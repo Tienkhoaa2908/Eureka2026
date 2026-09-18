@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+
+# Notebooks
+.ipynb_checkpoints/
+
+# Local data — source/license review required before publishing
+data/raw/**
+data/interim/**
+data/processed/**
+!data/README.md
+!data/**/.gitkeep
+
+# Generated artifacts
+artifacts/**
+!artifacts/README.md
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Secrets
+.env
+*.key
+*.pem
