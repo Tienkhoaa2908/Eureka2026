@@ -31,3 +31,33 @@
 - A stricter COVID-window robustness design remains for G5.
 - Spatial dependence remains untested.
 - Exact publication/page for the archived 2020–2024 Table 151 extract remains a documented lineage caveat.
+
+
+### Added — G4/G5/G6 deep validation
+- `src/eureka2026/predictive_benchmark.py` and temporal leakage tests.
+- `src/eureka2026/robustness.py` and robustness utility tests.
+- scikit-learn, XGBoost and SciPy dependency contract.
+- fold-level predictive metrics, nested tuning audit, PCI-increment comparison, prediction fingerprints and metadata.
+- robustness coefficient, CSTP5 targeted, year-LOO, region-LOO and metadata artifacts.
+- `artifacts/qa/PRED-BENCHMARK-01.md`.
+- `artifacts/qa/ROBUSTNESS-01.md`.
+- `docs/research/LITERATURE_MATRIX.md`.
+- `docs/research/INTEGRATED_RESULTS_AND_CONTRIBUTION.md`.
+- `docs/submission/MANUSCRIPT_DRAFT.md`.
+- `docs/submission/NUMBER_TO_ARTIFACT_MAP.md`.
+- `docs/submission/ANONYMITY_CHECKLIST.md`.
+- `docs/submission/SUBMISSION_PLAN.md`.
+
+### Changed — evidence state
+- G4 Predictive benchmark: PASS with negative incremental-PCI conclusion.
+- G5 Robustness: PASS with outcome-data caveat.
+- G6 Scientific contribution: PASS.
+- Current gate advanced to G7 submission package.
+- Working manuscript no longer frames CSTP5 as a universal “most impactful” component.
+- XGBoost/Random Forest are retained as benchmark models, not as the source of the paper’s novelty.
+
+### G4/G5 recorded finding
+- non-PCI Elastic Net is best on mean MAE for both outcomes;
+- no PCI-added model passes the feature-importance gate;
+- CSTP5 primary FE signal survives some robustness checks but weakens or disappears in strict-period/alternative-period specifications;
+- final interpretation is bounded association + negative predictive increment, not causal ranking.
