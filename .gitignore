@@ -18,6 +18,8 @@ data/processed/**
 # Generated artifacts
 artifacts/**
 !artifacts/README.md
+!artifacts/qa/
+!artifacts/qa/*.md
 
 # OS/editor
 .DS_Store
