@@ -1,0 +1,73 @@
+{
+  "covariance": "province-clustered, small-sample correction, t inference with cluster df correction",
+  "fdr": "Benjamini-Hochberg within the 10 component tests for each model specification/outcome",
+  "input_csv_sha256": "a5b76b667ed0e00a8422eeb4da48f78491824f6529feaf2e6ee9031c365211dd",
+  "models": {
+    "full:log_revenue": {
+      "adjusted_r_squared": 0.9879372356296587,
+      "cluster_df_inference": 62,
+      "clusters": 63,
+      "condition_number": 136.89490457720228,
+      "design_columns": 83,
+      "design_rank": 83,
+      "max_abs_residual": 0.6724332894229139,
+      "n": 693,
+      "r_squared": 0.9893666383440634,
+      "rmse_residual": 0.14329055957841227,
+      "years": [2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024]
+    },
+    "full:log_revenue_change": {
+      "adjusted_r_squared": 0.19145273650203154,
+      "cluster_df_inference": 62,
+      "clusters": 63,
+      "condition_number": 136.89490457720228,
+      "design_columns": 83,
+      "design_rank": 83,
+      "max_abs_residual": 0.9308755717809651,
+      "n": 693,
+      "r_squared": 0.2872632503847389,
+      "rmse_residual": 0.10033583185739468,
+      "years": [2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024]
+    },
+    "no_covid_2020_2021:log_revenue": {
+      "adjusted_r_squared": 0.9869265109593005,
+      "cluster_df_inference": 62,
+      "clusters": 63,
+      "condition_number": 138.9642710246832,
+      "design_columns": 81,
+      "design_rank": 81,
+      "max_abs_residual": 0.7112020118124072,
+      "n": 567,
+      "r_squared": 0.988774353933251,
+      "rmse_residual": 0.14771226607434243,
+      "years": [2014, 2015, 2016, 2017, 2018, 2019, 2022, 2023, 2024]
+    },
+    "no_covid_2020_2021:log_revenue_change": {
+      "adjusted_r_squared": 0.17924409130746854,
+      "cluster_df_inference": 62,
+      "clusters": 63,
+      "condition_number": 138.9642710246832,
+      "design_columns": 81,
+      "design_rank": 81,
+      "max_abs_residual": 0.893635274257895,
+      "n": 567,
+      "r_squared": 0.2952519935961655,
+      "rmse_residual": 0.1014779845547837,
+      "years": [2014, 2015, 2016, 2017, 2018, 2019, 2022, 2023, 2024]
+    }
+  },
+  "numpy_version": "2.3.5",
+  "output_sha256": {
+    "STAT-BASELINE-01_coefficients.csv": "7062c90249e350c43fc99147f3dded50a864383ab51e47306cdd14f88ae32495",
+    "STAT-BASELINE-01_influence.csv": "077c03fa5be000bcbb4879d5e6ddc3cf2a37bc39b08b031bebc9ab91e1ced1bb",
+    "STAT-BASELINE-01_scaling.csv": "960a0b6df763da43676217d739d2c8b940322aa50bbf1857a4f6fe7dbf1c456d"
+  },
+  "outputs": {
+    "coefficients": "STAT-BASELINE-01_coefficients.csv",
+    "influence": "STAT-BASELINE-01_influence.csv",
+    "scaling": "STAT-BASELINE-01_scaling.csv"
+  },
+  "standardization": "sample mean and sample SD (ddof=1), separately for full and no-COVID samples",
+  "statsmodels_version": "0.14.6",
+  "status": "PASS"
+}
