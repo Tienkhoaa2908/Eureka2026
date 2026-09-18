@@ -4,35 +4,34 @@
 
 Completed:
 - Recovered and audited the uploaded project bundle and project description.
-- Verified the 63 × 15 panel shape and full 10-subindex panel shape.
-- Identified notebook syntax defects and non-portable hardcoded paths.
 - Reframed the research question from unsupported causal ranking to panel inference + out-of-sample prediction.
-- Reviewed official Euréka 2026 timeline, scoring criteria, report structure, formatting, and anonymization constraints.
-- Reviewed recent Euréka economics themes and relevant Vietnam PCI/institution literature.
+- Reviewed official Euréka 2026 requirements and recent competition/literature context.
 - Bootstrapped GitHub research-OS structure.
-- Completed **DATA-INTEGRITY-01 (G1)**:
+- Completed **G1 DATA-INTEGRITY-01**:
   - documented revenue source blocks;
-  - identified and encoded three source-backed transcription corrections;
-  - added machine-readable lineage/correction registries;
-  - reduced all 90 regional subtotal QA residuals to absolute value ≤ 3.
-- Completed **REPRO-PIPELINE-01 (G2)**:
-  - added repository-relative one-command canonical build;
-  - added standard-library XLSX reader to avoid environment-specific spreadsheet dependencies;
-  - added explicit 63-province normalization contract;
-  - regenerated revenue growth, PCI lag, and all CSTP lag fields;
-  - enforced one-to-one province-year merge and structural-missingness invariants;
-  - reproduced 945-row canonical panel with stable SHA-256;
-  - verified two consecutive builds are byte-identical;
-  - verified zero keyed mismatches against the corrected G1 audit workbook for the first seven fields;
-  - expanded local validation suite to 11 passing tests.
+  - corrected three source-backed transcription errors;
+  - added machine-readable lineage/correction registries.
+- Completed **G2 REPRO-PIPELINE-01**:
+  - built one-command repository-relative canonical pipeline;
+  - generated stable 945-row output;
+  - added explicit province/merge/missingness tests.
+- Completed **G3 STAT-BASELINE-01**:
+  - implemented two-way FE with province-clustered cluster-t inference;
+  - standardized all 10 lagged PCI components reproducibly;
+  - added BH FDR multiplicity adjustment;
+  - generated full and no-2020/2021 outcome specifications;
+  - generated leave-one-province-out sensitivity;
+  - found no multiplicity-adjusted component in the log-level outcome;
+  - found CSTP5 as the only BH-adjusted association in the log-change outcome, stable in the recorded COVID and province-omission sensitivities;
+  - expanded local suite to 15 passing tests before PR.
 
 In progress:
-- G3 two-way fixed-effects statistical baseline.
-- Literature matrix and final method specification.
+- G4 time-respecting predictive benchmark.
+- Literature matrix / integrated manuscript narrative.
 
 Blocked:
-- Final ML comparison remains blocked until G3 passes.
-- Causal language remains blocked until a defensible identification strategy exists.
+- Feature-importance interpretation is blocked until a PCI-added model demonstrates out-of-sample incremental value under G4.
+- Causal language remains blocked.
 
 Current next action:
-Execute `docs/research/NEXT_EXPERIMENT.md` (STAT-BASELINE-01).
+Execute `docs/research/NEXT_EXPERIMENT.md` (PRED-BENCHMARK-01).

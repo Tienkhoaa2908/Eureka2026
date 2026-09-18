@@ -8,75 +8,75 @@ Status: AUDITED, NOT A FINAL RESULT
 Inputs: uploaded Panel_10_CSTP_2010_2024.xlsx and legacy EDA code.
 Findings:
 - 945 province-year rows.
-- Sub-index 6 missing exactly 189 rows = 63 provinces × 2010–2012.
+- CSTP6 missing exactly 189 rows = 63 provinces × 2010–2012.
 - Full 10-subindex VIF diagnostic uses 756 rows from 2013–2024.
 - Current VIFs are all < 5; largest observed values are around 3.5.
-- The legacy .ipynb has syntax errors in 8 code cells caused by uncommented separator text.
+- The legacy .ipynb has syntax errors in 8 code cells.
 Interpretation: collinearity is not the primary blocker; reproducibility and identification are.
 
 ## E-001 — Preliminary two-way FE smoke test
 Date: 2026-09-18
-Status: PRELIMINARY / DO NOT CITE AS FINAL
-Design: 2014–2024, one-year-lagged 10 PCI sub-indices, province FE, year FE, province-clustered SE; outcomes log revenue and log revenue change.
-Purpose: verify that the proposed inferential pipeline is technically estimable on 693 province-year rows.
-Result: model estimation succeeds. Coefficient patterns differ materially by outcome, reinforcing the need for prespecified outcomes and robustness checks rather than a single 'winner' sub-index.
-Next: re-run only after G2 reproducible pipeline passes and commit the exact script/output artifact.
+Status: SUPERSEDED BY E-004
+Purpose: verify technical estimability before canonical pipeline completion.
 
 ## E-002 — DATA-INTEGRITY-01
 Date: 2026-09-18
 Status: **PASS**
-Inputs:
-- legacy `panel_PCI_doanhthu_2010_2024.xlsx`;
-- six archived GSO/NSO table screenshots;
-- official NSO Statistical Yearbook / indicator cross-checks.
+Key result:
+- corrected Hòa Bình 2016, Gia Lai 2023, and An Giang 2023 revenue transcription errors;
+- after correction all 90 regional-subtotal QA residuals have absolute value ≤ 3.
 
-Legacy workbook SHA-256:
-`bbd5a7277b2473da49d7831fd1530a52a5563025f1d8aceadc3869cd0c40d345`
-
-Findings:
-- Three large region-subtotal discrepancies trace to three province-level transcription errors:
-  - Hòa Bình 2016: 23,040 → 33,040;
-  - Gia Lai 2023: 133,195 → 131,195;
-  - An Giang 2023: 212,941 → 212,961.
-- After correction, all 90 region-year subtotal checks have absolute residual ≤ 3; 47 are exact.
-- Correcting revenue materially changes affected annual growth values, so growth must always be regenerated downstream.
-- Source blocks are documented in `data/metadata/data_lineage.csv`; individual corrections in `data/metadata/revenue_corrections.csv`.
-- The exact publication/page behind the archived 2020–2024 Table 151 screenshot is not retained; official NSO PX-Web and the 2024 yearbook provide cross-checkable lineage.
-
-Correction implementation:
-`src/eureka2026/revenue_corrections.py`
-
-QA artifact:
-`artifacts/qa/DATA-INTEGRITY-01.md`
-
-Next:
-G2 REPRO-PIPELINE-01.
+Evidence:
+- `artifacts/qa/DATA-INTEGRITY-01.md`.
 
 ## E-003 — REPRO-PIPELINE-01
 Date: 2026-09-18
 Status: **PASS**
+Result:
+- 945-row deterministic canonical panel;
+- full contemporaneous 10-CSTP N=756;
+- full lagged 10-CSTP N=693;
+- output SHA-256 `a5b76b667ed0e00a8422eeb4da48f78491824f6529feaf2e6ee9031c365211dd`;
+- repeat builds byte-identical.
 
-Inputs:
-- legacy PCI/revenue XLSX SHA-256 `bbd5a7277b2473da49d7831fd1530a52a5563025f1d8aceadc3869cd0c40d345`;
-- 10-CSTP XLSX SHA-256 `b777da5cc8364a5c315a05f8a4bb976501fddfa86a426e8e21a0f13b6b7ea32d`.
+Evidence:
+- `artifacts/qa/REPRO-PIPELINE-01.md`.
 
-Command:
+## E-004 — STAT-BASELINE-01
+Date: 2026-09-18
+Status: **PASS**
 
-```bash
-python -m src.eureka2026.pipeline
-```
+Input:
+- canonical panel SHA-256 `a5b76b667ed0e00a8422eeb4da48f78491824f6529feaf2e6ee9031c365211dd`.
+
+Design:
+- 2014–2024;
+- N=693, 63 province clusters;
+- ten standardized one-year-lagged PCI components;
+- province FE + year FE;
+- province-clustered SE with cluster-t inference;
+- BH FDR across 10 component coefficients per model/outcome;
+- outcomes: log revenue and log revenue change;
+- sensitivity excludes 2020–2021 outcome years;
+- leave-one-province-out coefficient sensitivity.
 
 Results:
-- canonical output: 945 rows, 63 provinces, 2010–2024;
-- complete contemporaneous 10-CSTP rows: 756;
-- complete lagged 10-CSTP rows: 693;
-- output SHA-256: `a5b76b667ed0e00a8422eeb4da48f78491824f6529feaf2e6ee9031c365211dd`;
-- two consecutive actual-data builds were byte-identical;
-- comparison against the corrected G1 audit workbook on the first seven canonical fields found zero keyed mismatches across 945 rows;
-- all 11 local unit tests passed.
+- log revenue: no component has BH q<0.05;
+- log revenue change: CSTP5 beta=0.03628, 95% CI [0.01852, 0.05404], p=0.000129, q=0.001289;
+- no-2020/2021 outcome sensitivity: CSTP5 beta=0.03840, q=0.01290;
+- CSTP5 log-change leave-one-province-out beta range [0.03403, 0.03947], zero sign flips across 63 omissions;
+- CSTP6 raw p≈0.054 in the full change model but q≈0.270, therefore not multiplicity-adjusted evidence.
 
-QA artifact:
-`artifacts/qa/REPRO-PIPELINE-01.md`
+Interpretation:
+CSTP5 is the only component with a multiplicity-adjusted association in the prespecified growth specification under these checks. This is not a causal estimate and not a cross-outcome “winner”.
+
+Result artifact SHA-256:
+- coefficients `7062c90249e350c43fc99147f3dded50a864383ab51e47306cdd14f88ae32495`;
+- influence `077c03fa5be000bcbb4879d5e6ddc3cf2a37bc39b08b031bebc9ab91e1ced1bb`;
+- scaling `960a0b6df763da43676217d739d2c8b940322aa50bbf1857a4f6fe7dbf1c456d`.
+
+QA:
+- `artifacts/qa/STAT-BASELINE-01.md`.
 
 Next:
-G3 STAT-BASELINE-01.
+G4 PRED-BENCHMARK-01.
