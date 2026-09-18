@@ -43,3 +43,20 @@ Date: 2026-09-18
 Status: ACTIVE
 Decision: Main outcome candidates are log nominal revenue and log growth; add real/deflated revenue and scale-normalized outcomes if source data can support them.
 Reason: raw provincial revenue is dominated by province size and price-level trends.
+
+## D-008 — Correct three verified revenue transcription errors only in derived data
+Date: 2026-09-18
+Status: ACTIVE
+Decision:
+- Hòa Bình 2016 revenue: 23,040 → 33,040.
+- Gia Lai 2023 revenue: 133,195 → 131,195.
+- An Giang 2023 revenue: 212,941 → 212,961.
+- Recompute any growth or lagged outcome derived from revenue after applying corrections.
+- Preserve the raw/legacy artifact unchanged and apply corrections through committed code.
+Reason: archived source tables and official NSO cross-checks independently identify the three legacy values as transcription errors. Encoding the correction rather than editing raw evidence preserves provenance.
+
+## D-009 — Treat tiny regional subtotal residuals as QA metadata, not province data
+Date: 2026-09-18
+Status: ACTIVE
+Decision: After the verified corrections, remaining region-year subtotal residuals (maximum absolute value 3) are documented but not redistributed across provinces.
+Reason: the model unit is province-year, and inventing province-level adjustments to force regional arithmetic equality would alter published province observations without evidence.
