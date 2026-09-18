@@ -1,130 +1,59 @@
-# NEXT EXPERIMENT — PRED-BENCHMARK-01
+# NEXT EXPERIMENT — SUBMISSION-PACKAGE-01
 
-Priority: P0
-Gate: G4 Predictive benchmark
+Priority: P0  
+Gate: G7 Euréka submission
 
-## Question
+## Objective
 
-Do one-year-lagged PCI sub-indices add genuine future-year predictive value for provincial enterprise revenue outcomes beyond strong non-PCI baselines, and do nonlinear models improve over regularized linear prediction?
+Turn the validated G1–G6 evidence into an anonymous, internally consistent Euréka 2026 submission package without changing the scientific claims to make the story look stronger.
 
-This is a prediction question. It does not estimate causal effects.
+## Inputs
 
-## Canonical input
+- `docs/submission/MANUSCRIPT_DRAFT.md`
+- `docs/submission/SUBMISSION_PLAN.md`
+- `docs/submission/NUMBER_TO_ARTIFACT_MAP.md`
+- `docs/submission/ANONYMITY_CHECKLIST.md`
+- G1–G5 QA and result artifacts
+- official 2026 competition requirements in `docs/competition/EUREKA_2026.md`
 
-`data/processed/panel.csv`
+## Procedure
 
-Expected SHA-256:
-
-`a5b76b667ed0e00a8422eeb4da48f78491824f6529feaf2e6ee9031c365211dd`
-
-## Outcomes
-
-Primary:
-- one-year `log_revenue_change`.
-
-Secondary:
-- `log_revenue`.
-
-Reason: the level target is highly persistent and can make complex models appear strong without demonstrating added PCI information. The change target directly tests whether lagged governance information helps predict movement beyond scale persistence.
-
-## Outer temporal folds
-
-Fix these six expanding-window folds before model fitting:
-
-1. train 2014–2018 → test 2019;
-2. train 2014–2019 → test 2020;
-3. train 2014–2020 → test 2021;
-4. train 2014–2021 → test 2022;
-5. train 2014–2022 → test 2023;
-6. train 2014–2023 → test 2024.
-
-Each test fold contains the same 63 provinces. No random row split is permitted.
-
-## Information set
-
-For target year `t`, only variables observable by the end of `t-1` may enter features.
-
-Non-PCI baseline features:
-- lagged log revenue;
-- lagged log-revenue change where available;
-- province identity encoded inside the training pipeline;
-- deterministic calendar/time-trend feature.
-
-PCI-added feature set:
-- all non-PCI baseline features;
-- `cstp1_lag1 .. cstp10_lag1`.
-
-Do not include contemporaneous year-t PCI values.
-
-## Models
-
-Mandatory:
-1. naive baseline:
-   - log revenue: prior-year log revenue;
-   - log change: zero-change forecast.
-2. Elastic Net on non-PCI baseline features.
-3. Elastic Net with PCI-added features.
-4. Random Forest with PCI-added features.
-5. XGBoost with PCI-added features.
-
-Optional only if time permits: RF/XGBoost non-PCI variants to isolate model-class versus PCI-feature gains more directly.
-
-## Training/tuning rules
-
-- preprocessing is fitted on training years only;
-- categorical encoding/scaling is inside the training pipeline;
-- hyperparameter tuning uses inner expanding temporal splits within each outer training window;
-- no outer test year may affect preprocessing, tuning, early stopping, feature selection, or calibration;
-- use a small prespecified grid to limit overfitting to a 63-province panel;
-- set and record random seeds.
-
-## Metrics
-
-Primary metric:
-- MAE.
-
-Secondary:
-- RMSE.
-
-Report:
-- metric by outer test year;
-- mean and median across the six years;
-- mean paired improvement relative to the appropriate naive and Elastic-Net non-PCI baselines;
-- number of outer folds in which each model improves on the baseline.
-
-Do not select a model solely from one aggregate average.
-
-## Feature-importance gate
-
-Permutation importance / SHAP may be generated only if a PCI-added model:
-- has lower mean outer-fold MAE than the regularized non-PCI baseline; and
-- improves MAE in at least 4 of 6 outer folds for that outcome.
-
-If this condition fails, record the negative predictive result and do not manufacture an importance ranking.
+1. Generate publication-ready figures/tables from committed result artifacts:
+   - sample/data flow;
+   - G3 coefficient plot;
+   - G4 outer-year MAE comparison;
+   - G5 CSTP5 robustness plot;
+   - literature comparison table.
+2. Freeze the manuscript result wording against `NUMBER_TO_ARTIFACT_MAP.md`.
+3. Complete reference verification against primary/official source pages/DOIs.
+4. Produce the anonymous formatted manuscript using official margins/font/spacing.
+5. Produce the required portrait poster using the same bounded claims.
+6. Run anonymity audit and metadata audit.
+7. Run number-to-artifact audit: every quantitative statement must point to committed evidence.
+8. Re-run code/static tests and confirm the current Git commit/CI.
+9. Do not add SHAP/feature-importance figures; G4 gate failed.
+10. Do not change “association” to “impact/effect” without a new identification design.
 
 ## Pass criteria
 
-G4 passes regardless of whether ML wins, provided:
+- manuscript has no unsupported causal/ranking language;
+- all reported numeric claims match committed artifacts;
+- all references resolve to intended sources;
+- anonymous content has no author/institution/supervisor/logo/acknowledgement identifiers;
+- format complies with official Euréka 2026 requirements;
+- poster and manuscript tell the same scientific story;
+- final code/tests/CI pass;
+- current-state docs point to the exact final files.
 
-- all six outer folds are reproduced exactly;
-- no temporal leakage is detected;
-- tuning is training-only;
-- mandatory baselines/models run on identical outer folds;
-- fold-level predictions and metrics are committed as compact audit artifacts;
-- aggregate metrics are reproducible;
-- any feature-importance output obeys the feature-importance gate;
-- conclusions distinguish predictive performance from causal/inferential claims.
+## Output artifacts
 
-## Expected artifacts
+- final anonymous manuscript source and PDF/DOCX as appropriate;
+- final figures/tables;
+- poster;
+- final references;
+- signed-off anonymity and number audits;
+- `artifacts/qa/SUBMISSION-PACKAGE-01.md`.
 
-- `src/eureka2026/predictive_benchmark.py`;
-- tests for fold construction and leakage prevention;
-- dependency update for scikit-learn / XGBoost;
-- `artifacts/results/PRED-BENCHMARK-01_metrics.csv`;
-- `artifacts/results/PRED-BENCHMARK-01_predictions.csv`;
-- compact metadata/parameter artifact;
-- `artifacts/qa/PRED-BENCHMARK-01.md`.
+## Current scientific story to preserve
 
-## Unlocks
-
-G5 broader robustness work and final integrated result narrative.
+A lagged CSTP5 association appears in the primary FE growth specification but is bounded by period/specification robustness and does not create stable incremental future-year predictive value beyond the best non-PCI baseline. This is the result, not a failure to obtain a desired ML ranking.
