@@ -1,7 +1,7 @@
 # PROJECT STATE — Eureka 2026
 
 Last updated: 2026-09-18 (UTC+7)
-Status: bootstrap + scientific audit in progress
+Status: **G1 data integrity passed; G2 reproducible pipeline is current gate**
 
 ## 1. Research objective
 
@@ -14,15 +14,25 @@ Until a defensible identification strategy is established, use the words associa
 - Panel PCI + enterprise net revenue: 63 provinces/cities × 2010–2024 = 945 province-year rows.
 - Panel of 10 PCI sub-indices: 945 rows. Sub-index 6 (fair competition/policy bias) is structurally unavailable in 2010–2012; full 10-subindex sample begins in 2013.
 - Existing panel includes PCI_lag1 and annual enterprise-revenue growth.
-- Revenue figures were manually transcribed from GSO/NSO tables/screenshots in the current working materials; this remains the largest reproducibility risk.
+- Revenue source blocks are now documented in `data/metadata/data_lineage.csv`.
+- Three verified revenue transcription errors are encoded in `data/metadata/revenue_corrections.csv` and `src/eureka2026/revenue_corrections.py`.
+
+Verified revenue corrections:
+- Hòa Bình 2016: 23,040 → **33,040**.
+- Gia Lai 2023: 133,195 → **131,195**.
+- An Giang 2023: 212,941 → **212,961**.
+
+Annual revenue growth must be regenerated after applying these corrections.
 
 ## 3. Verified audit findings
 
+- DATA-INTEGRITY-01 passed. The three previously large regional-subtotal mismatches were caused by transcription errors in the derived province panel, not by large unexplained NSO source anomalies.
+- After those three corrections, all 90 region-year subtotal checks are within an absolute residual of 3; regional subtotals are used only as QA, not as model observations.
+- The 2020–2024 archived Table 151 extract is fingerprinted and traceable to the official NSO indicator/PX-Web series, but its exact originating publication/page was not retained in the source bundle. This remains a documented lineage caveat, not a silent assumption.
 - The EDA notebook contains invalid Python in multiple code cells because Vietnamese separator headings are not commented; the standalone .py version does not have this syntax defect.
-- Current scripts use environment-specific absolute paths such as /mnt/user-data/uploads and /mnt/user-data/outputs; they are not reproducible after cloning.
+- Current legacy scripts use environment-specific absolute paths such as /mnt/user-data/uploads and /mnt/user-data/outputs; they are not reproducible after cloning.
 - Current EDA computes pooled Pearson correlations and VIF. These are useful diagnostics but do not isolate within-province relationships or establish causality.
-- Full 10-subindex VIF values are all below 5 in the current 2013–2024 panel; multicollinearity is therefore not the main immediate blocker, although high pairwise correlations still require interpretation.
-- Three published subtotal-vs-province-sum discrepancies are recorded in the existing panel notebook. They must be rechecked against the original GSO/NSO PDFs before being treated as source anomalies.
+- Full 10-subindex VIF values are all below 5 in the current 2013–2024 panel; multicollinearity is not the main immediate blocker, although correlated-feature interpretation still matters.
 
 ## 4. Current scientific design
 
@@ -43,20 +53,27 @@ Prediction track:
 
 ## 5. Primary unresolved risks
 
-1. Outcome validity: nominal aggregate provincial revenue is heavily driven by province size, inflation, sector mix, and number of firms.
-2. Identification: aggregate PCI and aggregate revenue may co-move with omitted province-level economic conditions.
-3. Data lineage: revenue transcription is not yet independently reproducible from source tables.
-4. Structural missingness: sub-index 6 before 2013 must not be imputed as if it were observed.
+1. **Reproducibility:** legacy analysis still depends on absolute sandbox paths and manually assembled files; G2 must create one deterministic raw → clean → model build.
+2. Outcome validity: nominal aggregate provincial revenue is heavily driven by province size, inflation, sector mix, and number of firms.
+3. Identification: aggregate PCI and aggregate revenue may co-move with omitted province-level economic conditions.
+4. Structural missingness: sub-index 6 before 2013 must not be imputed as if observed.
 5. Methodology drift: PCI indicator composition/weights and administrative definitions may change over time; changes must be documented.
 6. Leakage: any random train/test split across province-years will contaminate temporal evaluation.
+7. Lineage caveat: exact publication/page for the archived 2020–2024 Table 151 extract remains to be recovered if available.
 
 ## 6. Highest-priority next work
 
-See docs/research/NEXT_EXPERIMENT.md. The next gate is DATA-INTEGRITY-01: independently verify the three disputed GSO/NSO cells/subtotals and generate a machine-readable data lineage table. No final model ranking should be accepted before this gate passes.
+See `docs/research/NEXT_EXPERIMENT.md`.
+
+Current gate: **G2 — REPRO-PIPELINE-01**.
+
+Build a deterministic repository-relative pipeline that applies the three source-backed revenue corrections, preserves CSTP6 structural missingness, regenerates growth/lagged fields, validates the 63×15 panel, and emits a canonical processed analysis dataset with checksum.
+
+Do not run final FE or tune XGBoost until G2 passes.
 
 ## 7. Submission state
 
-Euréka 2026 online registration closes 2026-09-25. Submission formatting and anonymization requirements are summarized in docs/competition/EUREKA_2026.md.
+Euréka 2026 online registration closes 2026-09-25. Submission formatting and anonymization requirements are summarized in `docs/competition/EUREKA_2026.md`.
 
 ## 8. Recovery protocol
 
