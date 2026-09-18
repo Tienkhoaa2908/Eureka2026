@@ -60,3 +60,21 @@ Date: 2026-09-18
 Status: ACTIVE
 Decision: After the verified corrections, remaining region-year subtotal residuals (maximum absolute value 3) are documented but not redistributed across provinces.
 Reason: the model unit is province-year, and inventing province-level adjustments to force regional arithmetic equality would alter published province observations without evidence.
+
+## D-010 — Canonical panel is generated, not manually maintained
+Date: 2026-09-18
+Status: ACTIVE
+Decision: `data/processed/panel.csv` is a generated artifact produced by `python -m src.eureka2026.pipeline`. It is never edited by hand. Legacy `PCI_lag1` and revenue-growth values are ignored and regenerated from current-year canonical fields.
+Reason: derived fields became stale when source revenue corrections were applied; deterministic regeneration prevents the same class of inconsistency.
+
+## D-011 — Use explicit pre-2025 63-province naming contract
+Date: 2026-09-18
+Status: ACTIVE
+Decision: The 2010–2024 analysis uses an explicit 63-province canonical name list plus a small reviewed alias map. Unknown names fail loudly.
+Reason: silent fuzzy matching can merge the wrong province and future administrative restructuring should not silently change the historical panel.
+
+## D-012 — Primary G3 change outcome is log revenue change
+Date: 2026-09-18
+Status: ACTIVE
+Decision: For G3 inference, primary level outcome is log revenue and the change robustness outcome is `log(revenue_t)-log(revenue_t-1)`. The legacy arithmetic percent-growth column remains descriptive/audit-friendly but is not the primary inferential transformation.
+Reason: log changes are scale-consistent with the log-level outcome and avoid mixing model interpretation with a rounded legacy percentage field.
