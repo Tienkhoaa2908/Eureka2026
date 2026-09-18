@@ -14,16 +14,29 @@ Pass when:
 - each revenue value has traceable official source/table/page or a reproducible extraction record;
 - the three known subtotal discrepancies are independently rechecked;
 - no silent imputation of structurally unavailable sub-index 6.
-Current: FAIL / open.
+
+Current: **PASS (2026-09-18).**
+
+Evidence:
+- `artifacts/qa/DATA-INTEGRITY-01.md`
+- `data/metadata/data_lineage.csv`
+- `data/metadata/revenue_corrections.csv`
+- `src/eureka2026/revenue_corrections.py`
+
+Caveat: exact originating publication/page for the archived 2020–2024 Table 151 extract is not retained; screenshot hashes and the official NSO series provide a reproducible evidence trail, with 2020–2023 additionally cross-checked to the 2024 yearbook.
 
 ## G2 — Reproducible pipeline
 Pass when:
 - no absolute sandbox/user paths;
 - environment dependencies are declared;
 - raw → clean → model datasets can be regenerated;
+- verified revenue corrections are applied by code;
+- derived growth/lag variables are regenerated after corrections;
 - notebook/script syntax checks pass;
-- invariant tests pass.
-Current: FAIL / open.
+- invariant tests pass;
+- canonical processed dataset checksum is recorded.
+
+Current: **OPEN / current gate.**
 
 ## G3 — Statistical baseline
 Pass when:
