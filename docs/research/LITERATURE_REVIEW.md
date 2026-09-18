@@ -2,68 +2,58 @@
 
 Updated: 2026-09-18
 
-## Core measurement source
+The detailed structured evidence table now lives in `docs/research/LITERATURE_MATRIX.md`.
 
-PCI/VCCI methodology states that PCI is built from business survey data plus published administrative sources, standardized into ten sub-indices and calibrated into a composite index. This matters because PCI is partly perception-based and its components are correlated measures of a broader institutional environment.
+## Core measurement
 
-Source: https://www.pcivietnam.vn/en/about/pci-methodology.html
-FAQ/weights: https://pcivietnam.vn/en/faqs.html
+PCI/VCCI constructs PCI from business survey data and published sources, standardizes ten sub-indices to a 10-point scale, and calibrates the composite PCI from those dimensions.
 
-## Prior evidence the project must position against
+Sources:
+- https://pcivietnam.vn/en/about/pci-methodology.html
+- https://pcivietnam.vn/en/faqs.html
 
-### Nguyen, Le & Bryant (2013), Journal of World Business
-Sub-national institutions, firm strategies, and firm performance: a multilevel study of private manufacturing firms in Vietnam.
-Finding relevant to this project: local institutions interact with firm strategies and outcomes; firm-level and province-level variation should be modeled separately.
-DOI: https://doi.org/10.1016/j.jwb.2012.06.008
+For CSTP5, stronger performance corresponds to **minimal informal charges**, so coefficient signs must be interpreted using that orientation.
 
-### Huynh (2022), Asian-Pacific Economic Literature
-Spatial effects of institutional quality on firm performance: evidence from Vietnam.
-Finding relevant to this project: provincial institutions can have direct and spatial spillover relationships with firm performance, so neighboring-province dependence is a possible robustness issue.
-DOI: https://doi.org/10.1111/apel.12362
+## Closest empirical evidence
+
+### Nguyen, Le & Bryant (2013)
+Journal of World Business, DOI 10.1016/j.jwb.2012.06.008.  
+Multilevel private-manufacturing evidence shows subnational institutional conditions matter for firm strategy/performance relationships.
+
+### Huynh (2022)
+Asian-Pacific Economic Literature, DOI 10.1111/apel.12362.  
+Spatial Durbin analysis, 2011–2018. Reports direct/spatial institutional relationships; control of corruption is positively related to profits and informal charges negatively to TFP. Motivates spatial caution.
 
 ### Asia-Pacific Journal of Regional Science (2024)
-Total factor productivity and institutional quality in Vietnam: which institutions matter most?
-Uses firm-level panel data and GMM; reports that not all PCI dimensions matter equally and highlights time costs and labor policy for TFP.
-URL: https://link.springer.com/article/10.1007/s41685-024-00343-9
-
-### Nguyen, Phong & Truc (2025)
-Impact of Institutional Factors and Tax Revenue on Firm Performance Across Provincial Localities in Vietnam.
-Uses 63-province data, 2015–2021, and GMM with additional province-level variables. Relevant because it demonstrates that aggregate province-level outcomes need controls and endogeneity discussion.
-DOI: https://doi.org/10.3233/FAIA250083
+“Total factor productivity and institutional quality in Vietnam: which institutions matter most?” DOI 10.1007/s41685-024-00343-9.  
+Component patterns are outcome/specification-specific; time costs and labor policy are prominent in important TFP specifications.
 
 ### Kokko, Nguyen & Nilsson Hakkala (ADB, 2026)
-Business Climate, Economic Complexity, and Performance at the Provincial Level in Viet Nam.
-Uses 63 provinces and a difference-GMM design; reports that changes in PCI have limited effects on several manufacturing outcomes in many specifications.
-URL: https://www.adb.org/publications/business-climate-economic-complexity-performance-provincial-viet-nam
+DOI 10.22617/WPS260325-2.  
+63-province evidence reports that PCI changes have limited effects on several manufacturing outcomes in many specifications. This makes weak/null results scientifically plausible rather than anomalous.
 
-### Thoa & Hung (2026), Hue University Journal of Science
-The impact of the provincial competitiveness index on firms' market entry in Vietnam.
-Uses 2017–2024 panel regressions with fixed effects and clustered robust standard errors; lagged PCI components are explicitly examined.
-DOI: https://doi.org/10.26459/hueunijed.v135i5C.8471
+### Thoa & Hung (2026)
+Hue University Journal of Science, DOI 10.26459/hueunijed.v135i5C.8471.  
+FE + clustered SE on 2017–2024 market entry. Component significance differs between current and lagged models; informal charges is significant in the lagged model while legal institutions/security is described as the most stable dimension.
 
-### Linh (2026), Can Tho University Journal of Science
-The impact of public governance quality and the business environment on GRDP of provinces and cities in Vietnam.
-Uses 63 provinces, 2018–2024, FEM/REM with PAPI and PCI; useful as a current province-level macro outcome comparator.
-DOI: https://doi.org/10.22144/ctujos.2026.178
+## Method references
 
-## Research gap we can defensibly claim
+- Zou & Hastie (2005), Elastic Net, DOI 10.1111/j.1467-9868.2005.00503.x.
+- Breiman (2001), Random Forests, DOI 10.1023/A:1010933404324.
+- Chen & Guestrin (2016), XGBoost, DOI 10.1145/2939672.2939785.
+- Tashman (2000), out-of-sample forecasting tests, DOI 10.1016/S0169-2070(00)00065-0.
 
-Do NOT claim that nobody has studied PCI and performance in Vietnam. That is false.
+## Gap the project can defend
 
-A defensible gap is narrower:
-- recent studies use different outcomes, samples, and econometric designs and do not agree on which institutional dimensions matter;
-- many applied studies emphasize in-sample coefficients, while strict time-ordered out-of-sample validation of the same province panel is less commonly foregrounded;
-- a transparent comparison of interpretable two-way FE estimates, lagged PCI components, and time-respecting ML prediction on 2010–2024 province-level enterprise revenue can contribute evidence about robustness and predictive usefulness, provided data integrity is established.
+Do not claim that PCI and firm performance have not been studied.
 
-## Implications for hypotheses
+The defensible gap is methodological and evidential:
+- prior Vietnam studies use different units, outcomes and estimators and produce mixed component patterns;
+- strict future-year out-of-sample validation is usually not the same exercise as FE inference;
+- the project compares the two on one audited long panel and adds falsification/robustness to define the boundary of any apparent signal.
 
-Use component-specific hypotheses only where theory/literature supports them. Avoid a post-hoc 'winner' hypothesis.
-Primary empirical question should be stability: whether a component's signal persists across outcomes, periods, and modeling frameworks.
+## Integrated position
 
-## Literature-review TODO
+G3–G5 support a bounded conclusion: CSTP5 has a lagged association in the primary growth specification, but the signal is period/specification-sensitive and does not add stable forecast value beyond the best non-PCI baseline.
 
-Before final manuscript:
-1. Build a structured evidence table: sample, level, outcome, PCI measure, estimator, controls, main findings, limitations.
-2. Read full methods/results (not only abstracts) for the 5–7 closest studies.
-3. Add citations on panel FE, clustered SE, temporal cross-validation, and correlated-feature importance.
-4. Add source documentation for GSO/NSO enterprise-revenue definitions and price/nominal units.
+That distinction, not a model/feature ranking, is the central contribution.
