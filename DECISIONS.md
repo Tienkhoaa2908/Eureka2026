@@ -90,3 +90,40 @@ Date: 2026-09-18
 Status: ACTIVE
 Decision: The G3 CSTP5 result may be described as the only multiplicity-adjusted association in the prespecified log-revenue-change specification that survives the recorded COVID and leave-one-province-out checks. It must not be described as the “most impactful” PCI component or as causal.
 Reason: no BH-adjusted signal appears in the log-level outcome; fixed effects do not remove time-varying confounding or reverse causality; G4/G5 can still weaken the apparent signal.
+
+
+## D-015 — G4 uses fixed future-year evaluation and strong non-PCI baselines
+Date: 2026-09-18
+Status: ACTIVE
+Decision: Evaluate prediction on six fixed expanding test years (2019–2024) with training-only preprocessing/tuning. Every ML family is compared both with and without lagged PCI where feasible, and all PCI-added models are compared against non-PCI Elastic Net.
+Reason: same-family improvement alone does not establish useful incremental information if a simpler baseline still predicts better.
+
+## D-016 — Do not generate PCI feature importance after the negative G4 gate
+Date: 2026-09-18
+Status: ACTIVE
+Decision: No SHAP/permutation/impurity ranking is generated because no PCI-added model beats non-PCI Elastic Net on mean MAE and at least 4/6 outer folds.
+Reason: ranking features from a model that fails the generalization gate would invite unsupported interpretation.
+
+## D-017 — Bound the CSTP5 claim using G5 failures as well as successes
+Date: 2026-09-18
+Status: ACTIVE
+Decision: Describe CSTP5 as a lagged, specification-bounded association in the primary 2014–2024 growth model. Explicitly report that it weakens under strict COVID exclusion and is null in contemporaneous and longer-period variants.
+Reason: robustness means identifying where a result fails, not counting only supportive specifications.
+
+## D-018 — A common national deflator is not an independent FE robustness dimension
+Date: 2026-09-18
+Status: ACTIVE
+Decision: Do not claim a separate “real revenue” FE robustness exercise by dividing every province by the same national year-level deflator. In a log model with full year fixed effects, that common year-only transformation is absorbed by the year effects.
+Reason: meaningful scale robustness requires verified province-specific prices or denominators such as active firms/workers.
+
+## D-019 — Final novelty is the separation of inference, prediction and falsification
+Date: 2026-09-18
+Status: ACTIVE
+Decision: The Euréka contribution is an auditable long province panel plus three evidence layers—multiplicity-aware FE inference, strict future-year prediction, and robustness/falsification—not the use of Random Forest/XGBoost itself.
+Reason: prior Vietnam and Euréka research already contains advanced quantitative/ML methods; method branding alone is not novelty.
+
+## D-020 — Submission title and narrative remain non-causal
+Date: 2026-09-18
+Status: ACTIVE
+Decision: Working title: “Chất lượng điều hành kinh tế cấp tỉnh và kết quả doanh nghiệp tại Việt Nam: Bằng chứng từ dữ liệu bảng và dự báo ngoài mẫu giai đoạn 2010–2024.” Avoid “tác động” in the title/abstract unless the identification design changes.
+Reason: current FE/prediction design does not identify causal effects.

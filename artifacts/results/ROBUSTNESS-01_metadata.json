@@ -1,0 +1,25 @@
+{
+  "input_sha256": "a5b76b667ed0e00a8422eeb4da48f78491824f6529feaf2e6ee9031c365211dd",
+  "output_sha256": {
+    "ROBUSTNESS-01_coefficients.csv": "0470a7f9e83305b11679ddb5a27409705e1fd860c5deba70ce8c5ed756dbc9db",
+    "ROBUSTNESS-01_cstp5_targeted.csv": "bbc987b6633141b9b0cea47287a4617dd4a0e3eb3bdfa6411aa19ed3ab04c1cb",
+    "ROBUSTNESS-01_region_loo.csv": "e69529671f69dd3885a5cc135ec730235c3f89b8953c0e5fda464cdab1465199",
+    "ROBUSTNESS-01_year_loo.csv": "4147e51e457cba8253e9c165d49636b26313ee6f1a3ef9974bca23bacf41700b"
+  },
+  "pesaran_cd_full_change": {
+    "asymptotic_p_value": 0.16597077791512493,
+    "mean_pairwise_residual_corr": -0.009451181172666578,
+    "n_entities": 63,
+    "pesaran_cd": -1.385267204359758,
+    "t_periods": 11
+  },
+  "specifications": {
+    "contemporaneous_10": {"n": 756, "years": "2013-2024"},
+    "distributed_lag": {"n": 630, "years": "2015-2024"},
+    "future_lead_placebo": {"n": 630, "years": "2014-2023"},
+    "long_2011_2024_lag9": {"n": 882, "years": "2011-2024"},
+    "strict_no_covid_2020_2022": {"n": 504, "years": "2014-2019,2023-2024"},
+    "winsorized_outcome_1pct": {"n": 693, "years": "2014-2024"}
+  },
+  "status": "PASS"
+}
