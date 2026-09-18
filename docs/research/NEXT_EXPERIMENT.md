@@ -1,13 +1,13 @@
-# NEXT EXPERIMENT — STAT-BASELINE-01
+# NEXT EXPERIMENT — PRED-BENCHMARK-01
 
 Priority: P0
-Gate: G3 Statistical baseline
+Gate: G4 Predictive benchmark
 
 ## Question
 
-After controlling for time-invariant province characteristics and common year shocks, which one-year-lagged PCI sub-indices show statistically and substantively stable within-province associations with enterprise revenue outcomes in 2014–2024?
+Do one-year-lagged PCI sub-indices add genuine future-year predictive value for provincial enterprise revenue outcomes beyond strong non-PCI baselines, and do nonlinear models improve over regularized linear prediction?
 
-This is an association question, not a causal-effect claim.
+This is a prediction question. It does not estimate causal effects.
 
 ## Canonical input
 
@@ -17,76 +17,114 @@ Expected SHA-256:
 
 `a5b76b667ed0e00a8422eeb4da48f78491824f6529feaf2e6ee9031c365211dd`
 
-Rebuild first with:
-
-```bash
-python -m src.eureka2026.pipeline
-```
-
-## Primary sample
-
-- years: 2014–2024;
-- 63 provinces × 11 years = 693 rows;
-- complete one-year-lagged `cstp1..cstp10`.
-
-## Prespecified outcomes
+## Outcomes
 
 Primary:
-- `log_revenue = ln(Doanh_thu_ty_dong)`.
+- one-year `log_revenue_change`.
 
-Robustness:
-- `log_revenue_change = log_revenue_it - log_revenue_i,t-1`.
+Secondary:
+- `log_revenue`.
 
-The legacy percent-growth column is not the primary inferential transformation; it is retained as an audit-friendly descriptive field.
+Reason: the level target is highly persistent and can make complex models appear strong without demonstrating added PCI information. The change target directly tests whether lagged governance information helps predict movement beyond scale persistence.
 
-## Predictors
+## Outer temporal folds
 
-`cstp1_lag1 .. cstp10_lag1`.
+Fix these six expanding-window folds before model fitting:
 
-Standardize each predictor over the analysis sample using committed code and record mean/SD so coefficients are comparable by one-standard-deviation changes.
+1. train 2014–2018 → test 2019;
+2. train 2014–2019 → test 2020;
+3. train 2014–2020 → test 2021;
+4. train 2014–2021 → test 2022;
+5. train 2014–2022 → test 2023;
+6. train 2014–2023 → test 2024.
 
-## Model
+Each test fold contains the same 63 provinces. No random row split is permitted.
 
-Two-way fixed effects:
+## Information set
 
-`y_it = alpha_i + lambda_t + beta' Z(PCI_components_i,t-1) + epsilon_it`
+For target year `t`, only variables observable by the end of `t-1` may enter features.
 
-where:
-- `alpha_i` = province fixed effects;
-- `lambda_t` = year fixed effects;
-- standard errors clustered by province.
+Non-PCI baseline features:
+- lagged log revenue;
+- lagged log-revenue change where available;
+- province identity encoded inside the training pipeline;
+- deterministic calendar/time-trend feature.
 
-## Required diagnostics
+PCI-added feature set:
+- all non-PCI baseline features;
+- `cstp1_lag1 .. cstp10_lag1`.
 
-1. Confirm exact N = 693 and 63 province clusters.
-2. Report coefficient, clustered SE, 95% CI, p-value.
-3. Report Benjamini–Hochberg FDR-adjusted q-values across the 10 component coefficients for each outcome.
-4. Compare coefficient sign/magnitude between log-level and log-change outcomes.
-5. Re-estimate excluding 2020–2021 as a prespecified COVID sensitivity.
-6. Flag influential observations/provinces using residual/leverage or leave-one-province-out sensitivity feasible for the fitted implementation.
-7. Record model rank/conditioning warnings if present.
-8. Do not choose a “winner” component from raw p-values alone.
+Do not include contemporaneous year-t PCI values.
+
+## Models
+
+Mandatory:
+1. naive baseline:
+   - log revenue: prior-year log revenue;
+   - log change: zero-change forecast.
+2. Elastic Net on non-PCI baseline features.
+3. Elastic Net with PCI-added features.
+4. Random Forest with PCI-added features.
+5. XGBoost with PCI-added features.
+
+Optional only if time permits: RF/XGBoost non-PCI variants to isolate model-class versus PCI-feature gains more directly.
+
+## Training/tuning rules
+
+- preprocessing is fitted on training years only;
+- categorical encoding/scaling is inside the training pipeline;
+- hyperparameter tuning uses inner expanding temporal splits within each outer training window;
+- no outer test year may affect preprocessing, tuning, early stopping, feature selection, or calibration;
+- use a small prespecified grid to limit overfitting to a 63-province panel;
+- set and record random seeds.
+
+## Metrics
+
+Primary metric:
+- MAE.
+
+Secondary:
+- RMSE.
+
+Report:
+- metric by outer test year;
+- mean and median across the six years;
+- mean paired improvement relative to the appropriate naive and Elastic-Net non-PCI baselines;
+- number of outer folds in which each model improves on the baseline.
+
+Do not select a model solely from one aggregate average.
+
+## Feature-importance gate
+
+Permutation importance / SHAP may be generated only if a PCI-added model:
+- has lower mean outer-fold MAE than the regularized non-PCI baseline; and
+- improves MAE in at least 4 of 6 outer folds for that outcome.
+
+If this condition fails, record the negative predictive result and do not manufacture an importance ranking.
 
 ## Pass criteria
 
-- exact canonical input checksum recorded;
-- model specification is executable from committed code;
-- N/cluster counts match prespecification;
-- clustered covariance is used;
-- result tables and diagnostics are generated deterministically;
-- COVID sensitivity is produced;
-- no causal language in automated summaries;
-- every reported number maps to a committed output artifact.
+G4 passes regardless of whether ML wins, provided:
 
-## Output artifacts
+- all six outer folds are reproduced exactly;
+- no temporal leakage is detected;
+- tuning is training-only;
+- mandatory baselines/models run on identical outer folds;
+- fold-level predictions and metrics are committed as compact audit artifacts;
+- aggregate metrics are reproducible;
+- any feature-importance output obeys the feature-importance gate;
+- conclusions distinguish predictive performance from causal/inferential claims.
 
-- `src/eureka2026/fe_baseline.py` or equivalent;
-- model dependency declaration;
-- `artifacts/results/STAT-BASELINE-01_coefficients.csv` locally;
-- `artifacts/qa/STAT-BASELINE-01.md`;
-- compact machine-readable model metadata;
-- tests for sample construction, standardization, and FDR logic.
+## Expected artifacts
+
+- `src/eureka2026/predictive_benchmark.py`;
+- tests for fold construction and leakage prevention;
+- dependency update for scikit-learn / XGBoost;
+- `artifacts/results/PRED-BENCHMARK-01_metrics.csv`;
+- `artifacts/results/PRED-BENCHMARK-01_predictions.csv`;
+- compact metadata/parameter artifact;
+- `artifacts/qa/PRED-BENCHMARK-01.md`.
 
 ## Unlocks
 
-G4 time-respecting predictive benchmark and G5 broader robustness work.
+G5 broader robustness work and final integrated result narrative.
