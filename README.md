@@ -8,72 +8,64 @@ Kho lưu trữ nghiên cứu cho đề tài dự thi **Giải thưởng Sinh vi�
 
 Cho tới khi có chiến lược nhận dạng nhân quả đủ mạnh, dự án dùng ngôn ngữ **association / relationship / predictive signal**, không suy diễn feature importance thành “tác động nhân quả”.
 
-## Current data
+## Canonical data
 
 - 63 tỉnh/thành × 15 năm (2010–2024) = 945 province-year observations.
-- PCI tổng hợp + doanh thu thuần SXKD doanh nghiệp theo tỉnh.
-- 10 chỉ số thành phần PCI; CSTP6 bắt đầu từ 2013.
-- Mẫu đủ 10 CSTP contemporaneous: 756 rows (2013–2024).
-- Mẫu đủ 10 CSTP lag 1 năm: 693 rows (2014–2024).
-- Nguồn chính: PCI/VCCI và GSO/NSO.
+- 10 PCI components; CSTP6 structurally unavailable in 2010–2012.
+- Complete contemporaneous 10-CSTP sample: 756 rows.
+- Complete lagged 10-CSTP sample: 693 rows.
+- Canonical SHA-256: `a5b76b667ed0e00a8422eeb4da48f78491824f6529feaf2e6ee9031c365211dd`.
 
-## Canonical build
-
-Hai binary migration inputs không commit vào public repo. Đặt chúng tại:
-
-```text
-data/raw/migration/panel_PCI_doanhthu_2010_2024.xlsx
-data/raw/migration/Panel_10_CSTP_2010_2024.xlsx
-```
-
-Sau đó chạy:
+Build:
 
 ```bash
 python -m src.eureka2026.pipeline
 ```
 
-Pipeline sẽ tạo local `data/processed/panel.csv`, tự áp dụng ba correction đã xác minh, tính lại revenue growth/PCI lag/CSTP lag, kiểm 63 × 15 keys, structural missingness và one-to-one merge.
+Run the statistical baseline after building:
 
-Canonical output fingerprint hiện tại:
+```bash
+python -m src.eureka2026.fe_baseline
+```
 
-`a5b76b667ed0e00a8422eeb4da48f78491824f6529feaf2e6ee9031c365211dd`
+## Current evidence
 
-Xem `data/metadata/canonical_build_manifest.json` và `artifacts/qa/REPRO-PIPELINE-01.md`.
+G1 data integrity, G2 reproducibility, and G3 statistical baseline have passed.
+
+G3 uses 2014–2024, province FE + year FE, province-clustered cluster-t inference, and BH FDR across the ten lagged PCI components.
+
+- Log revenue level: no component has BH q<0.05.
+- Log revenue change: CSTP5 (Chi phí không chính thức) has beta=0.03628, p=0.000129, q=0.001289, 95% CI [0.01852, 0.05404].
+- Excluding 2020–2021 outcome years: CSTP5 remains BH-adjusted (beta=0.03840, q=0.01290).
+- Leave-one-province-out for the full change model: CSTP5 keeps the same sign in all 63 omissions.
+
+This is an association result, not a causal effect and not a basis for calling CSTP5 the “most impactful” PCI component.
+
+See `artifacts/qa/STAT-BASELINE-01.md`.
 
 ## Start here
 
-1. `PROJECT_STATE.md` — trạng thái chuẩn hiện tại.
-2. `docs/research/NEXT_EXPERIMENT.md` — đúng một bước nghiên cứu ưu tiên tiếp theo.
-3. `docs/research/QUALITY_GATES.md` — các gate bắt buộc trước khi chấp nhận kết quả.
-4. `docs/research/AUDIT_2026-09-18.md` — lỗi và rủi ro đã phát hiện.
-5. `docs/research/METHODOLOGY_V1.md` — thiết kế phương pháp đề xuất.
-6. `docs/research/LITERATURE_REVIEW.md` — bản đồ tài liệu gần nhất.
-7. `docs/competition/EUREKA_2026.md` — deadline/rubric/format và định hướng từ các năm gần đây.
-8. `docs/handover/RECOVERY_PROMPT.md` — prompt phục hồi trạng thái ở chat mới.
-9. `docs/handover/SYNC_PROMPT.md` — prompt đồng bộ phiên làm việc lên GitHub.
-
-## Operating rules
-
-- Không báo cáo metric nếu không tái tạo được từ code + dữ liệu xác định.
-- Không sửa dữ liệu thô tại chỗ.
-- Không random-split province-year cho bài toán dự báo tương lai.
-- Không impute CSTP6 cho 2010–2012 như missing-at-random.
-- Inference và prediction là hai track riêng.
-- `PROJECT_STATE.md` là single source of truth.
+1. `PROJECT_STATE.md`
+2. `docs/research/NEXT_EXPERIMENT.md`
+3. `docs/research/QUALITY_GATES.md`
+4. `DECISIONS.md`
+5. `EXPERIMENTS.md`
+6. `docs/research/METHODOLOGY_V1.md`
+7. `docs/research/LITERATURE_REVIEW.md`
+8. `docs/competition/EUREKA_2026.md`
+9. `docs/handover/RECOVERY_PROMPT.md`
+10. `docs/handover/SYNC_PROMPT.md`
 
 ## Current gate
 
-**G3 — Statistical baseline: CURRENT.**
+**G4 — Predictive benchmark: CURRENT.**
 
-G1 data integrity và G2 reproducible pipeline đã pass. Bước kế tiếp là two-way fixed-effects baseline trên mẫu lagged 2014–2024, với province FE + year FE + province-clustered standard errors.
-
-Chưa tune XGBoost trước khi G3 hoàn tất.
+The next task is a fixed six-fold expanding-window benchmark (test years 2019–2024) comparing naive, non-PCI Elastic Net, PCI-added Elastic Net, Random Forest, and XGBoost. No random row split is permitted. Feature importance is allowed only if a PCI-added model demonstrates out-of-sample incremental value.
 
 ## Local validation
 
 ```bash
+python -m pip install -r requirements.txt
 python -m compileall -q src tests
 python -m unittest discover -s tests -v
 ```
-
-CI chạy cùng hai bước trên cho mọi push/PR.
