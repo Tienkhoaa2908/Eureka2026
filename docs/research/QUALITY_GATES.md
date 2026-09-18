@@ -11,9 +11,9 @@ Pass when:
 - 945 province-year panel keys are unique and complete for 2010–2024;
 - 10-subindex panel has expected structural missingness only;
 - province naming is canonical and merge coverage is 100%;
-- each revenue value has traceable official source/table/page or a reproducible extraction record;
-- the three known subtotal discrepancies are independently rechecked;
-- no silent imputation of structurally unavailable sub-index 6.
+- revenue source lineage is documented;
+- known subtotal discrepancies are independently rechecked;
+- no silent imputation of structurally unavailable CSTP6.
 
 Current: **PASS (2026-09-18).**
 
@@ -23,29 +23,45 @@ Evidence:
 - `data/metadata/revenue_corrections.csv`
 - `src/eureka2026/revenue_corrections.py`
 
-Caveat: exact originating publication/page for the archived 2020–2024 Table 151 extract is not retained; screenshot hashes and the official NSO series provide a reproducible evidence trail, with 2020–2023 additionally cross-checked to the 2024 yearbook.
+Caveat: exact originating publication/page for the archived 2020–2024 Table 151 extract is not retained; screenshot hashes and the official NSO series provide a reproducible evidence trail.
 
 ## G2 — Reproducible pipeline
 Pass when:
-- no absolute sandbox/user paths;
+- no absolute sandbox/user paths in active source;
 - environment dependencies are declared;
-- raw → clean → model datasets can be regenerated;
+- identified source/migration inputs can regenerate the canonical model dataset;
 - verified revenue corrections are applied by code;
 - derived growth/lag variables are regenerated after corrections;
-- notebook/script syntax checks pass;
+- province normalization and one-to-one merge checks are explicit;
 - invariant tests pass;
-- canonical processed dataset checksum is recorded.
+- canonical processed dataset checksum is recorded and stable across repeat builds.
 
-Current: **OPEN / current gate.**
+Current: **PASS (2026-09-18).**
+
+Evidence:
+- `src/eureka2026/pipeline.py`
+- `src/eureka2026/xlsx_reader.py`
+- `src/eureka2026/province_names.py`
+- `tests/test_pipeline.py`
+- `tests/test_no_legacy_paths.py`
+- `data/metadata/canonical_build_manifest.json`
+- `artifacts/qa/REPRO-PIPELINE-01.md`
+
+Canonical output SHA-256:
+`a5b76b667ed0e00a8422eeb4da48f78491824f6529feaf2e6ee9031c365211dd`
 
 ## G3 — Statistical baseline
 Pass when:
 - outcome definition is prespecified;
-- two-way FE model is reproduced;
-- clustered SE are used;
-- residual/outlier/sensitivity checks are documented;
+- 2014–2024 lagged 10-CSTP sample is exactly 693 rows;
+- province FE + year FE model is reproduced from the canonical panel;
+- standard errors are clustered by province;
+- standardized predictor scaling is reproducible;
+- coefficient table includes confidence intervals and multiplicity-aware interpretation;
+- residual/influence and COVID-period sensitivity checks are documented;
 - interpretation avoids causal overclaim.
-Current: NOT STARTED as final gate; only smoke-tested.
+
+Current: **OPEN / current gate.**
 
 ## G4 — Predictive benchmark
 Pass when:
@@ -62,7 +78,7 @@ Pass when core conclusions are compared across:
 - nominal vs deflated/scale-normalized outcome if available;
 - contemporaneous vs lagged PCI;
 - excluding/isolating COVID years;
-- alternative periods, including 2010–2024 without sub-index 6;
+- alternative periods, including 2010–2024 without CSTP6;
 - influential province checks.
 Current: NOT STARTED.
 

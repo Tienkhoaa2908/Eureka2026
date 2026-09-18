@@ -1,0 +1,24 @@
+{
+  "build_id": "REPRO-PIPELINE-01",
+  "date": "2026-09-18",
+  "inputs": {
+    "revenue_pci_xlsx": {
+      "path": "data/raw/migration/panel_PCI_doanhthu_2010_2024.xlsx",
+      "sha256": "bbd5a7277b2473da49d7831fd1530a52a5563025f1d8aceadc3869cd0c40d345"
+    },
+    "cstp_xlsx": {
+      "path": "data/raw/migration/Panel_10_CSTP_2010_2024.xlsx",
+      "sha256": "b777da5cc8364a5c315a05f8a4bb976501fddfa86a426e8e21a0f13b6b7ea32d"
+    }
+  },
+  "output": {
+    "path": "data/processed/panel.csv",
+    "sha256": "a5b76b667ed0e00a8422eeb4da48f78491824f6529feaf2e6ee9031c365211dd",
+    "rows": 945,
+    "provinces": 63,
+    "years": "2010-2024",
+    "full_10_cstp_rows": 756,
+    "lagged_full_10_cstp_rows": 693
+  },
+  "command": "python -m src.eureka2026.pipeline"
+}

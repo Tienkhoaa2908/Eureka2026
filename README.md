@@ -12,8 +12,33 @@ Cho tới khi có chiến lược nhận dạng nhân quả đủ mạnh, dự �
 
 - 63 tỉnh/thành × 15 năm (2010–2024) = 945 province-year observations.
 - PCI tổng hợp + doanh thu thuần SXKD doanh nghiệp theo tỉnh.
-- 10 chỉ số thành phần PCI; chỉ số 6 bắt đầu từ 2013, vì vậy mẫu đủ 10 chỉ số là 2013–2024 và mẫu lag 1 năm là 2014–2024.
+- 10 chỉ số thành phần PCI; CSTP6 bắt đầu từ 2013.
+- Mẫu đủ 10 CSTP contemporaneous: 756 rows (2013–2024).
+- Mẫu đủ 10 CSTP lag 1 năm: 693 rows (2014–2024).
 - Nguồn chính: PCI/VCCI và GSO/NSO.
+
+## Canonical build
+
+Hai binary migration inputs không commit vào public repo. Đặt chúng tại:
+
+```text
+data/raw/migration/panel_PCI_doanhthu_2010_2024.xlsx
+data/raw/migration/Panel_10_CSTP_2010_2024.xlsx
+```
+
+Sau đó chạy:
+
+```bash
+python -m src.eureka2026.pipeline
+```
+
+Pipeline sẽ tạo local `data/processed/panel.csv`, tự áp dụng ba correction đã xác minh, tính lại revenue growth/PCI lag/CSTP lag, kiểm 63 × 15 keys, structural missingness và one-to-one merge.
+
+Canonical output fingerprint hiện tại:
+
+`a5b76b667ed0e00a8422eeb4da48f78491824f6529feaf2e6ee9031c365211dd`
+
+Xem `data/metadata/canonical_build_manifest.json` và `artifacts/qa/REPRO-PIPELINE-01.md`.
 
 ## Start here
 
@@ -34,13 +59,15 @@ Cho tới khi có chiến lược nhận dạng nhân quả đủ mạnh, dự �
 - Không random-split province-year cho bài toán dự báo tương lai.
 - Không impute CSTP6 cho 2010–2012 như missing-at-random.
 - Inference và prediction là hai track riêng.
-- `PROJECT_STATE.md` là single source of truth; tránh nhân bản file “current status”.
+- `PROJECT_STATE.md` là single source of truth.
 
 ## Current gate
 
-**G1 — Data integrity: OPEN.**
+**G3 — Statistical baseline: CURRENT.**
 
-Việc ưu tiên hiện tại là xác minh độc lập ba chênh lệch subtotal doanh thu GSO/NSO đã được phát hiện và xây data-lineage machine-readable. Không tune XGBoost trước khi G1/G2 qua.
+G1 data integrity và G2 reproducible pipeline đã pass. Bước kế tiếp là two-way fixed-effects baseline trên mẫu lagged 2014–2024, với province FE + year FE + province-clustered standard errors.
+
+Chưa tune XGBoost trước khi G3 hoàn tất.
 
 ## Local validation
 

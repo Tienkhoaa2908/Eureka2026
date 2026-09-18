@@ -51,3 +51,32 @@ QA artifact:
 
 Next:
 G2 REPRO-PIPELINE-01.
+
+## E-003 — REPRO-PIPELINE-01
+Date: 2026-09-18
+Status: **PASS**
+
+Inputs:
+- legacy PCI/revenue XLSX SHA-256 `bbd5a7277b2473da49d7831fd1530a52a5563025f1d8aceadc3869cd0c40d345`;
+- 10-CSTP XLSX SHA-256 `b777da5cc8364a5c315a05f8a4bb976501fddfa86a426e8e21a0f13b6b7ea32d`.
+
+Command:
+
+```bash
+python -m src.eureka2026.pipeline
+```
+
+Results:
+- canonical output: 945 rows, 63 provinces, 2010–2024;
+- complete contemporaneous 10-CSTP rows: 756;
+- complete lagged 10-CSTP rows: 693;
+- output SHA-256: `a5b76b667ed0e00a8422eeb4da48f78491824f6529feaf2e6ee9031c365211dd`;
+- two consecutive actual-data builds were byte-identical;
+- comparison against the corrected G1 audit workbook on the first seven canonical fields found zero keyed mismatches across 945 rows;
+- all 11 local unit tests passed.
+
+QA artifact:
+`artifacts/qa/REPRO-PIPELINE-01.md`
+
+Next:
+G3 STAT-BASELINE-01.

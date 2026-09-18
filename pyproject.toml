@@ -1,0 +1,6 @@
+[project]
+name = "eureka2026-research"
+version = "0.1.0"
+description = "Reproducible research pipeline for the Euréka 2026 PCI panel study"
+requires-python = ">=3.11"
+dependencies = []
