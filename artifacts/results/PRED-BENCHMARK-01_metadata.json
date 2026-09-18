@@ -1,0 +1,51 @@
+{
+  "feature_importance_gate": {
+    "log_revenue:elastic_net": false,
+    "log_revenue:random_forest": false,
+    "log_revenue:xgboost": false,
+    "log_revenue_change:elastic_net": false,
+    "log_revenue_change:random_forest": false,
+    "log_revenue_change:xgboost": false
+  },
+  "feature_importance_generated": false,
+  "feature_information_cutoff": "target-year t features use revenue and PCI information no later than t-1; calendar trend t is deterministic",
+  "inner_fold_rule": "expanding within each outer train; use up to the two most recent validation years, each preceded by at least three training years",
+  "input_csv_sha256": "a5b76b667ed0e00a8422eeb4da48f78491824f6529feaf2e6ee9031c365211dd",
+  "models": [
+    "naive",
+    "elastic_net_nonpci",
+    "elastic_net_pci",
+    "random_forest_nonpci",
+    "random_forest_pci",
+    "xgboost_nonpci",
+    "xgboost_pci"
+  ],
+  "numpy_version": "2.3.5",
+  "outcomes": [
+    "log_revenue_change",
+    "log_revenue"
+  ],
+  "outer_fold_rule": "expanding: train 2014..t-1, test t",
+  "outer_test_years": [
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024
+  ],
+  "output_sha256": {
+    "PRED-BENCHMARK-01_aggregate.csv": "3f2dfc3e630c9e50be70f3bc94fa06c7216720fdb7383261b9c76018473ef7f7",
+    "PRED-BENCHMARK-01_metrics.csv": "fed348dc86be66db4f8406488d191f6b2b9136135226e5c27f1ed3bfa857d846",
+    "PRED-BENCHMARK-01_pci_increment.csv": "736d0ffb46e516eb86f59f180d5ed2ccc0887c1a203e2f21c642e810a0fdb7f1",
+    "PRED-BENCHMARK-01_prediction_fingerprints.csv": "abf5574d8d99b8118219950957c29868e633f06f39c07d5d2ee452f44eb3633e",
+    "PRED-BENCHMARK-01_predictions.csv": "65714d57fee901ca522fe2b7ea20164c9c1a7f982e212e6bc8a25e21a2922213",
+    "PRED-BENCHMARK-01_tuning.csv": "7767980d2c13a638d12daeb6697bda524ca4e26941d0f2f776d9607720a469d6"
+  },
+  "primary_metric": "MAE",
+  "random_seed": 20260918,
+  "secondary_metric": "RMSE",
+  "sklearn_version": "1.8.0",
+  "status": "PASS",
+  "xgboost_version": "3.1.3"
+}
