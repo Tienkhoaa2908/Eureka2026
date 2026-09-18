@@ -1,0 +1,4 @@
+province,year,field,legacy_value,verified_value,delta,source_table,evidence_file,evidence_sha256,official_reference,status
+"Hòa Bình",2016,Doanh_thu_ty_dong,23040,33040,10000,144,"Screenshot 2026-09-16 112820.png",d07f1a8c6a2aa904dc1656e7269961940218653cb6c3f1043f64f0b00b795a7f,"NSO Statistical Yearbook 2020 Table 144; NSO provincial indicator series",VERIFIED
+"Gia Lai",2023,Doanh_thu_ty_dong,133195,131195,-2000,151,"Screenshot 2026-09-16 111059.png",809f364155d2a73f9e604df447c97a4c091bcba50b12f1e8794157c2e634de0f,"NSO Statistical Yearbook 2024 Table 168; NSO Gia Lai indicator series",VERIFIED
+"An Giang",2023,Doanh_thu_ty_dong,212941,212961,20,151,"Screenshot 2026-09-16 111059.png",809f364155d2a73f9e604df447c97a4c091bcba50b12f1e8794157c2e634de0f,"NSO Statistical Yearbook 2024 Table 168; NSO An Giang indicator series",VERIFIED
