@@ -24,8 +24,6 @@ Completed:
   - found no multiplicity-adjusted component in the log-level outcome;
   - found CSTP5 as the only BH-adjusted association in the log-change outcome, stable in the recorded COVID and province-omission sensitivities;
   - expanded local suite to 15 passing tests before PR.
-
-Completed:
 - Completed **G4 PRED-BENCHMARK-01**:
   - six fixed expanding test years 2019–2024;
   - nested temporal tuning and leakage tests;
