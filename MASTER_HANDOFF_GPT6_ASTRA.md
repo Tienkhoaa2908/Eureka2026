@@ -20,6 +20,15 @@ Bạn **không được** quay lại hướng cũ “xếp hạng thành phần 
 
 ---
 
+## QUY TẮC GIAO TIẾP VÀ NGUỒN SỰ THẬT
+
+- Trả lời và viết tài liệu **100% bằng tiếng Việt**. Nếu buộc phải dùng thuật ngữ tiếng Anh, phải đặt nghĩa tiếng Việt ngay cạnh ở lần xuất hiện đầu tiên.
+- Không giả định bạn có thể đọc cuộc trò chuyện cũ. **GitHub + các tệp CSV người dùng cung cấp + nguồn công khai đã xác minh** là nguồn sự thật vận hành.
+- Nếu một chi tiết chỉ xuất hiện trong tài liệu cũ nhưng không còn phù hợp với `PROJECT_STATE.md`, coi nó là lịch sử, không phải trạng thái hiện tại.
+- Mọi dữ liệu hoặc kết quả không thể kiểm chứng phải được đánh dấu `[CHƯA XÁC MINH]` thay vì điền bằng suy đoán.
+
+---
+
 ## I. MỤC TIÊU CUỐI CÙNG
 
 Hãy triển khai dự án từ A đến Z để tạo ra một bài nghiên cứu có:
