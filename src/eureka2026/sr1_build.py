@@ -16,17 +16,17 @@ ENTRY_TARGET_YEARS = tuple(range(2018, 2025))
 COMPONENTS = tuple(f"cstp{i}" for i in range(1, 11))
 
 SERIES_TO_FILE = {
-    "active_results": "V05.08_active_results.csv",
-    "workers": "V05.11_workers.csv",
-    "capital": "V05.17_capital.csv",
-    "revenue": "V05.23_revenue.csv",
-    "monthly_income": "V05.35_monthly_income.csv",
-    "profit": "V05.38_profit.csv",
-    "profitability_ratio": "V05.41_profitability_ratio.csv",
-    "fixed_assets_per_worker": "V05.44_fixed_assets_per_worker.csv",
-    "new_registrations": "V05.02_new_registrations.csv",
-    "active_all": "V05.04_active_all.csv",
-    "active_per_1000": "V05.05_active_per_1000.csv",
+    "active_results": "E05.08_active_results.csv",
+    "workers": "E05.11_workers.csv",
+    "capital": "E05.17_capital.csv",
+    "revenue": "E05.23_revenue.csv",
+    "monthly_income": "E05.35_monthly_income.csv",
+    "profit": "E05.38_profit.csv",
+    "profitability_ratio": "E05.41_profitability_ratio.csv",
+    "fixed_assets_per_worker": "E05.44_fixed_assets_per_worker.csv",
+    "new_registrations": "E05.02_new_registrations.csv",
+    "active_all": "E05.04_active_all.csv",
+    "active_per_1000": "E05.05_active_per_1000.csv",
 }
 
 
