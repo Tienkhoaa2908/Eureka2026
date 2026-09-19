@@ -120,6 +120,61 @@ def request_with_retry(
     raise RuntimeError(f"request failed after {attempts} attempts: {url}") from last
 
 
+
+def decode_jsonstat2(dataset: dict[str, Any]) -> list[dict[str, Any]]:
+    """Compatibility helper retained for deterministic unit tests.
+
+    The active NSO downloader no longer depends on JSON-stat because the public
+    NSO deployment currently rejects the standard API POST endpoint.  Keeping
+    this decoder costs little and preserves a tested parser for any future API
+    restoration.
+    """
+    ids = list(dataset["id"])
+    sizes = [int(x) for x in dataset["size"]]
+    dimensions = dataset["dimension"]
+    codes_by_dim: list[list[str]] = []
+    labels_by_dim: list[dict[str, str]] = []
+    for dim in ids:
+        category = dimensions[dim]["category"]
+        index = category.get("index", {})
+        if isinstance(index, list):
+            codes = [str(x) for x in index]
+        else:
+            codes = [
+                str(code)
+                for code, _ in sorted(index.items(), key=lambda item: int(item[1]))
+            ]
+        codes_by_dim.append(codes)
+        labels_by_dim.append(
+            {str(k): str(v) for k, v in category.get("label", {}).items()}
+        )
+
+    values = dataset.get("value", [])
+    rows: list[dict[str, Any]] = []
+    flat = 0
+
+    def walk(level: int, coords: list[int]) -> None:
+        nonlocal flat
+        if level == len(sizes):
+            row: dict[str, Any] = {}
+            for pos, (dim, coord) in enumerate(zip(ids, coords)):
+                code = codes_by_dim[pos][coord]
+                row[dim] = labels_by_dim[pos].get(code, code)
+            row["value"] = (
+                values.get(str(flat))
+                if isinstance(values, dict)
+                else (values[flat] if flat < len(values) else None)
+            )
+            rows.append(row)
+            flat += 1
+            return
+        for coord in range(sizes[level]):
+            walk(level + 1, coords + [coord])
+
+    walk(0, [])
+    return rows
+
+
 def nso_ui_url(table_code: str, database: str) -> str:
     segment = NSO_DATABASE_SEGMENTS[database]
     return f"https://pxweb.nso.gov.vn/pxweb/en/{segment}/{segment}/{table_code}.px/"
