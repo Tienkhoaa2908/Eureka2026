@@ -106,7 +106,7 @@ def _write_csv(path: Path, records: list[dict[str, Any]]) -> None:
 
 def build_core_panel(raw_root: Path, output_root: Path) -> tuple[Path, dict[str, Any]]:
     nso_root = raw_root / "nso"
-    pci_path = raw_root / "pci" / "pci_components_2014_2024.csv"
+    pci_path = raw_root / "pci" / "pci_components_2013_2024.csv"
     series = {
         name: _read_series(nso_root / filename)
         for name, filename in SERIES_TO_FILE.items()
@@ -115,7 +115,7 @@ def build_core_panel(raw_root: Path, output_root: Path) -> tuple[Path, dict[str,
     pci = _read_pci(pci_path)
 
     zcache: dict[tuple[int, str], dict[str, float | None]] = {}
-    for exposure_year in range(2014, 2025):
+    for exposure_year in range(2013, 2025):
         for component in COMPONENTS:
             zcache[(exposure_year, component)] = _year_zscores(
                 pci, exposure_year, component
