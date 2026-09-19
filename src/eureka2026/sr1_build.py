@@ -230,6 +230,9 @@ def build_core_panel(raw_root: Path, output_root: Path) -> tuple[Path, dict[str,
                 raw = pci.get((province, exposure_year, component))
                 row[f"{component}_lag1_raw"] = raw
                 row[f"{component}_lag1_z"] = zcache[(exposure_year, component)][province]
+                lag2_year = year - 2
+                row[f"{component}_lag2_raw"] = pci.get((province, lag2_year, component))
+                row[f"{component}_lag2_z"] = zcache[(lag2_year, component)][province]
                 row[f"{component}_current_raw"] = pci.get((province, year, component))
                 row[f"{component}_current_z"] = zcache[(year, component)][province]
                 lead_year = year + 1
