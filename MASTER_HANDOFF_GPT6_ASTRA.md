@@ -141,6 +141,24 @@ Nếu có mâu thuẫn giữa CSV và tài liệu GitHub:
 
 ---
 
+
+## IV-B. CÁC CSV NGƯỜI DÙNG SẼ TẢI LÊN
+
+Cùng với GitHub, người dùng sẽ tải trực tiếp các CSV chuẩn hóa đã được chuẩn bị từ quá trình trước.
+
+Hãy coi chúng là đầu vào cần kiểm toán, không phải chân lý mặc định.
+
+Các file bàn giao dự kiến gồm:
+- `Eureka2026_panel_corrected_2010_2024.csv`: bảng cũ 63 tỉnh × 2010–2024 đã sửa các lỗi dữ liệu doanh thu được xác minh; chỉ dùng cho nguồn gốc dữ liệu, đối chiếu và kiểm tra lịch sử, **không dùng để khôi phục hướng cũ**;
+- `Eureka2026_panel_QA_DATA_INTEGRITY_01.csv`: bảng kiểm tra chất lượng của lần kiểm toán dữ liệu cũ;
+- `SR1_DATA_CATALOG.csv`: danh mục nguồn dữ liệu cần/có thể dùng cho hướng cơ chế;
+- `DATA_DICTIONARY_SR1.csv`: từ điển biến của thiết kế SR1;
+- `scientific_extension_sources.csv`: danh sách các nguồn mở rộng đã xác minh ở giai đoạn thiết kế.
+
+Nếu người dùng tải thêm CSV cơ chế mới, phải tự động đưa chúng vào danh mục dữ liệu và kiểm toán theo cùng tiêu chuẩn.
+
+Không được coi catalog/dictionary là dữ liệu quan sát. Chúng là metadata (siêu dữ liệu).
+
 ## V. KIẾN TRÚC DỮ LIỆU MỤC TIÊU
 
 Khối doanh nghiệp cấp tỉnh cần ưu tiên các bảng chính thức:
@@ -589,6 +607,55 @@ Khi sửa một kết quả khoa học:
 
 ---
 
+
+## XVIII-B. QUYỀN TRUY CẬP VÀ TRÁCH NHIỆM VỚI GITHUB
+
+Bạn được ủy quyền sử dụng quyền truy cập GitHub đã kết nối để **đọc và chỉnh sửa trực tiếp** kho mã `Tienkhoaa2908/Eureka2026`.
+
+Đừng chỉ trả lời “nên sửa file X”. Khi có đủ bằng chứng, hãy thực sự:
+- tạo nhánh;
+- sửa/tạo/xóa file;
+- viết mã;
+- thêm kiểm thử;
+- tạo issue;
+- tạo pull request;
+- kiểm tra CI;
+- hợp nhất khi điều kiện chất lượng đã đạt và quyền công cụ cho phép;
+- cập nhật trạng thái dự án.
+
+Mọi thay đổi khoa học quan trọng phải nằm trong GitHub, không chỉ nằm trong cuộc trò chuyện.
+
+### Sau khi chốt hướng cuối: viết lại repo thành một repo sạch của bài mới
+
+Khi đã hoàn thành nghiên cứu sâu, chọn thiết kế cuối và có đủ bằng chứng để khóa câu hỏi, bạn phải **tái cấu trúc toàn bộ working tree của repository hiện tại** như một repository mới dành riêng cho hướng cuối cùng.
+
+Mục tiêu cuối là người mới mở repository không thể nhầm hướng nghiên cứu.
+
+Bạn được phép:
+- thay README hoàn toàn;
+- viết lại PROJECT_STATE;
+- đổi cấu trúc thư mục;
+- thay pipeline;
+- thay tài liệu phương pháp;
+- xóa khỏi working tree các tài liệu cũ gây nhiễu;
+- chuyển tài liệu lịch sử cần giữ sang `archive/legacy/`;
+- loại mã nguồn cũ khỏi đường chạy mặc định;
+- tạo cấu trúc `data/`, `src/`, `tests/`, `docs/`, `paper/`, `artifacts/` hợp lý với paper cuối.
+
+Không xóa bằng chứng duy nhất về provenance (nguồn gốc), correction (chỉnh sửa) hoặc data integrity (toàn vẹn dữ liệu). Git history phải tiếp tục bảo toàn lịch sử.
+
+Repository sau cùng phải trông như được xây cho **paper cuối**, không phải một repo cũ được vá thêm một hướng mới.
+
+Tạo tài liệu:
+`docs/handover/FINAL_REPOSITORY_AUDIT.md`
+
+Nó phải xác nhận:
+- không còn tài liệu “current” mâu thuẫn;
+- không còn hướng cũ trong README hoặc NEXT_EXPERIMENT;
+- lệnh tái tạo chạy được;
+- mọi kết quả trong manuscript có artifact nguồn;
+- một nhà nghiên cứu hoặc LLM mới có thể tiếp quản chỉ từ repo.
+
 ## XIX. DỌN DẸP HƯỚNG CŨ
 
 Hướng cũ có thể còn tồn tại trong Git history (lịch sử Git) và một số file cũ.
@@ -637,6 +704,62 @@ Trước khi nộp:
 - kiểm tra không dùng causal language (ngôn ngữ nhân quả) vượt quá thiết kế.
 
 ---
+
+
+## XX-B. CHIẾN LƯỢC EURÉKA VÀ KỶ YẾU CÁC NĂM TRƯỚC
+
+Euréka không chỉ là một deadline. Đây là mục tiêu thi thật, có vòng sơ tuyển, bán kết và chung kết; ở chung kết tác giả phải trình bày và trả lời chất vấn trước hội đồng khoa học.
+
+Nguồn chính thức bắt buộc phải đọc lại trước khi nộp:
+- Trang chính: https://eureka.khoahoctre.com.vn/
+- Kế hoạch Euréka 2026: https://eureka.khoahoctre.com.vn/wp-content/uploads/sites/9/2026/07/Ke-hoach-Eureka-2026.pdf
+- Thể lệ Euréka 2026: https://eureka.khoahoctre.com.vn/wp-content/uploads/sites/9/2026/07/The-le-Eureka-2026.pdf
+
+Theo thể lệ 2026 hiện hành, cổng đăng ký trực tuyến mở từ 01/09/2026 đến hết 25/09/2026. Thang đánh giá 100 điểm cần được xác minh trực tiếp từ văn bản chính thức trước khi chốt hồ sơ, hiện gồm:
+- 15 điểm: mục đích và ý nghĩa;
+- 30 điểm: nội dung và phương pháp;
+- 30 điểm: tính mới và sáng tạo;
+- 15 điểm: khả năng ứng dụng, mở rộng và giá trị kiến nghị;
+- 10 điểm: trình bày và trích dẫn.
+
+Không hạ chuẩn khoa học để “hợp cuộc thi”. Hãy dùng tiêu chí Euréka để tối ưu cách trình bày, tính mới, khả năng ứng dụng và khả năng bảo vệ trước hội đồng.
+
+### Bắt buộc đọc kỷ yếu Euréka các năm trước
+
+Trang chính thức hiện có mục **Kỷ yếu Euréka** liệt kê các năm từ 2013 đến 2025.
+
+Trước khi chốt thiết kế và trước khi viết manuscript cuối:
+- đọc kỹ kỷ yếu 2025, 2024, 2023 và 2022;
+- quét thêm 2019–2021 để nhìn xu hướng dài hơn;
+- ưu tiên các đề tài thuộc kinh tế, quản trị, kinh doanh, chính sách công, khoa học dữ liệu ứng dụng và các bài định lượng gần chủ đề;
+- nếu xác định được đề tài đạt giải/chung kết thì ghi rõ cấp độ.
+
+Tạo:
+`docs/eureka/EUREKA_PROCEEDINGS_BENCHMARK.md`
+
+Tối thiểu phải thống kê:
+- năm;
+- lĩnh vực;
+- tên đề tài;
+- câu hỏi nghiên cứu;
+- loại dữ liệu;
+- phương pháp;
+- mức độ mới;
+- sản phẩm/ứng dụng;
+- cách trình bày;
+- điểm mạnh;
+- điểm yếu;
+- bài học cho dự án.
+
+Mục tiêu của việc đọc kỷ yếu:
+1. hiểu mặt bằng đề tài lọt chung kết;
+2. hiểu hội đồng Euréka coi trọng dạng đóng góp nào;
+3. hiểu cách chuyển một nghiên cứu tốt thành một sản phẩm thi rõ ràng;
+4. kiểm tra dự án hiện tại có đủ khác biệt và chiều sâu so với mặt bằng cuộc thi hay chưa.
+
+**Không dùng kỷ yếu để chứng minh novelty học thuật.** Novelty phải được kiểm chứng bằng literature khoa học quốc tế/Việt Nam. Kỷ yếu chỉ dùng cho competitive positioning (định vị cạnh tranh) và thiết kế sản phẩm dự thi.
+
+Ngoài kỷ yếu, nếu truy cập được “Thư viện đề tài” Euréka, hãy dùng nó để quét rộng chủ đề và phương pháp qua các năm.
 
 ## XXI. TIÊU CHUẨN NGUỒN VÀ TRÍCH DẪN
 
@@ -723,6 +846,54 @@ Trước khi chấp nhận bất kỳ kết luận chính nào, tự đóng vai 
 Nếu phản biện có thể phá claim, sửa thiết kế trước khi viết.
 
 ---
+
+
+## XXIV-B. TIÊU CHUẨN CHẮC CHẮN VÀ GIÁ TRỊ KHOA HỌC
+
+Bạn phải rất bảo thủ với những gì mình khẳng định.
+
+“Chắc chắn” không có nghĩa là viết với giọng tự tin. Nó có nghĩa là **mỗi tuyên bố quan trọng đã được kiểm chứng bằng một chuỗi bằng chứng có thể kiểm toán**.
+
+Trước khi chấp nhận bất kỳ claim khoa học nào:
+1. kiểm tra nguồn gốc dữ liệu;
+2. kiểm tra định nghĩa biến;
+3. kiểm tra mã xử lý;
+4. tái chạy kết quả;
+5. kiểm tra giả định mô hình;
+6. chạy robustness/falsification đã định trước;
+7. kiểm tra literature để tránh claim trùng;
+8. tự phản biện;
+9. phân biệt rõ evidence (bằng chứng), inference (suy luận) và speculation (suy đoán).
+
+Nếu chưa đủ, ghi `[CHƯA XÁC MINH]` hoặc hạ mức độ claim.
+
+Tạo và duy trì:
+`docs/research/CLAIM_EVIDENCE_LEDGER.md`
+
+Mỗi claim chính phải có:
+- nội dung claim;
+- mức claim: mô tả / liên hệ / dự báo / nhân quả;
+- dữ liệu hỗ trợ;
+- model/specification;
+- robustness;
+- nguồn literature;
+- artifact;
+- commit SHA;
+- trạng thái: VERIFIED / PARTIAL / REJECTED / NOT TESTED.
+
+### Mục tiêu không phải chỉ “chạy xong pipeline”
+
+Bạn phải tiếp tục nghiên cứu cho đến khi sản phẩm cuối có **giá trị khoa học thực sự**, hoặc có bằng chứng rõ ràng rằng dữ liệu hiện có không đủ và cần đổi dữ liệu/thiết kế/câu hỏi.
+
+Một sản phẩm đạt yêu cầu phải trả lời được:
+- tri thức mới nào được tạo ra;
+- tri thức đó khác gì literature trước;
+- bằng chứng nào khiến ta tin;
+- điều gì có thể làm kết luận sai;
+- ý nghĩa thực tiễn là gì;
+- vì sao hội đồng Euréka và một phản biện học thuật nên quan tâm.
+
+Nếu hướng hiện tại không đạt, bạn có trách nhiệm tìm dữ liệu, thiết kế hoặc câu hỏi tốt hơn. Không được hoàn tất dự án chỉ vì đã chạy đủ mô hình.
 
 ## XXV. ĐIỀU KIỆN HOÀN THÀNH
 
