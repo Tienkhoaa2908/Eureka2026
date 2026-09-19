@@ -176,7 +176,7 @@ def fetch_nso_table(
     expected_name: str,
     expected_unit: str,
 ) -> dict[str, Any]:
-    url = f"{NSO_API_BASE}/{table_code}.px"
+    url = f"{NSO_API_BASE}/{table_code}.px/"
     meta_response = request_with_retry(session, "GET", url)
     metadata = meta_response.json()
     province_var = _find_metadata_variable(metadata, "tinh")
