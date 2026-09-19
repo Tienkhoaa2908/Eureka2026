@@ -108,3 +108,18 @@ Evidence/checklists:
 - `docs/submission/SUBMISSION_PLAN.md`
 - `docs/submission/NUMBER_TO_ARTIFACT_MAP.md`
 - `docs/submission/ANONYMITY_CHECKLIST.md`
+
+
+## SR1 — Scientific redesign / mechanism validity
+Pass when:
+- external outcome families are acquired from official NSO sources with provenance;
+- matched definitions permit an auditable 2015–2023 mechanism panel;
+- PAPI triangulation data are acquired with time-comparability notes;
+- hypotheses are frozen before final coefficient interpretation;
+- aggregate revenue is decomposed into extensive/intensive margins;
+- within/between, distributed-lag, falsification and specification-curve evidence is produced;
+- the final contribution is stronger than a single PCI-component significance result.
+
+Current: **OPEN / current gate (2026-09-19).**
+
+G7 submission packaging remains paused until SR1 determines whether the manuscript needs a substantive scientific rewrite.

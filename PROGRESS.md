@@ -53,3 +53,19 @@ Blocked:
 
 Current next action:
 Execute `docs/research/NEXT_EXPERIMENT.md` (SUBMISSION-PACKAGE-01).
+
+## 2026-09-19 — publication-quality redesign
+
+Completed:
+- re-evaluated whether the existing G3–G6 story is strong enough for publication;
+- concluded that aggregate revenue obscures economically distinct enterprise-development margins;
+- verified additional official NSO PX-Web tables for enterprise entry, active firms, labor, capital, revenue, wages, profit, profitability and fixed assets per worker;
+- verified annual PAPI Excel availability for 2011–2024 and its independent citizen-facing governance role;
+- reviewed recent Vietnam literature on spatial institutional effects, market entry, TFP, PCI/PAPI alignment and provincial manufacturing outcomes;
+- ran exploratory current-panel diagnostics: within/between CSTP5, quadratic nonlinearity, pandemic interaction and component-control stability;
+- created docs/research/PUBLISHABLE_REDESIGN_2026-09-19.md;
+- created data/metadata/scientific_extension_sources.csv;
+- paused G7 packaging and activated SR1 SCIENCE-REDESIGN-01.
+
+Current action:
+Acquire and validate the official NSO/PAPI extension data, freeze mechanism hypotheses, then run the full mechanism/triangulation design in one research cycle.

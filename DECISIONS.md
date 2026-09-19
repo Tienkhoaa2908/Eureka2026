@@ -127,3 +127,33 @@ Date: 2026-09-18
 Status: ACTIVE
 Decision: Working title: “Chất lượng điều hành kinh tế cấp tỉnh và kết quả doanh nghiệp tại Việt Nam: Bằng chứng từ dữ liệu bảng và dự báo ngoài mẫu giai đoạn 2010–2024.” Avoid “tác động” in the title/abstract unless the identification design changes.
 Reason: current FE/prediction design does not identify causal effects.
+
+## D-021 — Pause submission packaging for a publication-quality scientific redesign
+Date: 2026-09-19
+Status: ACTIVE
+Decision: Pause G7 formatting and reopen the scientific design around enterprise-development mechanisms.
+Reason: aggregate provincial revenue conflates enterprise entry, firm scale, productivity, profitability, price and structural composition. The current CSTP5 result is too specification-bounded to serve as the sole scientific contribution.
+
+## D-022 — Mechanism decomposition becomes the primary scientific architecture
+Date: 2026-09-19
+Status: ACTIVE
+Decision: Decompose enterprise development into extensive margin (entry/density), scale, productivity, profitability and labor-value outcomes using matched official NSO province-year tables.
+Reason: policy meaning depends on where governance operates; a generic aggregate-revenue coefficient cannot distinguish those channels.
+
+## D-023 — Use theory-guided hypothesis families, not exhaustive PCI-outcome mining
+Date: 2026-09-19
+Status: ACTIVE
+Decision: Freeze entry, transaction-cost, capability and governance-triangulation families before final estimation; apply multiplicity control within families.
+Reason: expanding the outcome set creates severe researcher degrees of freedom unless hypotheses are prespecified.
+
+## D-024 — Add PAPI only as an independent governance triangulation layer
+Date: 2026-09-19
+Status: ACTIVE
+Decision: Use temporally comparable PAPI dimensions to test whether business-facing PCI relationships are corroborated by citizen-facing governance measures. Do not treat PAPI and PCI as interchangeable.
+Reason: the indices survey different respondent populations and recent evidence documents weak aggregate alignment.
+
+## D-025 — Do not build a threshold or COVID-resilience story from the current revenue-only panel
+Date: 2026-09-19
+Status: ACTIVE
+Decision: Current exploratory tests do not support a clear CSTP5 quadratic term or CSTP5×2020–2022 interaction, so those narratives are not promoted.
+Reason: scientific redesign should be driven by mechanism/data, not by searching for a dramatic interaction.
