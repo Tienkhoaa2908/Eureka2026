@@ -1,138 +1,95 @@
-# SR1 hypothesis freeze — enterprise-development mechanisms
+# GIẢ THUYẾT SR1 — CƠ CHẾ DOANH NGHIỆP VÀ TÍNH BỀN VỮNG THEO THỜI GIAN
 
-Frozen before the SR1 online workflow is run against final acquired outcome data.
+Ngày khóa khung: 2026-09-20
 
-Date: 2026-09-19  
-Status: **FROZEN FOR PRIMARY SR1 TESTS**
+Trạng thái: **KHÓA VỀ MẶT KHÁI NIỆM; chỉ được tinh chỉnh tên biến sau khi xác minh định nghĩa nguồn, không được chọn giả thuyết theo kết quả hệ số.**
 
-## Scientific target
+## H1 — Biên gia nhập
 
-Test where business-facing provincial governance is associated with enterprise development rather than asking which of ten PCI components is globally “best”.
+Cơ chế: chi phí hành chính thấp hơn, minh bạch cao hơn và thiết chế pháp lý đáng tin cậy hơn có thể giảm ma sát khi gia nhập thị trường.
 
-Primary exposure convention:
-- one-year-lagged PCI sub-index;
-- standardized within calendar year across provinces;
-- higher score is interpreted according to PCI’s favorable orientation for that sub-index.
+Biến giải thích chính:
+- CSTP1 — Chi phí gia nhập thị trường;
+- CSTP3 — Tính minh bạch;
+- CSTP10 — Thiết chế pháp lý và an ninh trật tự.
 
-Primary estimator:
-- province fixed effects;
-- year fixed effects;
-- province-clustered inference;
-- family-wise Benjamini–Hochberg FDR.
+Biến kết quả:
+- tỷ lệ doanh nghiệp đăng ký mới;
+- mật độ doanh nghiệp đang hoạt động.
 
-No causal claim is authorized by this design.
+Kỳ vọng: điểm quản trị tốt hơn liên hệ với gia nhập/mật độ cao hơn.
 
-## H1 — Market-entry / extensive-margin family
+## H2 — Chi phí giao dịch và biên thâm dụng
 
-Theory: lower administrative/information/legal frictions should first appear in the creation and density of enterprises.
+Cơ chế: chi phí thời gian và chi phí không chính thức làm giảm nguồn lực có thể dành cho sản xuất, mở rộng và lợi nhuận.
 
-Prespecified tests (6):
-- CSTP1 Entry Costs → entry rate;
-- CSTP3 Transparency → entry rate;
-- CSTP10 Legal Institutions & Security → entry rate;
-- CSTP1 Entry Costs → log active enterprises per 1,000 people;
-- CSTP3 Transparency → log active enterprises per 1,000 people;
-- CSTP10 Legal Institutions & Security → log active enterprises per 1,000 people.
+Biến giải thích chính:
+- CSTP4 — Chi phí thời gian;
+- CSTP5 — Chi phí không chính thức.
 
-Panel: entry extension, target years 2018–2024.
+Biến kết quả:
+- doanh thu trên lao động;
+- doanh thu trên doanh nghiệp;
+- biên lợi nhuận.
 
-## H2 — Transaction-cost / intensive-margin family
+Kỳ vọng: điểm quản trị tốt hơn liên hệ với kết quả vận hành tốt hơn.
 
-Theory: time burdens and informal charges should be more directly visible in the operating intensity and profitability of incumbent firms than in aggregate provincial scale.
+## H3 — Năng lực và tích lũy
 
-Prespecified tests (6):
-- CSTP4 Time Costs → log revenue per worker;
-- CSTP5 Informal Charges → log revenue per worker;
-- CSTP4 Time Costs → constructed profit margin;
-- CSTP5 Informal Charges → constructed profit margin;
-- CSTP4 Time Costs → log revenue per firm;
-- CSTP5 Informal Charges → log revenue per firm.
+Cơ chế: dịch vụ hỗ trợ doanh nghiệp và chính sách lao động có thể liên hệ với kỹ năng, giá trị lao động và mức độ trang bị vốn.
 
-Panel: matched enterprise-results panel, target years 2015–2023.
+Biến giải thích chính:
+- CSTP8 — Dịch vụ hỗ trợ doanh nghiệp;
+- CSTP9 — Đào tạo lao động.
 
-## H3 — Capability-building family
+Biến kết quả:
+- doanh thu trên lao động;
+- thu nhập bình quân lao động;
+- vốn trên lao động.
 
-Theory: business-support and labor-policy institutions should be reflected in productivity, labor value and capital intensity.
+## H4 — Tính bền vững theo thời gian
 
-Prespecified tests (6):
-- CSTP8 Business Support → log revenue per worker;
-- CSTP9 Labor Policy → log revenue per worker;
-- CSTP8 Business Support → log average monthly employee income;
-- CSTP9 Labor Policy → log average monthly employee income;
-- CSTP8 Business Support → log capital per worker;
-- CSTP9 Labor Policy → log capital per worker.
+Mục tiêu: đối chiếu hướng dấu và biên kết quả với các nghiên cứu Việt Nam trước đây, đặc biệt các nghiên cứu sử dụng giai đoạn trước năm 2015.
 
-Panel: matched enterprise-results panel, target years 2015–2023.
+Không yêu cầu hệ số phải bằng nhau. Một cơ chế được xem là có bằng chứng tái hiện khi hướng dấu, loại biên và độ bền đặc tả tương thích ở mức hợp lý. Sự không tái hiện cũng phải được báo cáo.
 
-## Exact accounting decomposition — prespecified mechanism anatomy
+## H5 — Đối chiếu bằng PAPI
 
-This analysis is not a search across outcomes; it exploits an exact accounting identity:
+PAPI là lớp xác nhận thứ cấp.
 
-[
-Deltalog Revenue =
-Deltalog Firms +
-Deltalog RevenuePerFirm
-]
+Chỉ khóa cặp PAPI–kết quả sau khi:
+- xác minh định nghĩa chỉ số;
+- xác minh tính so sánh theo thời gian;
+- lựa chọn cặp biến dựa trên lý thuyết, không dựa trên kết quả PCI.
 
-and
+PCI và PAPI không được xem là hai cách đo hoàn toàn tương đương.
+
+## Phân rã kế toán định trước
+
+Với CSTP4 và CSTP5, trên cùng mẫu cân bằng phải ước lượng các thành phần của:
 
 [
-Deltalog RevenuePerFirm =
-Deltalog WorkersPerFirm +
-Deltalog RevenuePerWorker.
+\Delta \log(R)=\Delta \log(F)+\Delta \log(R/F)
 ]
 
-For CSTP4 and CSTP5, estimate the same two-way-FE design on all five terms using the identical balanced sample. By OLS linearity, coefficient additivity is required up to numerical tolerance.
+và
 
-Purpose:
-- determine whether any transaction-cost association with aggregate revenue growth appears primarily through the extensive margin, firm scale, or revenue-per-worker margin;
-- avoid attributing an aggregate revenue coefficient to “productivity” without decomposition.
+[
+\Delta \log(R/F)=\Delta \log(L/F)+\Delta \log(R/L).
+]
 
-The decomposition is descriptive/mechanistic association, not mediation causality.
+Tính tuyến tính của hồi quy bình phương tối thiểu thông thường yêu cầu hệ số phân rã cộng lại trong sai số số học nếu cùng mẫu và cùng đặc tả.
 
-## Robustness frozen before primary results
+## Quy tắc bằng chứng
 
-For each H1–H3 pair:
-1. raw PCI score instead of within-year z-score;
-2. contemporaneous year-z exposure;
-3. exclude outcome years 2020–2022;
-4. distributed lag with t-1 and t-2 governance;
-5. future t+1 governance lead placebo;
-6. within-versus-between decomposition;
-7. leave-one-province and leave-one-year coefficient ranges;
-8. 199 province-trajectory permutations preserving the time structure;
-9. joint exposure specification within the same theory family/outcome.
+Không quảng bá một ô chỉ vì (p<0.05).
 
-## Evidence rule
+Một cơ chế chỉ được đưa vào kết luận chính khi:
+- qua hiệu chỉnh Benjamini–Hochberg trong họ giả thuyết;
+- có hướng dấu phù hợp với cơ chế;
+- không bị một tỉnh hoặc một năm chi phối;
+- kiểm định giả dược bằng giá trị quản trị tương lai không cho tín hiệu mâu thuẫn tương đương;
+- kết quả hoán vị không phủ nhận tín hiệu;
+- các đặc tả làm yếu hoặc đảo dấu được báo cáo rõ.
 
-A cell is **not** promoted to a scientific finding merely because p<0.05.
-
-A mechanism may enter the main paper only when:
-- family BH q<0.05 in the prespecified primary test;
-- direction is coherent with the stated mechanism;
-- the sign is not driven by one province or one year;
-- future-lead placebo does not show a comparably strong contradictory signal;
-- trajectory-permutation evidence is not inconsistent with the claimed signal;
-- important failures in raw/current/strict-period/distributed-lag specifications are explicitly reported.
-
-Multiple coherent outcomes in the same theory family strengthen the mechanism interpretation. Isolated significance weakens it.
-
-## H4 — PAPI triangulation
-
-PAPI remains a **secondary validation layer**, not part of the 18 PCI primary tests above.
-
-It will be frozen separately only after:
-- exact PAPI series/definitions are retrieved;
-- temporal comparability is established for the selected dimensions;
-- no SR1 outcome coefficients are used to choose which PAPI dimensions to test.
-
-Candidate constructs, subject to definition stability:
-- Control of Corruption in the Public Sector;
-- Transparency in Local Decision-making;
-- Public Administrative Procedures.
-
-This separation prevents the PAPI stage from becoming post-hoc confirmation mining.
-
-## Stop rule
-
-If H1–H3 do not yield coherent, robustness-supported mechanisms, the paper must not invent one. The scientific contribution will instead be reframed around the limits of aggregate institutional indicators and the failure of institutional scores to map robustly onto decomposed enterprise margins.
+Nếu không có cơ chế nào đáp ứng, kết luận chính phải là kết quả bằng không/không bền vững chứ không được mở rộng tìm kiếm sau thực nghiệm.
