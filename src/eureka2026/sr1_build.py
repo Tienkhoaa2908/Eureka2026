@@ -115,7 +115,7 @@ def build_core_panel(raw_root: Path, output_root: Path) -> tuple[Path, dict[str,
     pci = _read_pci(pci_path)
 
     zcache: dict[tuple[int, str], dict[str, float | None]] = {}
-    for exposure_year in range(2014, 2023):
+    for exposure_year in range(2014, 2025):
         for component in COMPONENTS:
             zcache[(exposure_year, component)] = _year_zscores(
                 pci, exposure_year, component
@@ -230,6 +230,15 @@ def build_core_panel(raw_root: Path, output_root: Path) -> tuple[Path, dict[str,
                 raw = pci.get((province, exposure_year, component))
                 row[f"{component}_lag1_raw"] = raw
                 row[f"{component}_lag1_z"] = zcache[(exposure_year, component)][province]
+                row[f"{component}_current_raw"] = pci.get((province, year, component))
+                row[f"{component}_current_z"] = zcache[(year, component)][province]
+                lead_year = year + 1
+                row[f"{component}_lead1_raw"] = (
+                    None if lead_year > 2024 else pci.get((province, lead_year, component))
+                )
+                row[f"{component}_lead1_z"] = (
+                    None if lead_year > 2024 else zcache[(lead_year, component)][province]
+                )
             records.append(row)
 
     expected = len(CANONICAL_PROVINCES) * len(CORE_YEARS)
@@ -260,7 +269,7 @@ def build_entry_panel(raw_root: Path, output_root: Path) -> tuple[Path, dict[str
     pci = _read_pci(raw_root / "pci" / "pci_components_2014_2024.csv")
 
     zcache: dict[tuple[int, str], dict[str, float | None]] = {}
-    for exposure_year in range(2017, 2024):
+    for exposure_year in range(2017, 2025):
         for component in COMPONENTS:
             zcache[(exposure_year, component)] = _year_zscores(
                 pci, exposure_year, component
@@ -297,6 +306,15 @@ def build_entry_panel(raw_root: Path, output_root: Path) -> tuple[Path, dict[str
                     (province, exposure_year, component)
                 )
                 row[f"{component}_lag1_z"] = zcache[(exposure_year, component)][province]
+                row[f"{component}_current_raw"] = pci.get((province, year, component))
+                row[f"{component}_current_z"] = zcache[(year, component)][province]
+                lead_year = year + 1
+                row[f"{component}_lead1_raw"] = (
+                    None if lead_year > 2024 else pci.get((province, lead_year, component))
+                )
+                row[f"{component}_lead1_z"] = (
+                    None if lead_year > 2024 else zcache[(lead_year, component)][province]
+                )
             records.append(row)
 
     expected = len(CANONICAL_PROVINCES) * len(ENTRY_TARGET_YEARS)
