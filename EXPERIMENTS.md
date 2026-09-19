@@ -155,3 +155,19 @@ Outputs:
 
 Result:
 The literature is mixed across outcomes/units/methods. The defensible contribution is the auditable separation of association, future-year prediction and falsification, including retention of negative predictive evidence.
+
+
+## E-008 — Đặt lại thiết kế khoa học sang cơ chế hậu 2015
+Date: 2026-09-20
+Status: **ĐANG HOẠT ĐỘNG — KHÔNG PHẢI KẾT QUẢ ĐỊNH LƯỢNG**
+
+Mục tiêu:
+- đóng hướng doanh thu tổng hợp + dự báo;
+- đặt tính bền vững theo thời gian và phân rã cơ chế làm câu hỏi trung tâm;
+- khóa các họ giả thuyết trước khi đọc hệ số cuối;
+- mở rộng dữ liệu NSO/PAPI theo các biên gia nhập, quy mô, hiệu quả, lợi nhuận, lao động và vốn.
+
+Lưu ý:
+- E-004 đến E-007 được giữ nguyên làm lịch sử kiểm toán;
+- kết quả cũ không được mang sang như bằng chứng xác nhận giả thuyết mới;
+- không có hệ số hoặc chỉ số mới nào được khai báo trong E-008.
