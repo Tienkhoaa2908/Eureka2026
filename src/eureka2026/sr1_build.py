@@ -244,12 +244,65 @@ def build_core_panel(raw_root: Path, output_root: Path) -> tuple[Path, dict[str,
                 )
             records.append(row)
 
+    # Exact year-on-year log decomposition:
+    # Δlog(revenue) = Δlog(firms) + Δlog(revenue/firm)
+    #                = Δlog(firms) + Δlog(workers/firm) + Δlog(revenue/worker).
+    by_key = {(str(r["province"]), int(r["year"])): r for r in records}
+    change_fields = {
+        "dlog_revenue": "log_revenue_billion",
+        "dlog_active_firms": "log_active_firms",
+        "dlog_revenue_per_firm": "log_revenue_per_firm",
+        "dlog_workers_per_firm": "log_workers_per_firm",
+        "dlog_revenue_per_worker": "log_revenue_per_worker",
+        "dlog_capital_per_worker": "log_capital_per_worker",
+        "dlog_monthly_income": "log_monthly_income",
+    }
+    change_identity_residuals: list[float] = []
+    for row in records:
+        province = str(row["province"])
+        year = int(row["year"])
+        prev = by_key.get((province, year - 1))
+        for out_name, level_name in change_fields.items():
+            current_value = row.get(level_name)
+            previous_value = None if prev is None else prev.get(level_name)
+            row[out_name] = (
+                None
+                if current_value is None or previous_value is None
+                else float(current_value) - float(previous_value)
+            )
+        if (
+            row["dlog_revenue"] is not None
+            and row["dlog_active_firms"] is not None
+            and row["dlog_revenue_per_firm"] is not None
+            and row["dlog_workers_per_firm"] is not None
+            and row["dlog_revenue_per_worker"] is not None
+        ):
+            change_identity_residuals.extend([
+                abs(
+                    float(row["dlog_revenue"])
+                    - float(row["dlog_active_firms"])
+                    - float(row["dlog_revenue_per_firm"])
+                ),
+                abs(
+                    float(row["dlog_revenue_per_firm"])
+                    - float(row["dlog_workers_per_firm"])
+                    - float(row["dlog_revenue_per_worker"])
+                ),
+            ])
+
     expected = len(CANONICAL_PROVINCES) * len(CORE_YEARS)
     if len(records) != expected:
         raise ValueError(f"core panel expected {expected}, got {len(records)}")
     max_identity = max(identity_residuals) if identity_residuals else math.inf
     if max_identity > 1e-10:
         raise ValueError(f"accounting log identity residual too large: {max_identity}")
+    max_change_identity = (
+        max(change_identity_residuals) if change_identity_residuals else math.inf
+    )
+    if max_change_identity > 1e-10:
+        raise ValueError(
+            f"change-decomposition identity residual too large: {max_change_identity}"
+        )
 
     output_path = output_root / "mechanism_panel_2015_2023.csv"
     _write_csv(output_path, records)
@@ -259,6 +312,8 @@ def build_core_panel(raw_root: Path, output_root: Path) -> tuple[Path, dict[str,
         "years": sorted({r["year"] for r in records}),
         "missing_by_source_series": missing_by_series,
         "max_accounting_log_identity_abs_residual": max_identity,
+        "max_change_decomposition_abs_residual": max_change_identity,
+        "complete_change_rows": sum(r["dlog_revenue"] is not None for r in records),
         "sha256": sha256_file(output_path),
     }
     return output_path, qa
@@ -269,7 +324,7 @@ def build_entry_panel(raw_root: Path, output_root: Path) -> tuple[Path, dict[str
     new_regs = _read_series(nso_root / SERIES_TO_FILE["new_registrations"])
     active_all = _read_series(nso_root / SERIES_TO_FILE["active_all"])
     density = _read_series(nso_root / SERIES_TO_FILE["active_per_1000"])
-    pci = _read_pci(raw_root / "pci" / "pci_components_2014_2024.csv")
+    pci = _read_pci(raw_root / "pci" / "pci_components_2013_2024.csv")
 
     zcache: dict[tuple[int, str], dict[str, float | None]] = {}
     for exposure_year in range(2016, 2025):
@@ -313,6 +368,9 @@ def build_entry_panel(raw_root: Path, output_root: Path) -> tuple[Path, dict[str
                     (province, exposure_year, component)
                 )
                 row[f"{component}_lag1_z"] = zcache[(exposure_year, component)][province]
+                lag2_year = year - 2
+                row[f"{component}_lag2_raw"] = pci.get((province, lag2_year, component))
+                row[f"{component}_lag2_z"] = zcache[(lag2_year, component)][province]
                 row[f"{component}_current_raw"] = pci.get((province, year, component))
                 row[f"{component}_current_z"] = zcache[(year, component)][province]
                 lead_year = year + 1
