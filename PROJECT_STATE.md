@@ -1,7 +1,7 @@
 # PROJECT STATE — Eureka 2026
 
-Last updated: 2026-09-18 (UTC+7)
-Status: **G1–G6 PASS; G7 Euréka submission package is current gate**
+Last updated: 2026-09-19 (UTC+7)
+Status: **G1–G6 remain valid; G7 packaging PAUSED; SCIENCE-REDESIGN-01 is current gate**
 
 ## 1. Research objective
 
@@ -113,7 +113,21 @@ G6 passed with:
 
 The literature is mixed across outcomes/methods, so the project must not claim novelty from merely using ML or from studying PCI-performance generally.
 
-## 9. Remaining risks
+## 9. Scientific redesign finding
+
+The current revenue-only evidence should not be treated as the final scientific contribution.
+
+Exploratory re-analysis of the current panel finds:
+- lagged CSTP5 has a within-province single-component association with log-revenue change (beta≈0.0151, p≈0.035);
+- the between-province CSTP5 component is null (beta≈-0.0021, p≈0.755);
+- roughly 73% of lagged CSTP5 variance in the current sample is within-province;
+- no clear quadratic CSTP5 pattern (p≈0.216);
+- no clear CSTP5 × 2020–2022 interaction (p≈0.890);
+- the larger joint-model CSTP5 coefficient is not caused by one single control component.
+
+These diagnostics argue against inventing a threshold/COVID story and support a mechanism-decomposition redesign.
+
+## 9B. Remaining risks
 
 1. Aggregate nominal revenue embeds province scale, firm count and sector composition.
 2. Two-way FE does not remove time-varying confounding/reverse causality.
@@ -124,13 +138,20 @@ The literature is mixed across outcomes/methods, so the project must not claim n
 
 ## 10. Current gate
 
-**G7 — SUBMISSION-PACKAGE-01**
+**SCIENCE-REDESIGN-01 — publication-quality mechanism redesign**
 
-Research content is drafted in `docs/submission/MANUSCRIPT_DRAFT.md`.
+G7 packaging is intentionally paused. The current G3–G5 result is scientifically honest but too narrow for the publication objective because aggregate revenue mixes firm entry, firm scale, productivity, profitability and nominal/structural effects.
 
-Next work is to generate final figures/tables from committed artifacts, perform reference/number/anonymity audits, and create the anonymous formatted manuscript/poster package consistent with official 2026 rules.
+Canonical redesign:
+- `docs/research/PUBLISHABLE_REDESIGN_2026-09-19.md`
+- `data/metadata/scientific_extension_sources.csv`
 
-Registration deadline: **2026-09-25**.
+Primary new question:
+**Where do local institutions matter in enterprise development — entry, scale, productivity, profitability or labor-value margins?**
+
+The redesign adds matched NSO enterprise outcomes and an independent PAPI governance triangulation layer. Final hypotheses must be frozen before final mechanism coefficients are interpreted.
+
+Registration deadline remains **2026-09-25**, but scientific validity takes precedence over prematurely formatting the current draft.
 
 ## 11. Recovery order
 
