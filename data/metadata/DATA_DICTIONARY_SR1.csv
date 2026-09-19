@@ -1,0 +1,35 @@
+variable,role,source,definition,unit,primary_or_secondary,transformation,expected_years,notes
+province,key,canonical contract,Tỉnh/thành theo hệ 63 đơn vị trước 2025,text,key,none,all,Không tự động đổi sang 34 tỉnh sau 2025
+year,key,source tables,Năm dương lịch,year,key,integer,all,
+new_registrations,outcome,NSO E05.02,Số doanh nghiệp đăng ký thành lập mới,enterprise,primary,none,2016-2024,Dùng để dựng tỷ lệ gia nhập
+active_firms_all,outcome,NSO E05.04,Số doanh nghiệp đang hoạt động cuối năm,enterprise,primary,log,2017-2024,Mẫu số trễ của tỷ lệ gia nhập
+active_firms_per_1000_people,outcome,NSO E05.05,Số doanh nghiệp đang hoạt động trên 1000 dân,enterprise/1000 persons,primary,log,2017-2024,Đối chiếu với mật độ tự dựng
+active_firms,outcome/denominator,NSO E05.08,Doanh nghiệp đang hoạt động có kết quả SXKD,enterprise,primary,log,2015-2023,Mẫu số phải dùng đồng nhất cho các tỷ lệ kết quả doanh nghiệp
+workers,outcome/denominator,NSO E05.11,Tổng lao động của doanh nghiệp có kết quả SXKD,person,primary,log,2015-2023,
+capital_billion_vnd,outcome,NSO E05.17,Vốn SXKD bình quân năm,billion VND,primary,log,2015-2023,
+revenue_billion_vnd,outcome,NSO E05.23,Doanh thu thuần,billion VND,primary,log,2015-2023,
+monthly_income_thousand_vnd,outcome,NSO E05.35,Thu nhập bình quân tháng của lao động,thousand VND,primary,log,2015-2023,
+profit_billion_vnd,outcome,NSO E05.38,Lợi nhuận trước thuế,billion VND,primary,asinh when normalized,2015-2023,Có thể âm
+profitability_ratio_pct_nso,crosscheck,NSO E05.41,Tỷ suất lợi nhuận theo định nghĩa NSO,percent,secondary,none,2015-2023,Không giả định trùng với profit/revenue trước khi xác minh định nghĩa
+fixed_assets_per_worker_million_vnd_nso,outcome,NSO E05.44,Tài sản cố định trên lao động,million VND/worker,secondary,log,2015-2023,Cường độ vốn vật chất
+average_population_thousand,denominator/context,NSO E02.03-07,Dân số trung bình,thousand persons,primary,none,2015-2023,Dùng dựng mật độ doanh nghiệp
+trained_labor_share_pct,context/heterogeneity,NSO E02.55,Tỷ lệ lực lượng lao động từ 15 tuổi trở lên đã qua đào tạo,percent,secondary,none,2015-2023,Không tự động làm biến kiểm soát
+spatial_cost_index_hanoi_100,price robustness,NSO E11.23,Chỉ số giá sinh hoạt theo không gian Hà Nội=100,index,primary robustness,divide monetary outcomes by index/100,2015-2023,Không phải chỉ số lạm phát theo thời gian
+entry_rate,outcome,constructed,new_registrations / lag(active_firms_all),ratio,primary,level,2018-2024,Chỉ tính khi mẫu số dương
+revenue_per_firm_million_vnd,outcome,constructed,revenue / active_firms,million VND/firm,primary,log,2015-2023,
+workers_per_firm,outcome,constructed,workers / active_firms,workers/firm,primary,log,2015-2023,
+revenue_per_worker_million_vnd,outcome,constructed,revenue / workers,million VND/worker,primary,log,2015-2023,Chỉ báo hiệu quả doanh thu trên lao động; không gọi là TFP
+profit_per_firm_million_vnd,outcome,constructed,profit / active_firms,million VND/firm,secondary,asinh,2015-2023,
+profit_margin_pct_constructed,outcome,constructed,profit / revenue * 100,percent,primary,level,2015-2023,Đối chiếu định nghĩa với E05.41
+capital_per_firm_million_vnd,outcome,constructed,capital / active_firms,million VND/firm,secondary,log,2015-2023,
+capital_per_worker_million_vnd,outcome,constructed,capital / workers,million VND/worker,primary,log,2015-2023,
+cstp1_lag1_z,exposure,PCI,Chi phí gia nhập thị trường trễ 1 năm chuẩn hóa trong năm,z-score,primary,year z-score,2014-2024,H1
+cstp3_lag1_z,exposure,PCI,Tính minh bạch trễ 1 năm chuẩn hóa trong năm,z-score,primary,year z-score,2014-2024,H1
+cstp4_lag1_z,exposure,PCI,Chi phí thời gian trễ 1 năm chuẩn hóa trong năm,z-score,primary,year z-score,2014-2024,H2
+cstp5_lag1_z,exposure,PCI,Chi phí không chính thức trễ 1 năm chuẩn hóa trong năm,z-score,primary,year z-score,2014-2024,H2
+cstp8_lag1_z,exposure,PCI,Hỗ trợ doanh nghiệp trễ 1 năm chuẩn hóa trong năm,z-score,primary,year z-score,2014-2024,H3
+cstp9_lag1_z,exposure,PCI,Đào tạo lao động trễ 1 năm chuẩn hóa trong năm,z-score,primary,year z-score,2014-2024,H3
+cstp10_lag1_z,exposure,PCI,Thiết chế pháp lý và an ninh trật tự trễ 1 năm chuẩn hóa trong năm,z-score,primary,year z-score,2014-2024,H1
+papi_transparency,triangulation,PAPI Core,Minh bạch trong ra quyết định ở địa phương,score,secondary,definition-stable series only,2015-2023,Khóa sau kiểm tra so sánh
+papi_corruption_control,triangulation,PAPI Core,Kiểm soát tham nhũng trong khu vực công,score,secondary,definition-stable series only,2015-2023,Khóa sau kiểm tra so sánh
+papi_admin_procedures,triangulation,PAPI Core,Thủ tục hành chính công,score,secondary,definition-stable series only,2015-2023,Khóa sau kiểm tra so sánh
