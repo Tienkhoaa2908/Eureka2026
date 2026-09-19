@@ -1,0 +1,13 @@
+source_id,provider,table_code,concept,unit,years_observed_from_ui,role,url,status
+NSO_ENTRY,NSO PX-Web,V05.02,newly registered enterprises,enterprises,2016-2024,extensive margin,https://pxweb.nso.gov.vn/pxweb/vi/Doanh%20nghi%E1%BB%87p/Doanh%20nghi%E1%BB%87p/V05.02.px/,verified metadata
+NSO_ACTIVE_ALL,NSO PX-Web,V05.04,active enterprises at 31/12,enterprises,2017-2024,firm density denominator/stock,https://pxweb.nso.gov.vn/pxweb/vi/Doanh%20nghi%E1%BB%87p/Doanh%20nghi%E1%BB%87p/V05.04.px/,verified metadata
+NSO_ACTIVE_RESULTS,NSO PX-Web,V05.08,active enterprises with business results,enterprises,"2010;2015-2023",matched denominator for enterprise outcomes,https://pxweb.nso.gov.vn/pxweb/vi/Doanh%20nghi%E1%BB%87p/Doanh%20nghi%E1%BB%87p/V05.08.px/,verified metadata
+NSO_EMPLOYMENT,NSO PX-Web,V05.11,total workers in active enterprises with business results,persons,"2010;2015-2023",scale/productivity,https://pxweb.nso.gov.vn/pxweb/vi/Doanh%20nghi%E1%BB%87p/Doanh%20nghi%E1%BB%87p/V05.11.px/,verified metadata
+NSO_CAPITAL,NSO PX-Web,V05.17,average annual business capital,billion VND,"2010;2015-2023",capital intensity,https://pxweb.nso.gov.vn/pxweb/vi/Doanh%20nghi%E1%BB%87p/Doanh%20nghi%E1%BB%87p/V05.17.px/,verified metadata
+NSO_REVENUE,NSO PX-Web,V05.23,net business revenue,billion VND,metadata shows 10 annual values,matched enterprise performance,https://pxweb.nso.gov.vn/pxweb/vi/Doanh%20nghi%E1%BB%87p/Doanh%20nghi%E1%BB%87p/V05.23.px/,verified table
+NSO_WAGE,NSO PX-Web,V05.35,average monthly employee income,thousand VND,metadata shows 10 annual values,labor-value channel,https://pxweb.nso.gov.vn/pxweb/vi/Doanh%20nghi%E1%BB%87p/Doanh%20nghi%E1%BB%87p/V05.35.px/,verified table
+NSO_PROFIT,NSO PX-Web,V05.38,pre-tax enterprise profit,billion VND,metadata shows 10 annual values,profitability channel,https://pxweb.nso.gov.vn/pxweb/vi/Doanh%20nghi%E1%BB%87p/Doanh%20nghi%E1%BB%87p/V05.38.px/,verified table
+NSO_PROFIT_RATE,NSO PX-Web,V05.41,enterprise profitability ratio,percent,"2010;2015-2023",profitability robustness,https://pxweb.nso.gov.vn/pxweb/vi/Doanh%20nghi%E1%BB%87p/Doanh%20nghi%E1%BB%87p/V05.41.px/,verified metadata
+NSO_FIXED_ASSET_WORKER,NSO PX-Web,V05.44,fixed assets per worker,million VND,metadata shows 10 annual values,capital intensity,https://pxweb.nso.gov.vn/pxweb/vi/Doanh%20nghi%E1%BB%87p/Doanh%20nghi%E1%BB%87p/V05.44.px/,verified table
+PCI,VCCI,annual PCI data,10 business-facing governance subindices,index points,2010-2024,primary governance exposure,https://pcivietnam.vn/en/pci-data,available
+PAPI,CECODES-UNDP,annual PAPI Excel data,citizen-facing governance dimensions,index points,2011-2024,independent governance triangulation,https://papi.org.vn/eng/papi-data/,available
