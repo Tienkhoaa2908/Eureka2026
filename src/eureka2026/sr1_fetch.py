@@ -17,10 +17,7 @@ from bs4 import BeautifulSoup
 
 from .province_names import CANONICAL_PROVINCES
 
-NSO_API_BASE = (
-    "https://pxweb.nso.gov.vn/api/v1/vi/"
-    "Doanh%20nghi%E1%BB%87p"
-)
+NSO_API_BASE = "https://pxweb.nso.gov.vn/api/v1/en/Enterprise"
 PCI_PROVINCES_URL = "https://pcivietnam.vn/en/provinces"
 USER_AGENT = "Eureka2026Research/1.0 (+https://github.com/Tienkhoaa2908/Eureka2026)"
 
@@ -28,17 +25,17 @@ CORE_YEARS = tuple(range(2015, 2024))
 ENTRY_YEARS = tuple(range(2016, 2025))
 
 NSO_TABLES: dict[str, dict[str, Any]] = {
-    "V05.08": {"name": "active_results", "years": CORE_YEARS, "unit": "enterprises"},
-    "V05.11": {"name": "workers", "years": CORE_YEARS, "unit": "persons"},
-    "V05.17": {"name": "capital", "years": CORE_YEARS, "unit": "billion_vnd"},
-    "V05.23": {"name": "revenue", "years": CORE_YEARS, "unit": "billion_vnd"},
-    "V05.35": {"name": "monthly_income", "years": CORE_YEARS, "unit": "thousand_vnd"},
-    "V05.38": {"name": "profit", "years": CORE_YEARS, "unit": "billion_vnd"},
-    "V05.41": {"name": "profitability_ratio", "years": CORE_YEARS, "unit": "percent"},
-    "V05.44": {"name": "fixed_assets_per_worker", "years": CORE_YEARS, "unit": "million_vnd"},
-    "V05.02": {"name": "new_registrations", "years": ENTRY_YEARS, "unit": "enterprises"},
-    "V05.04": {"name": "active_all", "years": tuple(range(2017, 2025)), "unit": "enterprises"},
-    "V05.05": {"name": "active_per_1000", "years": tuple(range(2017, 2025)), "unit": "enterprises_per_1000_people"},
+    "E05.08": {"name": "active_results", "years": CORE_YEARS, "unit": "enterprises"},
+    "E05.11": {"name": "workers", "years": CORE_YEARS, "unit": "persons"},
+    "E05.17": {"name": "capital", "years": CORE_YEARS, "unit": "billion_vnd"},
+    "E05.23": {"name": "revenue", "years": CORE_YEARS, "unit": "billion_vnd"},
+    "E05.35": {"name": "monthly_income", "years": CORE_YEARS, "unit": "thousand_vnd"},
+    "E05.38": {"name": "profit", "years": CORE_YEARS, "unit": "billion_vnd"},
+    "E05.41": {"name": "profitability_ratio", "years": CORE_YEARS, "unit": "percent"},
+    "E05.44": {"name": "fixed_assets_per_worker", "years": CORE_YEARS, "unit": "million_vnd"},
+    "E05.02": {"name": "new_registrations", "years": ENTRY_YEARS, "unit": "enterprises"},
+    "E05.04": {"name": "active_all", "years": tuple(range(2017, 2025)), "unit": "enterprises"},
+    "E05.05": {"name": "active_per_1000", "years": tuple(range(2017, 2025)), "unit": "enterprises_per_1000_people"},
 }
 
 PCI_ROW_TO_COMPONENT = {
@@ -159,13 +156,20 @@ def decode_jsonstat2(dataset: dict[str, Any]) -> list[dict[str, Any]]:
     return rows
 
 
-def _find_metadata_variable(metadata: dict[str, Any], needle: str) -> dict[str, Any]:
-    needle_key = _ascii_key(needle)
+def _find_metadata_variable_any(
+    metadata: dict[str, Any], needles: tuple[str, ...]
+) -> dict[str, Any]:
+    needle_keys = [_ascii_key(x) for x in needles]
     for variable in metadata.get("variables", []):
-        hay = _ascii_key(str(variable.get("text", "")) + " " + str(variable.get("code", "")))
-        if needle_key in hay:
+        hay = _ascii_key(
+            str(variable.get("text", "")) + " " + str(variable.get("code", ""))
+        )
+        if any(needle in hay for needle in needle_keys):
             return variable
-    raise ValueError(f"metadata variable containing {needle!r} not found")
+    raise ValueError(
+        f"metadata variable containing one of {needles!r} not found; "
+        f"available={[v.get('text') for v in metadata.get('variables', [])]}"
+    )
 
 
 def fetch_nso_table(
@@ -179,8 +183,10 @@ def fetch_nso_table(
     url = f"{NSO_API_BASE}/{table_code}.px/"
     meta_response = request_with_retry(session, "GET", url)
     metadata = meta_response.json()
-    province_var = _find_metadata_variable(metadata, "tinh")
-    year_var = _find_metadata_variable(metadata, "nam")
+    province_var = _find_metadata_variable_any(
+        metadata, ("cities", "province", "tinh")
+    )
+    year_var = _find_metadata_variable_any(metadata, ("year", "nam"))
 
     province_values = list(province_var["values"])
     province_texts = list(province_var.get("valueTexts", province_values))
