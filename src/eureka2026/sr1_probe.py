@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import re
 import requests
 from bs4 import BeautifulSoup
 
@@ -13,36 +14,60 @@ def main() -> int:
     r = s.get(URL, timeout=45)
     r.raise_for_status()
     soup = BeautifulSoup(r.text, "html.parser")
+
+    controls = []
+    for tag in soup.find_all(["input", "select", "button", "textarea"]):
+        typ = tag.get("type")
+        name = tag.get("name")
+        ident = tag.get("id")
+        value = tag.get("value")
+        if typ == "hidden":
+            value = f"<hidden len={len(value or '')}>"
+        item = {
+            "tag": tag.name, "type": typ, "name": name, "id": ident,
+            "value": value,
+        }
+        if tag.name == "select":
+            opts = tag.find_all("option")
+            item["option_count"] = len(opts)
+            item["options_head"] = [
+                {"value": o.get("value"), "text": o.get_text(" ", strip=True)}
+                for o in opts[:8]
+            ]
+        controls.append(item)
+
+    text = soup.get_text(" ", strip=True)
+    fragments = {}
+    for needle in [
+        "Select all available values", "Continue", "Show table",
+        "Number of acting enterprises", "Year", "province"
+    ]:
+        idx = text.lower().find(needle.lower())
+        fragments[needle] = None if idx < 0 else text[max(0, idx-300):idx+800]
+
+    html_fragments = {}
+    raw = r.text
+    for needle in [
+        "Select all available values", "Continue", "VariableSelector1",
+        "FileTypeCsvWithHeadingAndComma"
+    ]:
+        idx = raw.find(needle)
+        html_fragments[needle] = None if idx < 0 else raw[max(0, idx-1200):idx+2400]
+
     info = {
         "status": r.status_code,
         "final_url": r.url,
-        "forms": [],
-        "scripts": [x.get("src") for x in soup.find_all("script") if x.get("src")],
+        "form": {
+            "action": soup.find("form").get("action") if soup.find("form") else None,
+            "method": soup.find("form").get("method") if soup.find("form") else None,
+            "id": soup.find("form").get("id") if soup.find("form") else None,
+        },
+        "control_count": len(controls),
+        "controls": controls,
+        "text_fragments": fragments,
+        "html_fragments": html_fragments,
     }
-    for form in soup.find_all("form"):
-        f = {
-            "action": form.get("action"),
-            "method": form.get("method"),
-            "id": form.get("id"),
-            "inputs": [],
-            "selects": [],
-        }
-        for x in form.find_all("input"):
-            f["inputs"].append({
-                "name": x.get("name"), "type": x.get("type"),
-                "value": x.get("value"), "id": x.get("id"),
-            })
-        for sel in form.find_all("select"):
-            f["selects"].append({
-                "name": sel.get("name"), "id": sel.get("id"),
-                "options": [
-                    {"value": o.get("value"), "text": o.get_text(" ", strip=True)}
-                    for o in sel.find_all("option")[:5]
-                ],
-                "option_count": len(sel.find_all("option")),
-            })
-        info["forms"].append(f)
-    print(json.dumps(info, ensure_ascii=False, indent=2)[:30000])
+    print(json.dumps(info, ensure_ascii=False, indent=2))
     return 0
 
 
