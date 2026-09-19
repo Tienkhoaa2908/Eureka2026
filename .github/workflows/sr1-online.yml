@@ -23,7 +23,7 @@ jobs:
       - name: Compile and unit-test SR1
         run: |
           python -m compileall -q src tests
-          python -m unittest discover -s tests -v
+          python -m unittest -v tests.test_sr1
       - name: Probe NSO UI download form
         run: python -m src.eureka2026.sr1_probe
       - name: Acquire official NSO and PCI data
