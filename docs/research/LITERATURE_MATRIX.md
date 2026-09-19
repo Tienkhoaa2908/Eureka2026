@@ -6,7 +6,7 @@ This matrix is used to position the Euréka contribution. It is deliberately out
 
 | Study | Data / unit | Method | Outcome / focus | Result relevant to this project |
 |---|---|---|---|---|
-| Nguyen, Le & Bryant (2013), Journal of World Business, DOI 10.1016/j.jwb.2012.06.008 | private manufacturing firms in Vietnam; multilevel firm/subnational setting | multilevel analysis | export strategy and firm performance | subnational institutional conditions moderate firm-strategy/performance relationships; supports separating province context from firm outcomes |
+| Bach Ngoc Thang (2017), Journal of Economics and Development, DOI 10.33301/2017.19.01.01 | Vietnamese private manufacturing enterprises, 2006–2014 | province/business-environment analysis | firm entry, firm size, labor-productivity growth | already studies extensive/intensive enterprise margins; reports contract enforcement associated with entry/size, lower unofficial costs with size/productivity, and transparency with medium-run productivity. Therefore entry/size/productivity decomposition alone is not a novel claim for this project. |\n| Nguyen, Le & Bryant (2013), Journal of World Business, DOI 10.1016/j.jwb.2012.06.008 | private manufacturing firms in Vietnam; multilevel firm/subnational setting | multilevel analysis | export strategy and firm performance | subnational institutional conditions moderate firm-strategy/performance relationships; supports separating province context from firm outcomes |
 | Huynh (2022), Asian-Pacific Economic Literature, DOI 10.1111/apel.12362 | enterprise survey data, provinces, 2011–2018 | Spatial Durbin Model | firm performance, profit, TFP | reports direct/spatial institutional effects; control of corruption is positively related to profits and informal charges negatively to TFP; motivates spatial-dependence caution |
 | “Total factor productivity and institutional quality in Vietnam: which institutions matter most?” (2024), Asia-Pacific Journal of Regional Science, DOI 10.1007/s41685-024-00343-9 | Vietnamese firms | panel/GMM design | TFP | component patterns differ; time costs and labor policy are prominent in reported specifications; supports outcome-specific rather than universal ranking |
 | Kokko, Nguyen & Nilsson Hakkala (ADB, 2026), DOI 10.22617/WPS260325-2 | 63 provinces | difference-GMM / provincial manufacturing analysis | complexity, revenue, employment, productivity | reports limited effects of PCI changes on several provincial manufacturing outcomes in many specifications; directly supports testing weak/null institutional signals rather than assuming positive effects |
@@ -24,7 +24,7 @@ This matrix is used to position the Euréka contribution. It is deliberately out
 
 - PCI methodology: https://pcivietnam.vn/en/about/pci-methodology.html
 - PCI FAQ / interpretation: https://pcivietnam.vn/en/faqs.html
-- Nguyen et al. 2013: https://doi.org/10.1016/j.jwb.2012.06.008
+- Bach Ngoc Thang 2017: https://doi.org/10.33301/2017.19.01.01\n- Nguyen et al. 2013: https://doi.org/10.1016/j.jwb.2012.06.008
 - Huynh 2022: https://doi.org/10.1111/apel.12362
 - TFP/institutions 2024: https://doi.org/10.1007/s41685-024-00343-9
 - ADB 2026: https://www.adb.org/publications/business-climate-economic-complexity-performance-provincial-viet-nam
@@ -34,6 +34,16 @@ This matrix is used to position the Euréka contribution. It is deliberately out
 
 The defensible gap is **not** “PCI and firm performance have never been studied.” Prior evidence is substantial and mixed.
 
-The project’s contribution is narrower: on a long province panel, use the same audited institutional data to separate (1) within-province association, (2) future-year generalization, and (3) robustness/falsification. The resulting evidence can show that a statistically detectable institutional relationship need not deliver incremental forecasting value.
+The project’s contribution must now be narrower than generic “entry vs productivity” mechanisms because Bach (2017) already examines entry, size and labor-productivity channels over 2006–2014.
+
+The publication-oriented gap is therefore **temporal transportability plus accounting/measuring architecture**:
+1. test whether previously reported institutional mechanisms persist in a distinct post-2015 provincial period;
+2. exactly decompose aggregate revenue-growth associations into firm-stock growth versus revenue-per-firm growth, and then workers-per-firm versus revenue-per-worker growth;
+3. extend the outcome set to profitability, labor value and capital intensity using matched NSO denominators;
+4. distinguish within-province institutional change from between-province institutional differences;
+5. triangulate business-facing PCI constructs against independently sampled citizen-facing PAPI constructs where temporal comparability permits;
+6. retain falsification, family-level multiplicity control and negative/null evidence.
+
+H1 market entry should be described as **replication/external-validity evidence**, not as the paper’s principal novelty.
 
 This distinction is both methodologically useful and directly relevant to avoiding causal overinterpretation of machine-learning feature importance.
