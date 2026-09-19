@@ -298,6 +298,10 @@ def build_entry_panel(raw_root: Path, output_root: Path) -> tuple[Path, dict[str
                 "lag_active_firms_all": lag_stock,
                 "entry_rate": entry_rate,
                 "active_firms_per_1000_people": firm_density,
+                "log_active_firms_per_1000_people": (
+                    None if firm_density is None or firm_density <= 0
+                    else math.log(firm_density)
+                ),
                 "log_active_firms_all": (
                     None if current_stock is None or current_stock <= 0
                     else math.log(current_stock)
