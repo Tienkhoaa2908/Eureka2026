@@ -21,7 +21,7 @@ Therefore the publishable question should no longer be “which PCI component pr
 
 Vietnamese working title:
 
-**Thể chế địa phương tác động ở đâu trong quá trình phát triển doanh nghiệp? Phân rã các biên gia nhập, quy mô, năng suất và lợi nhuận tại các tỉnh Việt Nam**
+**Cơ chế thể chế địa phương có bền vững theo thời gian? Phân rã tăng trưởng doanh nghiệp và kiểm chứng chéo quản trị cấp tỉnh tại Việt Nam giai đoạn 2015–2023**
 
 Use “association / relationship / institutional channel” until a causal design is validated.
 
@@ -158,7 +158,24 @@ Exploratory tests find no clear quadratic CSTP5 term (p≈0.216) and no clear CS
 ### Component-ranking instability
 CSTP5 has a single-component FE coefficient ≈0.0151 and a joint 10-component FE coefficient ≈0.0363. The joint coefficient remains ≈0.0319–0.0363 when other PCI components are removed one at a time. This reinforces moving from post-hoc component ranking to theory-guided mechanisms.
 
-## 9. What would make this publishable
+## 9. Novelty boundary after deeper literature review
+
+Bach Ngoc Thang (2017) already studies how subnational governance relates to private-manufacturing **entry, firm size and labor-productivity growth** in Vietnam over 2006–2014. Thoa & Hung (2026) also study provincial market entry over 2017–2024.
+
+Therefore this project must **not** claim that decomposing governance into entry/size/productivity channels is new by itself.
+
+H1 entry becomes a replication/temporal-external-validity benchmark. The genuinely differentiated contribution, if supported by data, is:
+- post-2015 temporal transportability of earlier institutional mechanisms;
+- exact accounting decomposition of aggregate revenue growth into extensive and intensive margins using one matched province-year system;
+- further decomposition of the intensive margin into workers-per-firm and revenue-per-worker;
+- profitability, wage and capital-intensity extensions;
+- within-versus-between institutional change;
+- independent citizen-facing PAPI triangulation;
+- prespecified falsification and multiplicity-aware evidence.
+
+A stronger paper question is therefore: **which previously proposed institutional mechanisms persist in a later institutional/economic regime, and on which exact accounting margin do they appear?**
+
+## 9B. What would make this publishable
 
 A publishable result should be able to state something like:
 
