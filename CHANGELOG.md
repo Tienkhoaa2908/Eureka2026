@@ -61,3 +61,20 @@
 - no PCI-added model passes the feature-importance gate;
 - CSTP5 primary FE signal survives some robustness checks but weakens or disappears in strict-period/alternative-period specifications;
 - final interpretation is bounded association + negative predictive increment, not causal ranking.
+
+## 2026-09-19 — scientific redesign
+
+### Changed
+- G7 final packaging paused.
+- Added SR1 Scientific redesign / mechanism validity gate.
+- Reframed the target paper from PCI-component vs aggregate revenue to a decomposition of entry, scale, productivity, profitability and labor-value margins.
+
+### Added
+- docs/research/PUBLISHABLE_REDESIGN_2026-09-19.md.
+- data/metadata/scientific_extension_sources.csv.
+- new SR1 experiment protocol in docs/research/NEXT_EXPERIMENT.md.
+
+### Evidence added
+- verified NSO PX-Web source tables for enterprise-stock, entry, labor, capital, revenue, wages, profit and profitability outcomes;
+- verified PAPI annual Excel data availability;
+- exploratory current-panel diagnostics arguing against a threshold/COVID-resilience narrative and for a within-province mechanism redesign.
