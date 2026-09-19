@@ -27,6 +27,9 @@ SERIES_TO_FILE = {
     "new_registrations": "E05.02_new_registrations.csv",
     "active_all": "E05.04_active_all.csv",
     "active_per_1000": "E05.05_active_per_1000.csv",
+    "average_population": "E02.03-07_average_population.csv",
+    "trained_labor_share": "E02.55_trained_labor_share.csv",
+    "spatial_cost_index": "E11.23_spatial_cost_index.csv",
 }
 
 
@@ -105,7 +108,7 @@ def _write_csv(path: Path, records: list[dict[str, Any]]) -> None:
 
 
 def build_core_panel(raw_root: Path, output_root: Path) -> tuple[Path, dict[str, Any]]:
-    nso_root = raw_root / "nso"
+    nso_root = raw_root / "nso" / "normalized"
     pci_path = raw_root / "pci" / "pci_components_2013_2024.csv"
     series = {
         name: _read_series(nso_root / filename)
@@ -140,6 +143,9 @@ def build_core_panel(raw_root: Path, output_root: Path) -> tuple[Path, dict[str,
             wage = vals["monthly_income"]
             profitability = vals["profitability_ratio"]
             fixed_worker = vals["fixed_assets_per_worker"]
+            population_thousand = vals["average_population"]
+            trained_labor_share = vals["trained_labor_share"]
+            spatial_cost_index = vals["spatial_cost_index"]
 
             row: dict[str, Any] = {
                 "province": province,
@@ -152,6 +158,14 @@ def build_core_panel(raw_root: Path, output_root: Path) -> tuple[Path, dict[str,
                 "monthly_income_thousand_vnd": wage,
                 "profitability_ratio_pct_nso": profitability,
                 "fixed_assets_per_worker_million_vnd_nso": fixed_worker,
+                "average_population_thousand": population_thousand,
+                "trained_labor_share_pct": trained_labor_share,
+                "spatial_cost_index_hanoi_100": spatial_cost_index,
+                "active_results_per_1000_people_constructed": (
+                    None
+                    if firms is None or population_thousand is None or population_thousand <= 0
+                    else firms / population_thousand
+                ),
             }
 
             if firms is not None and workers is not None and revenue is not None and capital is not None:
@@ -176,6 +190,16 @@ def build_core_panel(raw_root: Path, output_root: Path) -> tuple[Path, dict[str,
                     "capital_per_worker_million_vnd": capital_per_worker_million,
                     "log_capital_per_worker": math.log(capital_per_worker_million),
                     "log_revenue_billion": math.log(revenue),
+                    "revenue_per_worker_cost_adjusted_scoli": (
+                        None
+                        if spatial_cost_index is None or spatial_cost_index <= 0
+                        else revenue_per_worker_million / (spatial_cost_index / 100.0)
+                    ),
+                    "revenue_per_firm_cost_adjusted_scoli": (
+                        None
+                        if spatial_cost_index is None or spatial_cost_index <= 0
+                        else revenue_per_firm_million / (spatial_cost_index / 100.0)
+                    ),
                 })
                 residual1 = (
                     row["log_revenue_billion"]
@@ -203,6 +227,8 @@ def build_core_panel(raw_root: Path, output_root: Path) -> tuple[Path, dict[str,
                     "capital_per_worker_million_vnd": None,
                     "log_capital_per_worker": None,
                     "log_revenue_billion": None,
+                    "revenue_per_worker_cost_adjusted_scoli": None,
+                    "revenue_per_firm_cost_adjusted_scoli": None,
                 })
 
             if profit is not None and firms is not None and firms > 0:
@@ -220,6 +246,16 @@ def build_core_panel(raw_root: Path, output_root: Path) -> tuple[Path, dict[str,
 
             row["log_monthly_income"] = _safe_log(
                 wage, "monthly_income", key
+            )
+            row["monthly_income_cost_adjusted_scoli"] = (
+                None
+                if wage is None or spatial_cost_index is None or spatial_cost_index <= 0
+                else wage / (spatial_cost_index / 100.0)
+            )
+            row["log_monthly_income_cost_adjusted_scoli"] = _safe_log(
+                row["monthly_income_cost_adjusted_scoli"],
+                "monthly_income_cost_adjusted_scoli",
+                key,
             )
             row["log_fixed_assets_per_worker"] = _safe_log(
                 fixed_worker, "fixed_assets_per_worker", key
@@ -324,6 +360,7 @@ def build_entry_panel(raw_root: Path, output_root: Path) -> tuple[Path, dict[str
     new_regs = _read_series(nso_root / SERIES_TO_FILE["new_registrations"])
     active_all = _read_series(nso_root / SERIES_TO_FILE["active_all"])
     density = _read_series(nso_root / SERIES_TO_FILE["active_per_1000"])
+    population = _read_series(nso_root / SERIES_TO_FILE["average_population"])
     pci = _read_pci(raw_root / "pci" / "pci_components_2013_2024.csv")
 
     zcache: dict[tuple[int, str], dict[str, float | None]] = {}
@@ -340,6 +377,12 @@ def build_entry_panel(raw_root: Path, output_root: Path) -> tuple[Path, dict[str
             lag_stock = active_all.get((province, year - 1))
             current_stock = active_all.get((province, year))
             firm_density = density.get((province, year))
+            population_thousand = population.get((province, year))
+            constructed_density = (
+                None
+                if current_stock is None or population_thousand is None or population_thousand <= 0
+                else current_stock / population_thousand
+            )
             entry_rate = (
                 None
                 if regs is None or lag_stock is None or lag_stock <= 0
@@ -353,6 +396,13 @@ def build_entry_panel(raw_root: Path, output_root: Path) -> tuple[Path, dict[str
                 "lag_active_firms_all": lag_stock,
                 "entry_rate": entry_rate,
                 "active_firms_per_1000_people": firm_density,
+                "average_population_thousand": population_thousand,
+                "active_firms_per_1000_people_constructed": constructed_density,
+                "firm_density_official_minus_constructed": (
+                    None
+                    if firm_density is None or constructed_density is None
+                    else firm_density - constructed_density
+                ),
                 "log_active_firms_per_1000_people": (
                     None if firm_density is None or firm_density <= 0
                     else math.log(firm_density)
@@ -394,6 +444,17 @@ def build_entry_panel(raw_root: Path, output_root: Path) -> tuple[Path, dict[str
         "missing_entry_rate": sum(r["entry_rate"] is None for r in records),
         "missing_density": sum(
             r["active_firms_per_1000_people"] is None for r in records
+        ),
+        "missing_population": sum(
+            r["average_population_thousand"] is None for r in records
+        ),
+        "density_crosscheck_max_abs_difference": max(
+            (
+                abs(float(r["firm_density_official_minus_constructed"]))
+                for r in records
+                if r["firm_density_official_minus_constructed"] is not None
+            ),
+            default=None,
         ),
         "sha256": sha256_file(output_path),
     }
