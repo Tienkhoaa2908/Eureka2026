@@ -4,7 +4,7 @@ Decision log. New decisions append below; superseded decisions remain with statu
 
 ## D-001 — Separate inference from prediction
 Date: 2026-09-18
-Status: ACTIVE
+Status: SUPERSEDED
 Decision: Maintain two linked tracks: (A) interpretable panel-econometric inference and (B) out-of-sample ML prediction.
 Reason: feature importance from Random Forest/XGBoost is not a causal-effect estimator; combining the tracks prevents predictive performance from being misreported as institutional impact.
 
@@ -22,13 +22,13 @@ Reason: the variable was not available in the earlier period; this is structural
 
 ## D-004 — Two-way fixed effects are the minimum inferential baseline
 Date: 2026-09-18
-Status: ACTIVE
+Status: SUPERSEDED
 Decision: Province FE + year FE, with province-clustered standard errors, must be reported before advanced ML results.
 Reason: pooled correlations mix stable province differences with within-province change and common national shocks.
 
 ## D-005 — No random row train/test split
 Date: 2026-09-18
-Status: ACTIVE
+Status: SUPERSEDED
 Decision: Prediction evaluation must respect time ordering using expanding or rolling splits.
 Reason: random splitting leaks future regime information and repeated province characteristics into training.
 
@@ -40,7 +40,7 @@ Reason: correlated predictors make impurity-based importance unstable and causal
 
 ## D-007 — Revenue outcome needs scale/price robustness
 Date: 2026-09-18
-Status: ACTIVE
+Status: SUPERSEDED
 Decision: Main outcome candidates are log nominal revenue and log growth; add real/deflated revenue and scale-normalized outcomes if source data can support them.
 Reason: raw provincial revenue is dominated by province size and price-level trends.
 
@@ -75,38 +75,38 @@ Reason: silent fuzzy matching can merge the wrong province and administrative re
 
 ## D-012 — Primary G3 change outcome is log revenue change
 Date: 2026-09-18
-Status: ACTIVE
+Status: SUPERSEDED
 Decision: G3 uses log revenue as the level outcome and `log(revenue_t)-log(revenue_t-1)` as the change outcome.
 Reason: log changes are scale-consistent with the log-level outcome.
 
 ## D-013 — G3 inference uses cluster-t uncertainty plus BH multiplicity adjustment
 Date: 2026-09-18
-Status: ACTIVE
+Status: SUPERSEDED
 Decision: Standard errors are clustered by province with small-sample correction; hypothesis inference uses cluster degrees of freedom (62) and Benjamini–Hochberg FDR across the 10 PCI-component tests within each specification/outcome.
 Reason: 63 province clusters are the inferential sampling units, and ten correlated component tests create a material multiple-testing risk.
 
 ## D-014 — Treat CSTP5 growth result as a robustness target, not a causal winner
 Date: 2026-09-18
-Status: ACTIVE
+Status: SUPERSEDED
 Decision: The G3 CSTP5 result may be described as the only multiplicity-adjusted association in the prespecified log-revenue-change specification that survives the recorded COVID and leave-one-province-out checks. It must not be described as the “most impactful” PCI component or as causal.
 Reason: no BH-adjusted signal appears in the log-level outcome; fixed effects do not remove time-varying confounding or reverse causality; G4/G5 can still weaken the apparent signal.
 
 
 ## D-015 — G4 uses fixed future-year evaluation and strong non-PCI baselines
 Date: 2026-09-18
-Status: ACTIVE
+Status: SUPERSEDED
 Decision: Evaluate prediction on six fixed expanding test years (2019–2024) with training-only preprocessing/tuning. Every ML family is compared both with and without lagged PCI where feasible, and all PCI-added models are compared against non-PCI Elastic Net.
 Reason: same-family improvement alone does not establish useful incremental information if a simpler baseline still predicts better.
 
 ## D-016 — Do not generate PCI feature importance after the negative G4 gate
 Date: 2026-09-18
-Status: ACTIVE
+Status: SUPERSEDED
 Decision: No SHAP/permutation/impurity ranking is generated because no PCI-added model beats non-PCI Elastic Net on mean MAE and at least 4/6 outer folds.
 Reason: ranking features from a model that fails the generalization gate would invite unsupported interpretation.
 
 ## D-017 — Bound the CSTP5 claim using G5 failures as well as successes
 Date: 2026-09-18
-Status: ACTIVE
+Status: SUPERSEDED
 Decision: Describe CSTP5 as a lagged, specification-bounded association in the primary 2014–2024 growth model. Explicitly report that it weakens under strict COVID exclusion and is null in contemporaneous and longer-period variants.
 Reason: robustness means identifying where a result fails, not counting only supportive specifications.
 
@@ -118,19 +118,19 @@ Reason: meaningful scale robustness requires verified province-specific prices o
 
 ## D-019 — Final novelty is the separation of inference, prediction and falsification
 Date: 2026-09-18
-Status: ACTIVE
+Status: SUPERSEDED
 Decision: The Euréka contribution is an auditable long province panel plus three evidence layers—multiplicity-aware FE inference, strict future-year prediction, and robustness/falsification—not the use of Random Forest/XGBoost itself.
 Reason: prior Vietnam and Euréka research already contains advanced quantitative/ML methods; method branding alone is not novelty.
 
 ## D-020 — Submission title and narrative remain non-causal
 Date: 2026-09-18
-Status: ACTIVE
+Status: SUPERSEDED
 Decision: Working title: “Chất lượng điều hành kinh tế cấp tỉnh và kết quả doanh nghiệp tại Việt Nam: Bằng chứng từ dữ liệu bảng và dự báo ngoài mẫu giai đoạn 2010–2024.” Avoid “tác động” in the title/abstract unless the identification design changes.
 Reason: current FE/prediction design does not identify causal effects.
 
 ## D-021 — Pause submission packaging for a publication-quality scientific redesign
 Date: 2026-09-19
-Status: ACTIVE
+Status: SUPERSEDED
 Decision: Pause G7 formatting and reopen the scientific design around enterprise-development mechanisms.
 Reason: aggregate provincial revenue conflates enterprise entry, firm scale, productivity, profitability, price and structural composition. The current CSTP5 result is too specification-bounded to serve as the sole scientific contribution.
 
@@ -157,3 +157,34 @@ Date: 2026-09-19
 Status: ACTIVE
 Decision: Current exploratory tests do not support a clear CSTP5 quadratic term or CSTP5×2020–2022 interaction, so those narratives are not promoted.
 Reason: scientific redesign should be driven by mechanism/data, not by searching for a dramatic interaction.
+
+
+## D-026 — Đóng hoàn toàn hướng doanh thu tổng hợp + dự báo
+Date: 2026-09-20
+Status: ACTIVE
+Decision: Hướng nghiên cứu cũ lấy doanh thu cấp tỉnh làm kết quả trung tâm, xếp hạng thành phần PCI và dùng học máy (machine learning — học máy) để kiểm tra giá trị dự báo được đóng vĩnh viễn như một hướng nghiên cứu.
+Reason: doanh thu tổng hợp trộn số doanh nghiệp, quy mô doanh nghiệp, lao động, năng suất, giá cả và cơ cấu ngành; kết quả cũ không đủ để trả lời cơ chế thể chế.
+
+## D-027 — Câu hỏi chính là tính bền vững theo thời gian của cơ chế
+Date: 2026-09-20
+Status: ACTIVE
+Decision: Câu hỏi chính là liệu các cơ chế thể chế cấp tỉnh đã được ghi nhận trước đây còn tái hiện sau năm 2015 hay không, và chúng xuất hiện trên biên gia nhập, quy mô, doanh thu trên lao động, lợi nhuận, giá trị lao động và cường độ vốn nào.
+Reason: câu hỏi này có nền tảng lý thuyết, cho phép đối chiếu trực tiếp với nghiên cứu trước và có giá trị chính sách rõ hơn việc xếp hạng hệ số.
+
+## D-028 — Kinh tế lượng bảng là trụ cột; học máy không còn là đóng góp chính
+Date: 2026-09-20
+Status: ACTIVE
+Decision: Phương pháp chính là hiệu ứng cố định tỉnh/năm, sai số chuẩn gom cụm, hiệu chỉnh đa kiểm định, phân rã trong/giữa tỉnh, độ trễ phân phối và kiểm định phản chứng. Học máy chỉ còn là tài sản lưu trữ của hướng cũ.
+Reason: mục tiêu mới là nhận diện vị trí và tính bền vững của cơ chế, không phải tối ưu dự báo.
+
+## D-029 — Phân rã kế toán là xương sống của phần cơ chế
+Date: 2026-09-20
+Status: ACTIVE
+Decision: Bắt buộc kiểm tra phân rã Δlog(doanh thu) = Δlog(số doanh nghiệp) + Δlog(doanh thu/doanh nghiệp), và Δlog(doanh thu/doanh nghiệp) = Δlog(lao động/doanh nghiệp) + Δlog(doanh thu/lao động) trên cùng mẫu và cùng đặc tả.
+Reason: chỉ có phân rã này mới cho phép nói doanh thu tổng hợp thay đổi qua biên mở rộng, quy mô lao động hay hiệu quả trên lao động.
+
+## D-030 — Phương pháp phức tạp chỉ mở khi chẩn đoán yêu cầu
+Date: 2026-09-20
+Status: ACTIVE
+Decision: Mô hình không gian, bảng động, trung gian nhân quả, học máy nhân quả hoặc phương pháp phi tuyến không được dùng chỉ để tăng độ phức tạp. Chỉ mở khi có vấn đề nhận dạng/chẩn đoán cụ thể và giả định có thể bảo vệ.
+Reason: mẫu khoảng 63 tỉnh với chuỗi thời gian ngắn đến vừa khiến việc thêm mô hình phức tạp dễ tạo ảo giác chính xác hơn là thêm giá trị khoa học.
