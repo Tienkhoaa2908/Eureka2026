@@ -366,21 +366,21 @@ def fetch_pci(session: requests.Session, output_dir: Path) -> dict[str, Any]:
         response = request_with_retry(session, "GET", profiles[province])
         profile_hashes[province] = sha256_bytes(response.content)
         parsed = _parse_pci_table(response.text, province)
-        records.extend(r for r in parsed if 2014 <= int(r["year"]) <= 2024)
+        records.extend(r for r in parsed if 2013 <= int(r["year"]) <= 2024)
         if idx and idx % 15 == 0:
             time.sleep(0.5)
 
     key_count = len({(r["province"], r["year"], r["component"]) for r in records})
     if key_count != len(records):
         raise ValueError("duplicate PCI province-year-component keys")
-    expected_2014_2024 = len(CANONICAL_PROVINCES) * 11 * 10
-    if len(records) != expected_2014_2024:
+    expected_2013_2024 = len(CANONICAL_PROVINCES) * 12 * 10
+    if len(records) != expected_2013_2024:
         raise ValueError(
-            f"PCI expected {expected_2014_2024} records for 2014-2024, got {len(records)}"
+            f"PCI expected {expected_2013_2024} records for 2013-2024, got {len(records)}"
         )
 
     output_dir.mkdir(parents=True, exist_ok=True)
-    path = output_dir / "pci_components_2014_2024.csv"
+    path = output_dir / "pci_components_2013_2024.csv"
     with path.open("w", encoding="utf-8", newline="") as f:
         writer = csv.DictWriter(
             f, fieldnames=["province", "year", "component", "value"], lineterminator="\n"
