@@ -19,7 +19,7 @@ from .province_names import CANONICAL_PROVINCES
 
 NSO_API_BASE = (
     "https://pxweb.nso.gov.vn/api/v1/vi/"
-    "Doanh%20nghi%E1%BB%87p/Doanh%20nghi%E1%BB%87p"
+    "Doanh%20nghi%E1%BB%87p"
 )
 PCI_PROVINCES_URL = "https://pcivietnam.vn/en/provinces"
 USER_AGENT = "Eureka2026Research/1.0 (+https://github.com/Tienkhoaa2908/Eureka2026)"
