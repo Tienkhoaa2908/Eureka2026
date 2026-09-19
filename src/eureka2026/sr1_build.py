@@ -272,7 +272,7 @@ def build_entry_panel(raw_root: Path, output_root: Path) -> tuple[Path, dict[str
     pci = _read_pci(raw_root / "pci" / "pci_components_2014_2024.csv")
 
     zcache: dict[tuple[int, str], dict[str, float | None]] = {}
-    for exposure_year in range(2017, 2025):
+    for exposure_year in range(2016, 2025):
         for component in COMPONENTS:
             zcache[(exposure_year, component)] = _year_zscores(
                 pci, exposure_year, component
