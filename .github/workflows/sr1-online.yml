@@ -18,8 +18,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Install dependencies
-        run: python -m pip install -r requirements.txt
+      - name: Install SR1 dependencies
+        run: python -m pip install "numpy>=2,<3" "statsmodels>=0.14,<0.15" "scipy>=1.14,<2" "requests>=2.32,<3" "beautifulsoup4>=4.12,<5"
       - name: Compile and unit-test SR1
         run: |
           python -m compileall -q src tests
