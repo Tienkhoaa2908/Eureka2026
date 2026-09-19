@@ -38,6 +38,7 @@ NSO_TABLES: dict[str, dict[str, Any]] = {
     "V05.44": {"name": "fixed_assets_per_worker", "years": CORE_YEARS, "unit": "million_vnd"},
     "V05.02": {"name": "new_registrations", "years": ENTRY_YEARS, "unit": "enterprises"},
     "V05.04": {"name": "active_all", "years": tuple(range(2017, 2025)), "unit": "enterprises"},
+    "V05.05": {"name": "active_per_1000", "years": tuple(range(2017, 2025)), "unit": "enterprises_per_1000_people"},
 }
 
 PCI_ROW_TO_COMPONENT = {
