@@ -304,6 +304,78 @@ def influence_summary(
     }
 
 
+def mechanism_decomposition(
+    rows: Sequence[dict[str, Any]],
+) -> tuple[list[dict[str, Any]], dict[str, Any]]:
+    """Decompose governance association with revenue growth into exact margins.
+
+    Because the outcomes obey accounting identities and every regression uses the
+    same sample/design matrix, OLS linearity implies the corresponding
+    coefficients must add exactly (up to floating-point tolerance).
+    """
+    outcomes = [
+        ("aggregate_revenue", "dlog_revenue"),
+        ("extensive_firm_stock", "dlog_active_firms"),
+        ("intensive_revenue_per_firm", "dlog_revenue_per_firm"),
+        ("firm_scale_workers_per_firm", "dlog_workers_per_firm"),
+        ("labor_productivity_revenue_per_worker", "dlog_revenue_per_worker"),
+    ]
+    records: list[dict[str, Any]] = []
+    qa: dict[str, Any] = {}
+    for component in ("cstp4", "cstp5"):
+        exposure = f"{component}_lag1_z"
+        component_rows: list[dict[str, Any]] = []
+        beta_by_outcome: dict[str, float] = {}
+        for margin, outcome in outcomes:
+            fitted = fit_fe(rows, outcome, [exposure])
+            rec = coefficient_record(
+                "DECOMP_transaction_cost",
+                component,
+                outcome,
+                f"exact_growth_decomposition:{margin}",
+                *fitted[:3],
+                exposure,
+            )
+            rec["margin"] = margin
+            component_rows.append(rec)
+            beta_by_outcome[outcome] = float(rec["beta"])
+
+        qvals = bh_adjust([float(r["p_value"]) for r in component_rows])
+        for row, q in zip(component_rows, qvals):
+            row["q_bh_decomposition"] = q
+
+        total = beta_by_outcome["dlog_revenue"]
+        extensive = beta_by_outcome["dlog_active_firms"]
+        intensive = beta_by_outcome["dlog_revenue_per_firm"]
+        scale = beta_by_outcome["dlog_workers_per_firm"]
+        productivity = beta_by_outcome["dlog_revenue_per_worker"]
+        residual_top = total - extensive - intensive
+        residual_bottom = intensive - scale - productivity
+        if max(abs(residual_top), abs(residual_bottom)) > 1e-9:
+            raise ValueError(
+                f"{component}: regression decomposition identity failed "
+                f"top={residual_top} bottom={residual_bottom}"
+            )
+        for row in component_rows:
+            row["aggregate_beta"] = total
+            row["share_of_aggregate_beta"] = (
+                None if abs(total) < 1e-12 else float(row["beta"]) / total
+            )
+            row["top_identity_residual"] = residual_top
+            row["intensive_identity_residual"] = residual_bottom
+        qa[component] = {
+            "aggregate_beta": total,
+            "extensive_beta": extensive,
+            "intensive_beta": intensive,
+            "scale_beta": scale,
+            "productivity_beta": productivity,
+            "top_identity_residual": residual_top,
+            "intensive_identity_residual": residual_bottom,
+        }
+        records.extend(component_rows)
+    return records, qa
+
+
 def _write_csv(path: Path, records: list[dict[str, Any]]) -> None:
     if not records:
         raise ValueError(f"no records for {path}")
@@ -332,6 +404,7 @@ def run(core_csv: str | Path, entry_csv: str | Path, output_dir: str | Path) -> 
     robustness_rows: list[dict[str, Any]] = []
     influence_rows: list[dict[str, Any]] = []
     permutation_rows: list[dict[str, Any]] = []
+    decomposition_rows, decomposition_qa = mechanism_decomposition(panels["core"])
 
     for family, config in PRIMARY_HYPOTHESES.items():
         panel = panels[str(config["panel"])]
@@ -425,11 +498,13 @@ def run(core_csv: str | Path, entry_csv: str | Path, output_dir: str | Path) -> 
     robust_path = output_dir / "SR1_robustness.csv"
     influence_path = output_dir / "SR1_influence.csv"
     perm_path = output_dir / "SR1_permutation.csv"
+    decomp_path = output_dir / "SR1_exact_growth_decomposition.csv"
     _write_csv(primary_path, primary_rows)
     _write_csv(wb_path, within_between_rows)
     _write_csv(robust_path, robustness_rows)
     _write_csv(influence_path, influence_rows)
     _write_csv(perm_path, permutation_rows)
+    _write_csv(decomp_path, decomposition_rows)
 
     significant = [
         r for r in primary_rows if float(r["q_bh_family"]) < 0.05
@@ -444,6 +519,7 @@ def run(core_csv: str | Path, entry_csv: str | Path, output_dir: str | Path) -> 
             for family, config in PRIMARY_HYPOTHESES.items()
         },
         "primary_q_lt_0_05_count": len(significant),
+        "exact_growth_decomposition": decomposition_qa,
         "primary_q_lt_0_05": [
             {
                 "family": r["family"],
