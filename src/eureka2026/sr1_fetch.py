@@ -92,7 +92,12 @@ _CANONICAL_BY_KEY.update(
 
 def normalize_province_loose(value: object) -> str | None:
     raw = re.sub(r"\*+$", "", str(value or "").strip()).strip()
-    return _CANONICAL_BY_KEY.get(_ascii_key(raw))
+    key = _ascii_key(raw)
+    # PX-Web English labels are not fully consistent with Vietnamese Unicode
+    # names. Keep explicit reviewed exceptions rather than fuzzy matching.
+    if key in {"thua thien hue", "thua thien hue province"}:
+        return "Thừa Thiên Huế"
+    return _CANONICAL_BY_KEY.get(key)
 
 
 def request_with_retry(
