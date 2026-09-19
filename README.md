@@ -1,77 +1,81 @@
-# Eureka 2026 — PCI, thể chế địa phương và kết quả doanh nghiệp Việt Nam
+# Euréka 2026 — Thể chế địa phương và các cơ chế phát triển doanh nghiệp tại Việt Nam
 
-Research repository for a 2010–2024 province-panel study prepared for **Giải thưởng Sinh viên Nghiên cứu khoa học Euréka 2026**.
+Kho mã này phục vụ nghiên cứu dự thi **Giải thưởng Sinh viên Nghiên cứu khoa học Euréka 2026**.
 
-## Research question
+## Câu hỏi nghiên cứu đang hoạt động
 
-> Những chiều cạnh nào của chất lượng điều hành kinh tế cấp tỉnh có liên hệ ổn định với kết quả doanh nghiệp sau khi kiểm soát dị biệt tỉnh/năm; và các chiều PCI đó có tạo thêm giá trị dự báo cho những năm tương lai ngoài các baseline không dùng PCI hay không?
+> **Những cơ chế thể chế cấp tỉnh đã được ghi nhận trong các nghiên cứu trước có còn tái hiện trong giai đoạn sau năm 2015 tại Việt Nam hay không; và nếu có, chúng biểu hiện qua biên gia nhập doanh nghiệp, quy mô doanh nghiệp, năng suất lao động, khả năng sinh lời, giá trị lao động và cường độ vốn nào?**
 
-The project separates **inference, prediction and robustness**. Feature importance is never treated as causal impact.
+Đây là hướng nghiên cứu duy nhất đang hoạt động.
 
-## Canonical data
+Hướng cũ — xếp hạng các thành phần PCI theo doanh thu tổng hợp và kiểm tra giá trị dự báo bằng học máy (machine learning — học máy) — **đã đóng**. Mã nguồn, kết quả và hiện vật cũ chỉ được giữ lại làm dấu vết kiểm toán và không còn được dùng làm câu hỏi nghiên cứu, đóng góp chính hay cơ sở để xây dựng kết luận.
 
-- 63 provinces/cities × 15 years = 945 rows.
-- Full contemporaneous 10-CSTP N=756.
-- Full lagged 10-CSTP N=693.
-- Canonical SHA-256: `a5b76b667ed0e00a8422eeb4da48f78491824f6529feaf2e6ee9031c365211dd`.
+## Kiến trúc khoa học mới
 
-Build:
-```bash
-python -m src.eureka2026.pipeline
-```
+Nghiên cứu tập trung vào ba nhóm cơ chế:
 
-## Current evidence
+- **Biên mở rộng**: gia nhập doanh nghiệp và mật độ doanh nghiệp.
+- **Biên thâm dụng**: quy mô doanh nghiệp, doanh thu trên lao động và khả năng sinh lời.
+- **Năng lực sản xuất**: thu nhập lao động và cường độ vốn.
 
-**G1–G6 have passed. G7 submission package is current.**
+Phân rã kế toán trung tâm:
 
-### G3 — inference
-- log revenue level: no lagged PCI component has BH q<0.05;
-- log revenue change: CSTP5 has beta=0.03628, p=0.000129, q=0.001289 in the primary FE model;
-- this is association, not causality.
+[
+\Delta \log(R) = \Delta \log(F) + \Delta \log(R/F)
+]
 
-### G4 — future-year prediction
-- six fixed expanding outer folds, test 2019–2024;
-- non-PCI Elastic Net is best on mean MAE for both log change (0.08819) and log level (0.08859);
-- adding PCI does not produce stable incremental value beyond that strong baseline;
-- no PCI-added model passes the feature-importance gate, so no SHAP/permutation ranking is generated.
+[
+\Delta \log(R/F) = \Delta \log(L/F) + \Delta \log(R/L)
+]
 
-### G5 — robustness
-CSTP5 remains positive under outlier/year/region checks, but:
-- strict COVID exclusion weakens BH q to 0.06720;
-- contemporaneous specification is null;
-- longer 2011–2024 nine-component specification is null;
-- future-lead placebo is null.
+trong đó (R) là doanh thu, (F) là số doanh nghiệp và (L) là lao động.
 
-The project therefore rejects a universal “most impactful PCI component” narrative.
+## Phương pháp chính
 
-## Start here
+- hồi quy hiệu ứng cố định hai chiều (two-way fixed effects — hiệu ứng cố định theo tỉnh và năm);
+- biến thể chế trễ một năm;
+- sai số chuẩn gom cụm theo tỉnh;
+- hiệu chỉnh đa kiểm định Benjamini–Hochberg;
+- phân rã trong tỉnh và giữa tỉnh;
+- mô hình độ trễ phân phối;
+- kiểm định giả dược bằng giá trị thể chế tương lai;
+- loại lần lượt tỉnh/năm;
+- hoán vị quỹ đạo tỉnh;
+- kiểm tra phụ thuộc chéo và không gian trước khi dùng mô hình không gian;
+- đối chiếu PCI với PAPI như hai phép đo quản trị khác nhau.
+
+Không sử dụng học máy (machine learning — học máy) như trụ cột đóng góp của bài mới.
+
+## Dữ liệu đang mở rộng
+
+Nguồn chính:
+- PCI cấp tỉnh;
+- PAPI cấp tỉnh;
+- Tổng cục Thống kê / Cục Thống kê qua PX-Web: doanh nghiệp đang hoạt động, doanh nghiệp đăng ký mới, lao động, vốn, doanh thu, lợi nhuận, khả năng sinh lời, thu nhập lao động, tài sản cố định;
+- dân số cấp tỉnh để chuẩn hóa mật độ doanh nghiệp.
+
+Khoảng thời gian mục tiêu của bảng cơ chế chính: **2015–2023**. Phần gia nhập doanh nghiệp có thể có cửa sổ riêng tùy độ phủ chính thức.
+
+## Trạng thái hiện tại
+
+**Cổng nghiên cứu hiện tại: SR1 — kiểm định tính bền vững theo thời gian và cơ chế doanh nghiệp.**
+
+Trước khi diễn giải hệ số cuối cùng phải:
+1. xác minh và đóng băng nguồn dữ liệu;
+2. đóng băng giả thuyết;
+3. dựng bảng dữ liệu cơ chế có thể tái tạo;
+4. chạy mô hình chính và bộ kiểm định phản chứng;
+5. chỉ sau đó mới viết bản thảo cuối.
+
+## Bắt đầu từ đây
 
 1. `PROJECT_STATE.md`
-2. `docs/research/INTEGRATED_RESULTS_AND_CONTRIBUTION.md`
-3. `docs/research/LITERATURE_MATRIX.md`
-4. `artifacts/qa/STAT-BASELINE-01.md`
-5. `artifacts/qa/PRED-BENCHMARK-01.md`
-6. `artifacts/qa/ROBUSTNESS-01.md`
-7. `docs/submission/MANUSCRIPT_DRAFT.md`
-8. `docs/research/NEXT_EXPERIMENT.md`
-9. `docs/handover/RECOVERY_PROMPT.md`
+2. `docs/research/PUBLISHABLE_REDESIGN_2026-09-19.md`
+3. `docs/research/HYPOTHESES_SR1.md`
+4. `docs/research/NEXT_EXPERIMENT.md`
+5. `docs/research/QUALITY_GATES.md`
+6. `DECISIONS.md`
+7. `PROGRESS.md`
+8. `docs/handover/RECOVERY_PROMPT.md`
 
-## Main commands
-
-```bash
-python -m pip install -r requirements.txt
-python -m src.eureka2026.pipeline
-python -m src.eureka2026.fe_baseline
-python -m src.eureka2026.predictive_benchmark
-python -m src.eureka2026.robustness
-python -m compileall -q src tests
-python -m unittest discover -s tests -v
-```
-
-## Current gate
-
-**G7 — SUBMISSION-PACKAGE-01.**
-
-Research-content draft: `docs/submission/MANUSCRIPT_DRAFT.md`.
-
-Registration deadline: **2026-09-25**.
+Hạn đăng ký Euréka 2026 đang được theo dõi riêng trong tài liệu cuộc thi.

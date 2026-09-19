@@ -69,3 +69,18 @@ Completed:
 
 Current action:
 Acquire and validate the official NSO/PAPI extension data, freeze mechanism hypotheses, then run the full mechanism/triangulation design in one research cycle.
+
+
+## 2026-09-20 — đóng hướng cũ, chuyển hoàn toàn sang nghiên cứu cơ chế
+
+Đã hoàn thành:
+- đóng vĩnh viễn câu hỏi xếp hạng thành phần PCI theo doanh thu và hướng học máy (machine learning — học máy) làm đóng góp trung tâm;
+- khóa câu hỏi nghiên cứu mới về tính bền vững theo thời gian của các cơ chế thể chế sau năm 2015;
+- xác định các biên kết quả chính: gia nhập, mật độ, quy mô, doanh thu trên lao động, lợi nhuận, thu nhập lao động và cường độ vốn;
+- đưa phân rã kế toán doanh thu vào lõi phương pháp;
+- chuyển các kết quả G3–G6 cũ sang trạng thái tư liệu kiểm toán;
+- đặt hiệu ứng cố định hai chiều, hiệu chỉnh đa kiểm định, phân rã trong/giữa tỉnh, độ trễ và phản chứng làm khung ước lượng chính;
+- yêu cầu chẩn đoán trước khi mở mô hình không gian, bảng động hoặc phương pháp phức tạp hơn.
+
+Việc tiếp theo duy nhất:
+- hoàn tất SR1: khóa dữ liệu chính thức NSO/PCI/PAPI và dựng bảng cơ chế có thể tái tạo trước khi đọc kết quả cuối.

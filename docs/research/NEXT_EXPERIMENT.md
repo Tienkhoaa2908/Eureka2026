@@ -1,113 +1,110 @@
-# NEXT EXPERIMENT — SCIENCE-REDESIGN-01
+# THÍ NGHIỆM TIẾP THEO — SR1-CƠ-CHẾ-01
 
-Priority: P0  
-Gate: SR1 Scientific redesign / mechanism validity
+Ưu tiên: P0
 
-## Question
+## Câu hỏi
 
-Where does provincial governance appear in the enterprise-development process: firm entry/density, firm scale, productivity, profitability, or labor value?
+Những cơ chế thể chế cấp tỉnh đã được ghi nhận trước đây có còn tái hiện sau năm 2015, và nếu có thì xuất hiện trên biên doanh nghiệp nào?
 
-The existing aggregate-revenue paper is not accepted as the final scientific contribution until this question is tested.
+## Giai đoạn A — khóa dữ liệu
 
-## New official inputs
+Thu thập trực tiếp từ nguồn chính thức, không chép tay:
+- V05.02: doanh nghiệp đăng ký mới;
+- V05.08: doanh nghiệp đang hoạt động có kết quả sản xuất kinh doanh;
+- V05.11: lao động trong doanh nghiệp;
+- V05.17: vốn kinh doanh bình quân năm;
+- V05.23: doanh thu thuần;
+- V05.35: thu nhập bình quân tháng của lao động;
+- V05.38: lợi nhuận trước thuế;
+- V05.41: tỷ suất lợi nhuận;
+- V05.44: tài sản cố định trên lao động;
+- dân số cấp tỉnh;
+- PCI hằng năm;
+- PAPI hằng năm với ghi chú về tính so sánh theo thời gian.
 
-NSO PX-Web:
-- V05.02 newly registered enterprises;
-- V05.08 active enterprises with business results;
-- V05.11 enterprise workers;
-- V05.17 business capital;
-- V05.23 net revenue;
-- V05.35 average monthly employee income;
-- V05.38 pre-tax profit;
-- V05.41 profitability ratio;
-- V05.44 fixed assets per worker;
-- provincial population for density normalization.
+Mỗi nguồn phải có mã bảng, đơn vị, đường dẫn, ngày cập nhật và SHA-256.
 
-Governance:
-- annual PCI component data;
-- annual PAPI Excel data, with explicit time-comparability restrictions.
+## Giai đoạn B — dựng bảng cơ chế
 
-Source manifest:
-`data/metadata/scientific_extension_sources.csv`.
+Mục tiêu chính: 2015–2023.
 
-## Phase A — acquisition/integrity
+Biến kết quả:
+- số doanh nghiệp đang hoạt động;
+- mật độ doanh nghiệp;
+- tỷ lệ gia nhập doanh nghiệp;
+- doanh thu trên doanh nghiệp;
+- lao động trên doanh nghiệp;
+- doanh thu trên lao động;
+- lợi nhuận trên doanh nghiệp;
+- biên lợi nhuận;
+- vốn trên doanh nghiệp;
+- vốn trên lao động;
+- thu nhập lao động.
 
-1. Download official source exports without manual transcription.
-2. Save source metadata, table code, unit, update date, URL and SHA-256.
-3. Normalize province names using the existing historical 63-province contract.
-4. Verify 63-province coverage for each intended year.
-5. Check table-definition compatibility before forming ratios.
-6. Do not interpolate missing official years.
+Không nội suy năm thiếu từ nguồn chính thức.
 
-## Phase B — construct mechanism outcomes
+## Giai đoạn C — kiểm tra phân rã kế toán
 
-Primary matched panel target: 2015–2023.
+Trên cùng một mẫu cân bằng, xác minh:
 
-Construct:
-- active firms;
-- revenue per firm;
-- workers per firm;
-- revenue per worker;
-- profit per firm (asinh);
-- profit margin;
-- capital per firm;
-- capital per worker;
-- employee income;
-- firm density;
-- entry rate in the separate 2017/2016–2024 extension where feasible.
+[
+\Delta \log(R)=\Delta \log(F)+\Delta \log(R/F)
+]
 
-Verify accounting identities and denominator consistency.
+[
+\Delta \log(R/F)=\Delta \log(L/F)+\Delta \log(R/L)
+]
 
-## Phase C — freeze hypotheses before final estimation
+Sai số số học phải nằm trong ngưỡng dung sai được ghi trước.
 
-H1 Entry: CSTP1, CSTP3, CSTP10 → entry rate / firm density.
-H2 Transaction costs: CSTP4, CSTP5 → revenue per worker / profit margin / revenue per firm.
-H3 Capabilities: CSTP8, CSTP9 → productivity / wage / capital intensity.
-H4 Triangulation: matched PAPI dimensions → selected mechanism outcomes.
+## Giai đoạn D — khóa giả thuyết
 
-No 10×outcome significance mining.
+Dùng `docs/research/HYPOTHESES_SR1.md`.
 
-## Phase D — estimation
+Không chạy lưới mười thành phần PCI nhân với mọi biến kết quả để chọn ô có ý nghĩa thống kê.
 
-For each prespecified family:
-- province FE + year FE;
-- lagged governance;
-- within-year governance z-score primary, raw score robustness;
-- province-clustered inference;
-- BH FDR within hypothesis family;
-- within/between decomposition;
-- lag1+lag2 sensitivity;
-- strict pandemic exclusion;
-- future-lead placebo;
-- trajectory permutation;
-- specification curve;
-- residual cross-sectional/spatial diagnostic.
+## Giai đoạn E — ước lượng chính
 
-## Pass criteria
+Cho từng họ giả thuyết đã định trước:
+- hiệu ứng cố định tỉnh và năm (two-way fixed effects — hiệu ứng cố định hai chiều);
+- chỉ số quản trị trễ một năm;
+- điểm chuẩn hóa theo năm ở đặc tả chính;
+- sai số chuẩn gom cụm theo tỉnh;
+- Benjamini–Hochberg trong từng họ giả thuyết;
+- phân rã trong tỉnh và giữa tỉnh;
+- độ trễ một và hai năm;
+- loại 2020–2022;
+- kiểm định giả dược bằng biến quản trị tương lai;
+- loại lần lượt tỉnh và năm;
+- hoán vị quỹ đạo tỉnh;
+- kiểm tra phụ thuộc chéo và không gian.
 
-SR1 passes only if at least one scientifically interpretable mechanism is:
-- directionally coherent with theory;
-- supported by more than one outcome/specification or independent governance measure;
-- not driven by one period/region/province;
-- not contradicted by falsification tests;
-- transparently bounded where evidence is weak.
+## Tiêu chí qua cổng
 
-A null mechanism result is acceptable; in that case the paper must be reframed around measurement limits / aggregate-outcome masking rather than force a policy claim.
+Không yêu cầu phải có kết quả dương.
 
-## Expected artifacts
+Một cơ chế chỉ được đưa vào kết luận chính khi:
+- hướng dấu phù hợp với cơ chế lý thuyết đã định trước;
+- vượt hiệu chỉnh đa kiểm định ở đặc tả chính;
+- không bị đảo dấu bởi một tỉnh hay một năm;
+- kiểm định giả dược không tạo tín hiệu mâu thuẫn tương đương;
+- bằng chứng hoán vị không phủ nhận tín hiệu;
+- các thất bại ở đặc tả thay thế được báo cáo công khai;
+- có tính tái hiện hợp lý so với bằng chứng trước hoặc có lý do dữ liệu/thể chế rõ ràng cho sự khác biệt.
 
-- raw-source manifest with hashes;
-- canonical mechanism panel;
-- data dictionary;
-- hypothesis preregistration file;
-- mechanism coefficient family tables;
-- within/between results;
-- specification curves;
-- PAPI triangulation results;
-- QA report `artifacts/qa/SCIENCE-REDESIGN-01.md`;
-- revised integrated contribution;
-- decision on whether G7 packaging resumes.
+## Đầu ra bắt buộc
 
-## Scientific stop rule
+- bản kê nguồn và hàm băm;
+- từ điển dữ liệu;
+- bảng cơ chế chuẩn;
+- báo cáo kiểm tra phân rã;
+- bảng hệ số theo từng họ giả thuyết;
+- kết quả trong/giữa tỉnh;
+- kết quả độ trễ;
+- kết quả giả dược và hoán vị;
+- đối chiếu PAPI nếu vượt kiểm tra tính so sánh;
+- báo cáo kiểm định chất lượng `artifacts/qa/SCIENCE-REDESIGN-01.md`.
 
-Do not resume final manuscript/poster formatting until SR1 is evaluated.
+## Quy tắc dừng
+
+Không quay lại bài toán xếp hạng PCI theo doanh thu và không khôi phục học máy (machine learning — học máy) làm đóng góp trung tâm chỉ vì kết quả cơ chế yếu hoặc bằng không.

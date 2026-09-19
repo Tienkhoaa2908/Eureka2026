@@ -78,3 +78,21 @@
 - verified NSO PX-Web source tables for enterprise-stock, entry, labor, capital, revenue, wages, profit and profitability outcomes;
 - verified PAPI annual Excel data availability;
 - exploratory current-panel diagnostics arguing against a threshold/COVID-resilience narrative and for a within-province mechanism redesign.
+
+
+## 2026-09-20 — chuyển hướng nghiên cứu hoàn toàn
+
+### Thay đổi
+- hướng cũ về doanh thu tổng hợp, xếp hạng thành phần PCI và dự báo bằng học máy (machine learning — học máy) được đóng như một hướng nghiên cứu;
+- README, PROJECT_STATE, NEXT_EXPERIMENT, QUALITY_GATES và RECOVERY_PROMPT được viết lại theo hướng cơ chế;
+- câu hỏi trung tâm chuyển sang tính bền vững theo thời gian của các cơ chế thể chế sau năm 2015;
+- phân rã gia nhập/quy mô/doanh thu trên lao động/lợi nhuận/lao động/vốn trở thành kiến trúc chính;
+- học máy không còn là nguồn đóng góp khoa học của bản thảo mới.
+
+### Thêm
+- `docs/research/HYPOTHESES_SR1.md` với H1–H5;
+- quyết định D-026 đến D-030;
+- thí nghiệm thiết kế E-008.
+
+### Giữ lại có chủ đích
+- dữ liệu, mã nguồn, kết quả và hiện vật G1–G6 cũ không bị xóa để bảo toàn lịch sử và khả năng kiểm toán.

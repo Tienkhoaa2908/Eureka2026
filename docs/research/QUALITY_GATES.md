@@ -1,125 +1,69 @@
-# QUALITY GATES
+# CỔNG CHẤT LƯỢNG
 
-No downstream result is considered final while an upstream gate is failed.
+Không có kết quả hạ nguồn nào được xem là cuối cùng nếu cổng thượng nguồn chưa đạt.
 
-## G0 — Competition compliance
-Current: **PASS for documented requirements; final-file compliance belongs to G7.**
+## L0 — Tuân thủ cuộc thi
+Trạng thái: **ĐẠT đối với yêu cầu đã xác minh; kiểm tra tệp nộp cuối thực hiện ở giai đoạn cuối.**
 
-## G1 — Data integrity
-Current: **PASS (2026-09-18).**
+## L1 — Hạ tầng dữ liệu cũ
+Trạng thái: **ĐẠT và LƯU TRỮ.**
 
-Evidence:
-- `artifacts/qa/DATA-INTEGRITY-01.md`
-- `data/metadata/data_lineage.csv`
-- `data/metadata/revenue_corrections.csv`
+Bao gồm kiểm tra nguồn doanh thu, ba chỉnh sửa có bằng chứng và đường ống tái tạo bảng 2010–2024. Hạ tầng này được giữ để kiểm toán nhưng không xác định câu hỏi nghiên cứu mới.
 
-## G2 — Reproducible pipeline
-Current: **PASS (2026-09-18).**
+## L2 — Hướng cũ
+Trạng thái: **ĐÃ ĐÓNG.**
 
-Canonical SHA-256:
-`a5b76b667ed0e00a8422eeb4da48f78491824f6529feaf2e6ee9031c365211dd`
+Các cổng G3–G6 trước đây về doanh thu tổng hợp, dự báo ngoài mẫu và học máy (machine learning — học máy) được giữ làm lịch sử nghiên cứu. Chúng không còn là cổng đang hoạt động và không được dùng làm đóng góp chính.
 
-Evidence:
-- `src/eureka2026/pipeline.py`
-- `data/metadata/canonical_build_manifest.json`
-- `artifacts/qa/REPRO-PIPELINE-01.md`
+## SR1 — Nguồn dữ liệu cơ chế
+Đạt khi:
+- mọi bảng NSO/PAPI/PCI cần dùng có nguồn chính thức;
+- có mã bảng, đơn vị, thời gian, đường dẫn và SHA-256;
+- tên tỉnh được chuẩn hóa theo hợp đồng 63 tỉnh lịch sử;
+- mọi đứt gãy phương pháp hoặc năm thiếu được ghi rõ;
+- không có nội suy im lặng.
 
-## G3 — Statistical baseline
-Current: **PASS (2026-09-18).**
+Trạng thái: **ĐANG MỞ / CỔNG HIỆN TẠI.**
 
-Evidence:
-- `src/eureka2026/fe_baseline.py`
-- `artifacts/results/STAT-BASELINE-01_*.csv/json`
-- `artifacts/qa/STAT-BASELINE-01.md`
+## SR2 — Bảng cơ chế và đồng nhất định nghĩa
+Đạt khi:
+- ghép được bảng tỉnh-năm mục tiêu;
+- mẫu phân tích của từng biến được ghi rõ;
+- mẫu số của mọi tỷ lệ tương thích về định nghĩa;
+- phân rã kế toán khớp trong dung sai;
+- có từ điển dữ liệu và báo cáo chất lượng.
 
-Key result:
-- no BH-adjusted signal in log-revenue level;
-- CSTP5 is the only BH-adjusted component in primary log-change specification;
-- interpretation is associational.
+## SR3 — Khóa giả thuyết
+Đạt khi:
+- các họ giả thuyết H1–H5 được cố định trước ước lượng cuối;
+- biến giải thích, biến kết quả, chiều dấu kỳ vọng và họ hiệu chỉnh đa kiểm định được định nghĩa trước;
+- PAPI chưa được chọn theo kết quả PCI.
 
-## G4 — Predictive benchmark
-Pass requires:
-- fixed temporal outer folds;
-- no future information in preprocessing/tuning;
-- naive, Elastic Net, RF and XGBoost on identical outer years;
-- non-PCI and PCI-added comparisons;
-- fold-level MAE/RMSE;
-- nested training-only tuning;
-- feature importance withheld unless incremental-value gate is passed.
+## SR4 — Ước lượng cơ chế
+Đạt khi:
+- hiệu ứng cố định tỉnh/năm là đường cơ sở;
+- sai số chuẩn gom cụm theo tỉnh;
+- Benjamini–Hochberg theo họ;
+- phân rã trong/giữa tỉnh;
+- độ trễ phân phối;
+- kiểm định giả dược tương lai;
+- loại lần lượt tỉnh/năm;
+- hoán vị quỹ đạo tỉnh;
+- mọi kết quả yếu hoặc bằng không được giữ lại.
 
-Current: **PASS (2026-09-18) — negative incremental-PCI result.**
+## SR5 — Chẩn đoán mở rộng
+Đạt khi:
+- kiểm tra phụ thuộc chéo và không gian đã chạy;
+- mô hình không gian chỉ được dùng nếu chẩn đoán và lý thuyết yêu cầu;
+- mô hình động hoặc phương pháp phức tạp chỉ được thêm khi có vấn đề nhận dạng cụ thể cần giải quyết.
 
-Evidence:
-- `src/eureka2026/predictive_benchmark.py`
-- `tests/test_predictive_benchmark.py`
-- `artifacts/results/PRED-BENCHMARK-01_*.csv/json`
-- `artifacts/qa/PRED-BENCHMARK-01.md`
+## SR6 — Đối chiếu và tính bền vững theo thời gian
+Đạt khi:
+- kết quả hậu 2015 được đối chiếu với các cơ chế trong nghiên cứu trước;
+- sự tái hiện hoặc không tái hiện đều được diễn giải với giới hạn;
+- PAPI được dùng như phép đo quản trị độc lập khi tính so sánh thời gian cho phép.
 
-Gate finding:
-- non-PCI Elastic Net has lowest mean MAE for both outcomes;
-- PCI does not add stable predictive value beyond that baseline;
-- no feature-importance output is allowed/generated.
+## SR7 — Tổng hợp và nộp bài
+Chỉ mở sau khi SR1–SR6 hoàn tất.
 
-## G5 — Robustness
-Pass requires boundary testing across period/specification/outliers/influence and residual dependence where warranted.
-
-Current: **PASS (2026-09-18), with outcome-data caveat.**
-
-Evidence:
-- `src/eureka2026/robustness.py`
-- `tests/test_robustness.py`
-- `artifacts/results/ROBUSTNESS-01_*.csv/json`
-- `artifacts/qa/ROBUSTNESS-01.md`
-
-Gate finding:
-- CSTP5 survives outlier and leave-one-year/region checks;
-- result weakens under strict COVID exclusion and is null in contemporaneous/longer-period variants;
-- future-lead placebo is null;
-- no universal/causal ranking is supported.
-
-Scale-normalized outcome robustness remains outside the current canonical data because verified per-firm/per-worker or province-deflator inputs are unavailable.
-
-## G6 — Scientific contribution
-Pass requires:
-- recent Vietnam evidence accurately positioned;
-- contribution stated without “nobody has studied this” claims;
-- inference vs prediction distinction explicit;
-- negative evidence retained;
-- policy claims bounded.
-
-Current: **PASS (2026-09-18).**
-
-Evidence:
-- `docs/research/LITERATURE_MATRIX.md`
-- `docs/research/INTEGRATED_RESULTS_AND_CONTRIBUTION.md`
-- `docs/submission/MANUSCRIPT_DRAFT.md`
-
-## G7 — Euréka submission
-Pass when:
-- manuscript and poster are anonymous and format compliant;
-- final figures/tables are generated from committed artifacts;
-- references are checked;
-- every number maps to an artifact;
-- final narrative matches G1–G6 evidence.
-
-Current: **OPEN / current gate.**
-
-Evidence/checklists:
-- `docs/submission/SUBMISSION_PLAN.md`
-- `docs/submission/NUMBER_TO_ARTIFACT_MAP.md`
-- `docs/submission/ANONYMITY_CHECKLIST.md`
-
-
-## SR1 — Scientific redesign / mechanism validity
-Pass when:
-- external outcome families are acquired from official NSO sources with provenance;
-- matched definitions permit an auditable 2015–2023 mechanism panel;
-- PAPI triangulation data are acquired with time-comparability notes;
-- hypotheses are frozen before final coefficient interpretation;
-- aggregate revenue is decomposed into extensive/intensive margins;
-- within/between, distributed-lag, falsification and specification-curve evidence is produced;
-- the final contribution is stronger than a single PCI-component significance result.
-
-Current: **OPEN / current gate (2026-09-19).**
-
-G7 submission packaging remains paused until SR1 determines whether the manuscript needs a substantive scientific rewrite.
+Bản thảo và áp phích của hướng cũ không được dùng làm bản cuối.
