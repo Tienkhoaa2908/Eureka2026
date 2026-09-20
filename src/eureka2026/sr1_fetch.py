@@ -90,9 +90,13 @@ _CANONICAL_BY_KEY.update(
 )
 
 
-def normalize_province_loose(value: object) -> str | None:
+def normalize_province_loose(value: object, *, historical_63: bool = False) -> str | None:
     raw = re.sub(r"\*+$", "", str(value or "").strip()).strip()
     key = _ascii_key(raw)
+    # NQ 175/2024/QH15: the centrally governed Hue uses the whole former
+    # province. Only accept the renamed label in explicitly pre-2025 panels.
+    if historical_63 and key == "hue":
+        return "Thừa Thiên Huế"
     # PX-Web English labels are not fully consistent with Vietnamese Unicode
     # names. Keep explicit reviewed exceptions rather than fuzzy matching.
     if key in {"thua thien hue", "thua thien hue province"}:
@@ -296,7 +300,7 @@ def _parse_wide_pxweb_csv(
     for row in parsed[1:]:
         if not row:
             continue
-        province = normalize_province_loose(row[0])
+        province = normalize_province_loose(row[0], historical_63=max(years) <= 2024)
         if not province:
             continue
         for year, col in year_columns.items():
@@ -329,18 +333,22 @@ def _submit_nso_form(
 
     province_values: list[str] = []
     province_names: list[str] = []
+    province_labels: list[dict[str, str]] = []
     for option in province_box.find_all("option"):
         label = " ".join(option.get_text(" ", strip=True).split())
-        canonical = normalize_province_loose(label)
+        canonical = normalize_province_loose(label, historical_63=max(years) <= 2024)
         if canonical:
             province_values.append(str(option.get("value")))
             province_names.append(canonical)
+            province_labels.append({"source_label": label, "canonical": canonical})
+    if len(province_names) != len(set(province_names)):
+        raise ValueError(f"duplicate province labels after normalization at {page_url}")
     if set(province_names) != set(CANONICAL_PROVINCES):
         missing = sorted(set(CANONICAL_PROVINCES) - set(province_names))
         extra = sorted(set(province_names) - set(CANONICAL_PROVINCES))
         unmapped = [o.get_text(" ", strip=True) for o in province_box.find_all("option")
-                    if normalize_province_loose(o.get_text(" ", strip=True)) is None]
-        raise ValueError(f"province coverage mismatch missing={missing} extra={extra}; unmapped={unmapped}")
+                    if normalize_province_loose(o.get_text(" ", strip=True), historical_63=max(years) <= 2024) is None]
+        raise ValueError(f"province coverage mismatch at {page_url}: missing={missing} extra={extra}; unmapped={unmapped}")
 
     year_options = {
         " ".join(o.get_text(" ", strip=True).split()): str(o.get("value"))
@@ -451,6 +459,8 @@ def _submit_nso_form(
         "title": meta_title,
         "selected_years": list(years),
         "province_count": len(province_values),
+        "province_label_mapping": province_labels,
+        "page_text": soup.get_text(" ", strip=True),
         "auxiliary_selections": selected_aux,
         "page_sha256": sha256_bytes(page.content),
         "raw_export_sha256": sha256_bytes(response.content),
@@ -467,7 +477,7 @@ def fetch_nso_table(
 ) -> dict[str, Any]:
     years = tuple(int(x) for x in config["years"])
     page_url = nso_ui_url(table_code, str(config["database"]))
-    raw_bytes, form_meta, _ = _submit_nso_form(session, page_url, years)
+    raw_bytes, form_meta, page_bytes = _submit_nso_form(session, page_url, years)
 
     records = _parse_wide_pxweb_csv(
         raw_bytes,
@@ -497,6 +507,7 @@ def fetch_nso_table(
 
     raw_path = source_dir / f"{table_code}.csv"
     raw_path.write_bytes(raw_bytes)
+    (source_dir / f"{table_code}.html").write_bytes(page_bytes)
     normalized_path = normalized_dir / f"{table_code}_{config['name']}.csv"
     with normalized_path.open("w", encoding="utf-8", newline="") as f:
         writer = csv.DictWriter(
@@ -652,6 +663,7 @@ def run(output_root: str | Path) -> dict[str, Any]:
 
     nso_manifest = []
     for code, config in NSO_TABLES.items():
+        print(f"Acquiring NSO {code}: {config['name']}", flush=True)
         nso_manifest.append(fetch_nso_table(session, code, config, root / "raw" / "nso"))
 
     pci_manifest = fetch_pci(session, root / "raw" / "pci")

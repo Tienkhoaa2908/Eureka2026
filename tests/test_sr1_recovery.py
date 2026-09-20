@@ -9,11 +9,20 @@ from bs4 import BeautifulSoup
 
 from src.eureka2026.province_names import CANONICAL_PROVINCES
 from src.eureka2026.sr1_build import _read_pci, build_entry_panel, SERIES_TO_FILE
-from src.eureka2026.sr1_fetch import _choose_scalar_option
+from src.eureka2026.sr1_fetch import _choose_scalar_option, normalize_province_loose, _parse_wide_pxweb_csv
 from src.eureka2026.sr1_models import mechanism_decomposition, run
 
 
 class RecoveryTests(unittest.TestCase):
+    def test_hue_alias_is_explicitly_historical(self):
+        self.assertIsNone(normalize_province_loose("Hue"))
+        self.assertEqual(normalize_province_loose("Hue", historical_63=True), "Thừa Thiên Huế")
+        body = b'"Province","2023","2024"\n"Hue",10,12\n'
+        rows = _parse_wide_pxweb_csv(body, (2023, 2024), "fixture", "fixture", "persons")
+        self.assertEqual(len(rows), 2)
+        self.assertEqual(rows[0]["province"], "Thừa Thiên Huế")
+        self.assertEqual(_parse_wide_pxweb_csv(b'"Province","2025"\n"Hue",10\n', (2025,), "fixture", "fixture", "persons"), [])
+
     def test_auxiliary_selection_must_be_unambiguous(self):
         box = BeautifulSoup('<select><option value="m">Male</option><option value="f">Female</option></select>', 'html.parser').select_one('select')
         with self.assertRaisesRegex(ValueError, 'chưa xác minh'):
