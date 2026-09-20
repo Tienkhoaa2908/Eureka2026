@@ -479,6 +479,17 @@ def fetch_nso_table(
     page_url = nso_ui_url(table_code, str(config["database"]))
     raw_bytes, form_meta, page_bytes = _submit_nso_form(session, page_url, years)
 
+    # Preserve the official response even if its layout cannot yet be parsed.
+    source_dir = output_dir / "source"
+    source_dir.mkdir(parents=True, exist_ok=True)
+    (source_dir / f"{table_code}.csv").write_bytes(raw_bytes)
+    (source_dir / f"{table_code}.html").write_bytes(page_bytes)
+    metadata_dir = output_dir / "metadata"
+    metadata_dir.mkdir(parents=True, exist_ok=True)
+    (metadata_dir / f"{table_code}.json").write_text(
+        json.dumps({**form_meta, "table_code": table_code, "status": "DOWNLOADED_NOT_VALIDATED"},
+                   ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
     records = _parse_wide_pxweb_csv(
         raw_bytes,
         years,
@@ -662,13 +673,24 @@ def run(output_root: str | Path) -> dict[str, Any]:
     )
 
     nso_manifest = []
+    errors = []
     for code, config in NSO_TABLES.items():
         print(f"Acquiring NSO {code}: {config['name']}", flush=True)
-        nso_manifest.append(fetch_nso_table(session, code, config, root / "raw" / "nso"))
+        try:
+            nso_manifest.append(fetch_nso_table(session, code, config, root / "raw" / "nso"))
+        except Exception as exc:
+            errors.append({"source": code, "error": str(exc)})
+            print(f"Acquisition blocked for {code}: {exc}", flush=True)
 
-    pci_manifest = fetch_pci(session, root / "raw" / "pci")
+    pci_manifest = None
+    try:
+        pci_manifest = fetch_pci(session, root / "raw" / "pci")
+    except Exception as exc:
+        errors.append({"source": "PCI", "error": str(exc)})
     manifest = {
         "nso": nso_manifest,
+        "errors": errors,
+        "complete": not errors,
         "pci": pci_manifest,
         "generated_at_utc": None,
         "note": "Timestamp omitted from deterministic payload; source hashes identify the retrieval.",
@@ -678,6 +700,8 @@ def run(output_root: str | Path) -> dict[str, Any]:
         json.dumps(manifest, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
         encoding="utf-8",
     )
+    if errors:
+        raise ValueError(f"Acquisition incomplete; see {root / 'source_manifest.json'}: {errors}")
     return manifest
 
 
