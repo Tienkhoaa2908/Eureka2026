@@ -1,5 +1,14 @@
 # THÍ NGHIỆM TIẾP THEO — SR1-CƠ-CHẾ-01
 
+## Cập nhật phục hồi 20/09/2026 UTC
+
+Nhánh hoạt động: `research/sr1-recovery-audit`, [PR16](https://github.com/Tienkhoaa2908/Eureka2026/pull/16), kế thừa PR13 và main. PR13 chưa merge; không dùng mô tả lỗi cũ thay cho log mới.
+
+Đã tải 11 bảng doanh nghiệp NSO, lao động qua đào tạo, SCOLI và 7.560 giá trị thành phần PCI (63 tỉnh × 12 năm × 10 thành phần, không thiếu). Dân số đã tải CSV gốc, lỗi parser do tiêu đề `Total 2015`; nhãn năm 2024 là `Prel. 2024` cần giữ cờ sơ bộ. Đang sửa và chạy lại thu thập. Chưa có ước lượng nghiên cứu mới.
+
+Khóa mô hình chưa được tạo. Các điểm chặn khoa học: phép đo PCI thay đổi; quần thể so sánh H4 chưa đồng nhất; E05.41 chưa khớp tỷ suất tự tính. Đọc `docs/research/RECOVERY_AUDIT_2026-09-20.md` và `docs/eureka/EUREKA_PROCEEDINGS_BENCHMARK.md` trước khi dùng các đặc tả dự kiến bên dưới. Các đặc tả này **chưa được khóa**.
+
+
 Ưu tiên: P0
 
 ## Câu hỏi

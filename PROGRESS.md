@@ -84,3 +84,8 @@ Acquire and validate the official NSO/PAPI extension data, freeze mechanism hypo
 
 Việc tiếp theo duy nhất:
 - hoàn tất SR1: khóa dữ liệu chính thức NSO/PCI/PAPI và dựng bảng cơ chế có thể tái tạo trước khi đọc kết quả cuối.
+
+
+## 2026-09-20 — phục hồi SR1 và kiểm toán trước mô hình
+
+Đã hợp nhất lịch sử main/PR13 trong PR16 nháp, kiểm toán ZIP và sửa lỗi thu thập NSO. Run 35482892847 thu được toàn bộ nguồn trừ bước chuẩn hóa dân số; giữ CSV gốc để sửa parser tiêu đề Total/năm sơ bộ. Không mở khóa mô hình: cần xác minh tính nhất quán PCI, quần thể H4 và mẫu số tỷ suất lợi nhuận. Bằng chứng và giới hạn: `docs/research/RECOVERY_AUDIT_2026-09-20.md`.

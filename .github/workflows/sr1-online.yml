@@ -1,0 +1,47 @@
+name: sr1-online-research
+
+on:
+  pull_request:
+    paths:
+      - "src/eureka2026/sr1_*.py"
+      - "tests/test_sr1*.py"
+      - "requirements.txt"
+      - ".github/workflows/sr1-online.yml"
+      - "docs/research/HYPOTHESES_SR1.md"
+
+jobs:
+  acquire-build-analyze:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install SR1 dependencies
+        run: python -m pip install "numpy>=2,<3" "statsmodels>=0.14,<0.15" "scipy>=1.14,<2" "requests>=2.32,<3" "beautifulsoup4>=4.12,<5"
+      - name: Compile and unit-test SR1
+        run: |
+          python -m compileall -q src tests
+          python -m unittest discover -s tests -p "test_sr1*.py" -v
+      - name: Probe NSO UI download form
+        run: python -m src.eureka2026.sr1_probe
+      - name: Acquire official NSO and PCI data
+        run: python -m src.eureka2026.sr1_fetch --output-root artifacts/sr1
+      - name: Build mechanism panels
+        run: python -m src.eureka2026.sr1_build --input-root artifacts/sr1 --output-root artifacts/sr1/processed
+      - name: Run preregistered mechanism models
+        run: |
+          python -m src.eureka2026.sr1_models             --core artifacts/sr1/processed/mechanism_panel_2015_2023.csv             --entry artifacts/sr1/processed/entry_panel_2018_2024.csv             --output-dir artifacts/sr1/results
+      - name: Print compact scientific audit
+        run: |
+          cat artifacts/sr1/processed/mechanism_panel_qa.json
+          cat artifacts/sr1/results/SR1_metadata.json
+      - name: Upload SR1 research artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sr1-research-output
+          path: artifacts/sr1
+          if-no-files-found: warn
+          retention-days: 30

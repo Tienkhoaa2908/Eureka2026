@@ -1,0 +1,6 @@
+filename,rows,bytes,sha256,role
+Eureka2026_panel_corrected_2010_2024.csv,945,69900,f53f91ebce483b2330ec6368341658ab3e811468c710272b781be2cf160ebe13,Bảng quan sát dẫn xuất của hướng cũ
+Eureka2026_panel_QA_DATA_INTEGRITY_01.csv,14,1435,96297514f1ed7883d93dac5fb8456f0f90bbf8e1ec81be89424f45811bd583b5,Nhật ký kiểm toán; không phải bảng quan sát
+SR1_DATA_CATALOG.csv,17,5430,3a2b0578ed983d7f4a828b8ca52c4f1b598aca62c3ad350dd968464ccb3dda99,Danh mục nguồn; không phải dữ liệu đã thu thập
+DATA_DICTIONARY_SR1.csv,34,5155,396b51da2f2ab0af3131cbecda455d5ec4a1d024865b90c7fd812a615b474b54,Từ điển biến; không phải bảng quan sát
+scientific_extension_sources.csv,12,2725,6fcc34fb2224a44c12c89b28dfa8ed8c190ea1c3a75085bf00171363667bde90,Danh mục nguồn bổ sung; không phải bảng quan sát

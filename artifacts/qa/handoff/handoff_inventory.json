@@ -1,0 +1,270 @@
+{
+  "bundle_filename": "Eureka2026_Astra_CSV_bundle(1).zip",
+  "bundle_sha256": "e03ecd538a809652fa3f0113e1ac62534eb23352002c17bb83073e4b325ca154",
+  "files": [
+    {
+      "bytes": 69900,
+      "columns": [
+        "Tinh",
+        "Vung",
+        "Nam",
+        "PCI",
+        "PCI_lag1",
+        "Doanh_thu_ty_dong",
+        "Tang_truong_doanh_thu_pct"
+      ],
+      "filename": "Eureka2026_panel_corrected_2010_2024.csv",
+      "nulls": {
+        "Doanh_thu_ty_dong": 0,
+        "Nam": 0,
+        "PCI": 0,
+        "PCI_lag1": 63,
+        "Tang_truong_doanh_thu_pct": 63,
+        "Tinh": 0,
+        "Vung": 0
+      },
+      "panel_checks": {
+        "duplicate_keys": [],
+        "extra_keys": [],
+        "grain": "tỉnh-năm",
+        "missing_keys": [],
+        "pci_components_present": [],
+        "pci_lag_errors": [],
+        "provinces": 63,
+        "range_errors": [],
+        "research_use": "Chỉ đối chiếu lịch sử; thiếu số doanh nghiệp, lao động, vốn, lợi nhuận và thành phần PCI cho SR1.",
+        "revenue_growth_errors": [],
+        "rows": 945,
+        "rows_by_year": {
+          "2010": 63,
+          "2011": 63,
+          "2012": 63,
+          "2013": 63,
+          "2014": 63,
+          "2015": 63,
+          "2016": 63,
+          "2017": 63,
+          "2018": 63,
+          "2019": 63,
+          "2020": 63,
+          "2021": 63,
+          "2022": 63,
+          "2023": 63,
+          "2024": 63
+        },
+        "verified_corrections": [
+          {
+            "matches_registry": true,
+            "province": "Hòa Bình",
+            "value": 33040.0,
+            "year": 2016
+          },
+          {
+            "matches_registry": true,
+            "province": "Gia Lai",
+            "value": 131195.0,
+            "year": 2023
+          },
+          {
+            "matches_registry": true,
+            "province": "An Giang",
+            "value": 212961.0,
+            "year": 2023
+          }
+        ],
+        "years": [
+          2010,
+          2011,
+          2012,
+          2013,
+          2014,
+          2015,
+          2016,
+          2017,
+          2018,
+          2019,
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ]
+      },
+      "role": "Bảng quan sát dẫn xuất của hướng cũ",
+      "rows": 945,
+      "sha256": "f53f91ebce483b2330ec6368341658ab3e811468c710272b781be2cf160ebe13"
+    },
+    {
+      "bytes": 1435,
+      "columns": [
+        "Province",
+        "Year",
+        "Legacy value",
+        "Verified value",
+        "Delta",
+        "Evidence",
+        "Official cross-check",
+        "Status"
+      ],
+      "filename": "Eureka2026_panel_QA_DATA_INTEGRITY_01.csv",
+      "nulls": {
+        "Delta": 11,
+        "Evidence": 11,
+        "Legacy value": 11,
+        "Official cross-check": 11,
+        "Province": 2,
+        "Status": 11,
+        "Verified value": 11,
+        "Year": 2
+      },
+      "role": "Nhật ký kiểm toán; không phải bảng quan sát",
+      "rows": 14,
+      "sha256": "96297514f1ed7883d93dac5fb8456f0f90bbf8e1ec81be89424f45811bd583b5"
+    },
+    {
+      "bytes": 5430,
+      "columns": [
+        "source_id",
+        "priority",
+        "status",
+        "provider",
+        "table_or_dataset",
+        "target_years",
+        "level",
+        "variables",
+        "scientific_role",
+        "merge_key",
+        "redistribution_policy",
+        "source_url",
+        "decision"
+      ],
+      "filename": "SR1_DATA_CATALOG.csv",
+      "nulls": {
+        "decision": 0,
+        "level": 0,
+        "merge_key": 0,
+        "priority": 0,
+        "provider": 0,
+        "redistribution_policy": 0,
+        "scientific_role": 0,
+        "source_id": 0,
+        "source_url": 0,
+        "status": 0,
+        "table_or_dataset": 0,
+        "target_years": 0,
+        "variables": 0
+      },
+      "role": "Danh mục nguồn; không phải dữ liệu đã thu thập",
+      "rows": 17,
+      "sha256": "3a2b0578ed983d7f4a828b8ca52c4f1b598aca62c3ad350dd968464ccb3dda99"
+    },
+    {
+      "bytes": 5155,
+      "columns": [
+        "variable",
+        "role",
+        "source",
+        "definition",
+        "unit",
+        "primary_or_secondary",
+        "transformation",
+        "expected_years",
+        "notes"
+      ],
+      "filename": "DATA_DICTIONARY_SR1.csv",
+      "nulls": {
+        "definition": 0,
+        "expected_years": 0,
+        "notes": 10,
+        "primary_or_secondary": 0,
+        "role": 0,
+        "source": 0,
+        "transformation": 0,
+        "unit": 0,
+        "variable": 0
+      },
+      "role": "Từ điển biến; không phải bảng quan sát",
+      "rows": 34,
+      "sha256": "396b51da2f2ab0af3131cbecda455d5ec4a1d024865b90c7fd812a615b474b54"
+    },
+    {
+      "bytes": 2725,
+      "columns": [
+        "source_id",
+        "provider",
+        "table_code",
+        "concept",
+        "unit",
+        "years_observed_from_ui",
+        "role",
+        "url",
+        "status"
+      ],
+      "filename": "scientific_extension_sources.csv",
+      "nulls": {
+        "concept": 0,
+        "provider": 0,
+        "role": 0,
+        "source_id": 0,
+        "status": 0,
+        "table_code": 0,
+        "unit": 0,
+        "url": 0,
+        "years_observed_from_ui": 0
+      },
+      "role": "Danh mục nguồn bổ sung; không phải bảng quan sát",
+      "rows": 12,
+      "sha256": "6fcc34fb2224a44c12c89b28dfa8ed8c190ea1c3a75085bf00171363667bde90"
+    }
+  ],
+  "git_commit": "cde11d70f240ff8a643220e470a9db7085073720",
+  "metadata_comparisons": [
+    {
+      "byte_identical": false,
+      "changed_rows": [],
+      "filename": "SR1_DATA_CATALOG.csv",
+      "only_in_repo": [
+        "DTI",
+        "ENTERPRISE_MICRODATA",
+        "FDI_PROVINCE",
+        "NSO_E03_10",
+        "NSO_E03_12",
+        "PAR_INDEX",
+        "SIPAS",
+        "VHLSS_LFS",
+        "WBES_2023"
+      ],
+      "only_in_upload": [],
+      "repo_rows": 26,
+      "repo_sha256": "a9059ea4ad1d9cb859d490aabe8319d63be2a75112c8f27ce39cafe286b68989",
+      "resolution": "Giữ cả hai phiên bản; catalog main là trạng thái vận hành, không chứng minh đã có quan sát.",
+      "same_schema": true,
+      "uploaded_rows": 17
+    },
+    {
+      "byte_identical": false,
+      "changed_rows": [],
+      "filename": "DATA_DICTIONARY_SR1.csv",
+      "only_in_repo": [],
+      "only_in_upload": [],
+      "repo_rows": 34,
+      "repo_sha256": "ffceeb041047c28af2d965f33aaccdd48d63313d7478c7191fe6ae36fd127dee",
+      "resolution": "Giữ cả hai phiên bản; catalog main là trạng thái vận hành, không chứng minh đã có quan sát.",
+      "same_schema": true,
+      "uploaded_rows": 34
+    },
+    {
+      "byte_identical": false,
+      "changed_rows": [],
+      "filename": "scientific_extension_sources.csv",
+      "only_in_repo": [],
+      "only_in_upload": [],
+      "repo_rows": 12,
+      "repo_sha256": "8979398f72c716968f355d0fe6fc251b8cb7d2e33a0de8cbb0403a83186ff03d",
+      "resolution": "Giữ cả hai phiên bản; catalog main là trạng thái vận hành, không chứng minh đã có quan sát.",
+      "same_schema": true,
+      "uploaded_rows": 12
+    }
+  ],
+  "status": "KIỂM TOÁN BÀN GIAO; KHÔNG PHẢI ĐẠT CỔNG DỮ LIỆU SR1"
+}

@@ -96,3 +96,8 @@
 
 ### Giữ lại có chủ đích
 - dữ liệu, mã nguồn, kết quả và hiện vật G1–G6 cũ không bị xóa để bảo toàn lịch sử và khả năng kiểm toán.
+
+
+## 2026-09-20 — phục hồi SR1 và kiểm toán trước mô hình
+
+Đã hợp nhất lịch sử main/PR13 trong PR16 nháp, kiểm toán ZIP và sửa lỗi thu thập NSO. Run 35482892847 thu được toàn bộ nguồn trừ bước chuẩn hóa dân số; giữ CSV gốc để sửa parser tiêu đề Total/năm sơ bộ. Không mở khóa mô hình: cần xác minh tính nhất quán PCI, quần thể H4 và mẫu số tỷ suất lợi nhuận. Bằng chứng và giới hạn: `docs/research/RECOVERY_AUDIT_2026-09-20.md`.

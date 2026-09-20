@@ -1,0 +1,356 @@
+{
+  "status": "SOURCE_QA_ONLY_NOT_ANALYSIS_LOCK",
+  "tables": [
+    {
+      "table": "E05.02",
+      "source_url": "https://pxweb.nso.gov.vn/pxweb/en/Enterprise/Enterprise/E05.02.px/",
+      "source_sha256": "5a83594e923f9530722debb264fccc454a9eed55d67abb456bc09ae82de28588",
+      "normalized": true,
+      "rows": 567,
+      "provinces": 63,
+      "years": [
+        2016,
+        2017,
+        2018,
+        2019,
+        2020,
+        2021,
+        2022,
+        2023,
+        2024
+      ],
+      "missing": 0,
+      "negative": 0,
+      "minimum": 64.0,
+      "maximum": 53300.0,
+      "normalized_sha256": "12b81bae6b4f25d83cca52a7f2174e64fedca1ae2b272a1f9ddda3d638ff7239",
+      "declared_unit": "enterprises"
+    },
+    {
+      "table": "E05.04",
+      "source_url": "https://pxweb.nso.gov.vn/pxweb/en/Enterprise/Enterprise/E05.04.px/",
+      "source_sha256": "81e9f33085aaf0f2bb25abddc85432c83bc7a1f3447c9125319d46c46b009142",
+      "normalized": true,
+      "rows": 504,
+      "provinces": 63,
+      "years": [
+        2017,
+        2018,
+        2019,
+        2020,
+        2021,
+        2022,
+        2023,
+        2024
+      ],
+      "missing": 0,
+      "negative": 0,
+      "minimum": 602.0,
+      "maximum": 274067.0,
+      "normalized_sha256": "89f17b6267392b5c525239bec0ed0165704eb78f02964036e977aa56c0c7dc28",
+      "declared_unit": "enterprises"
+    },
+    {
+      "table": "E05.05",
+      "source_url": "https://pxweb.nso.gov.vn/pxweb/en/Enterprise/Enterprise/E05.05.px/",
+      "source_sha256": "5995f3849efe1240891fdcd42dcd22d1e98f4a4390fbfdffa2d6a908cfd861ea",
+      "normalized": true,
+      "rows": 504,
+      "provinces": 63,
+      "years": [
+        2017,
+        2018,
+        2019,
+        2020,
+        2021,
+        2022,
+        2023,
+        2024
+      ],
+      "missing": 0,
+      "negative": 0,
+      "minimum": 1.34,
+      "maximum": 29.29,
+      "normalized_sha256": "7648ef141a002341cfdc599da7427639c5328a097c293ff6647942a7ed3bdbba",
+      "declared_unit": "enterprises_per_1000_people"
+    },
+    {
+      "table": "E05.08",
+      "source_url": "https://pxweb.nso.gov.vn/pxweb/en/Enterprise/Enterprise/E05.08.px/",
+      "source_sha256": "00c2806dc17f1436872386c83c9b9ca6e35df1062fa98e1c99e066a4fbad9bf1",
+      "normalized": true,
+      "rows": 567,
+      "provinces": 63,
+      "years": [
+        2015,
+        2016,
+        2017,
+        2018,
+        2019,
+        2020,
+        2021,
+        2022,
+        2023
+      ],
+      "missing": 0,
+      "negative": 0,
+      "minimum": 416.0,
+      "maximum": 230824.0,
+      "normalized_sha256": "bacb1167589821405ff1bb60ac975bc1dc0e08d07d08279fe38d13beee0a305b",
+      "declared_unit": "enterprises"
+    },
+    {
+      "table": "E05.11",
+      "source_url": "https://pxweb.nso.gov.vn/pxweb/en/Enterprise/Enterprise/E05.11.px/",
+      "source_sha256": "ce6499a1d495037051410f3e90faa56144c9ce687eaea78f74c5abf47d1153ce",
+      "normalized": true,
+      "rows": 567,
+      "provinces": 63,
+      "years": [
+        2015,
+        2016,
+        2017,
+        2018,
+        2019,
+        2020,
+        2021,
+        2022,
+        2023
+      ],
+      "missing": 0,
+      "negative": 0,
+      "minimum": 6739.0,
+      "maximum": 2958127.0,
+      "normalized_sha256": "5cf9209c268467015588fa3432841b597c2e7376dd6b322a4dee6959b73af2de",
+      "declared_unit": "persons"
+    },
+    {
+      "table": "E05.17",
+      "source_url": "https://pxweb.nso.gov.vn/pxweb/en/Enterprise/Enterprise/E05.17.px/",
+      "source_sha256": "8c2665f4fb380693fb26c683288085e8f22cc5089d21a5e38e22b334401b8589",
+      "normalized": true,
+      "rows": 567,
+      "provinces": 63,
+      "years": [
+        2015,
+        2016,
+        2017,
+        2018,
+        2019,
+        2020,
+        2021,
+        2022,
+        2023
+      ],
+      "missing": 0,
+      "negative": 0,
+      "minimum": 8148.0,
+      "maximum": 13261620.0,
+      "normalized_sha256": "1339414cb1cecd28fb338a64f5df16e2f4313516410989fa89fdf3ae67384274",
+      "declared_unit": "billion_vnd"
+    },
+    {
+      "table": "E05.23",
+      "source_url": "https://pxweb.nso.gov.vn/pxweb/en/Enterprise/Enterprise/E05.23.px/",
+      "source_sha256": "07a1650687e596c39869431a23fa742d95031f778152982818e2a003eba7720d",
+      "normalized": true,
+      "rows": 567,
+      "provinces": 63,
+      "years": [
+        2015,
+        2016,
+        2017,
+        2018,
+        2019,
+        2020,
+        2021,
+        2022,
+        2023
+      ],
+      "missing": 0,
+      "negative": 0,
+      "minimum": 4047.0,
+      "maximum": 8166235.01,
+      "normalized_sha256": "7cfd2bf00f3397c142409a0ffdfb693b4a3462135f5efd30d19ccf543b0c9fd2",
+      "declared_unit": "billion_vnd"
+    },
+    {
+      "table": "E05.35",
+      "source_url": "https://pxweb.nso.gov.vn/pxweb/en/Enterprise/Enterprise/E05.35.px/",
+      "source_sha256": "9b9ffb50594165019a318b2d39a09432411d9701cc6091c6a8f44c181649504b",
+      "normalized": true,
+      "rows": 567,
+      "provinces": 63,
+      "years": [
+        2015,
+        2016,
+        2017,
+        2018,
+        2019,
+        2020,
+        2021,
+        2022,
+        2023
+      ],
+      "missing": 0,
+      "negative": 0,
+      "minimum": 3937.0,
+      "maximum": 14323.58,
+      "normalized_sha256": "515a7b186a55aeb53a57b140b00daf92b877ab540b8a2ad32f81265bf51f92ca",
+      "declared_unit": "thousand_vnd"
+    },
+    {
+      "table": "E05.38",
+      "source_url": "https://pxweb.nso.gov.vn/pxweb/en/Enterprise/Enterprise/E05.38.px/",
+      "source_sha256": "7de3a1a4ef3f6539804ee1dba2c2ca2528cac8f32a992f4559c040f427469228",
+      "normalized": true,
+      "rows": 567,
+      "provinces": 63,
+      "years": [
+        2015,
+        2016,
+        2017,
+        2018,
+        2019,
+        2020,
+        2021,
+        2022,
+        2023
+      ],
+      "missing": 0,
+      "negative": 79,
+      "minimum": -28308.09,
+      "maximum": 317675.27,
+      "normalized_sha256": "b9ddf6a3141907025b3430bbf96929ac9410673c09bb626595a6af3135866693",
+      "declared_unit": "billion_vnd"
+    },
+    {
+      "table": "E05.41",
+      "source_url": "https://pxweb.nso.gov.vn/pxweb/en/Enterprise/Enterprise/E05.41.px/",
+      "source_sha256": "a3ce6c429d060e1a1d8153d57e6592ec61a6888087053caa148e0ff41d924506",
+      "normalized": true,
+      "rows": 567,
+      "provinces": 63,
+      "years": [
+        2015,
+        2016,
+        2017,
+        2018,
+        2019,
+        2020,
+        2021,
+        2022,
+        2023
+      ],
+      "missing": 0,
+      "negative": 79,
+      "minimum": -9.63,
+      "maximum": 13.67,
+      "normalized_sha256": "cd3ccc87e694017edc0959be36432fecd8011c96f5e21669256f5fddd8968bde",
+      "declared_unit": "percent"
+    },
+    {
+      "table": "E05.44",
+      "source_url": "https://pxweb.nso.gov.vn/pxweb/en/Enterprise/Enterprise/E05.44.px/",
+      "source_sha256": "95a3131b427e710a06897302db170eda925f1e92e45daef533fc676361955d8e",
+      "normalized": true,
+      "rows": 567,
+      "provinces": 63,
+      "years": [
+        2015,
+        2016,
+        2017,
+        2018,
+        2019,
+        2020,
+        2021,
+        2022,
+        2023
+      ],
+      "missing": 0,
+      "negative": 0,
+      "minimum": 76.6,
+      "maximum": 3600.39,
+      "normalized_sha256": "f8f4040ada038d81472fffd671646393f76de9d626186a7d779f1cdd94d30d9a",
+      "declared_unit": "million_vnd"
+    }
+  ],
+  "profitability_comparison": {
+    "n": 567,
+    "tolerance_percentage_points": 0.01,
+    "within_tolerance": 465,
+    "largest_discrepancies": [
+      {
+        "province": "Lai Châu",
+        "year": 2016,
+        "constructed": 5.106001791579576,
+        "official": 4.69,
+        "difference_percentage_points": 0.41600179157957573
+      },
+      {
+        "province": "Hà Giang",
+        "year": 2015,
+        "constructed": 7.89614848192254,
+        "official": 7.53,
+        "difference_percentage_points": 0.36614848192254
+      },
+      {
+        "province": "Gia Lai",
+        "year": 2015,
+        "constructed": 5.481317999206856,
+        "official": 5.21,
+        "difference_percentage_points": 0.27131799920685573
+      },
+      {
+        "province": "Vĩnh Phúc",
+        "year": 2016,
+        "constructed": 11.959415129899165,
+        "official": 11.71,
+        "difference_percentage_points": 0.24941512989916426
+      },
+      {
+        "province": "Hà Giang",
+        "year": 2016,
+        "constructed": 4.940202391904323,
+        "official": 4.77,
+        "difference_percentage_points": 0.17020239190432385
+      },
+      {
+        "province": "Hà Tĩnh",
+        "year": 2016,
+        "constructed": -7.916006498064619,
+        "official": -7.75,
+        "difference_percentage_points": -0.1660064980646192
+      },
+      {
+        "province": "Vĩnh Phúc",
+        "year": 2015,
+        "constructed": 12.089035630211866,
+        "official": 11.93,
+        "difference_percentage_points": 0.15903563021186606
+      },
+      {
+        "province": "Đồng Nai",
+        "year": 2015,
+        "constructed": 6.13471835667273,
+        "official": 5.99,
+        "difference_percentage_points": 0.1447183566727297
+      },
+      {
+        "province": "Hà Nội",
+        "year": 2016,
+        "constructed": 2.8421742062375257,
+        "official": 2.71,
+        "difference_percentage_points": 0.13217420623752574
+      },
+      {
+        "province": "Long An",
+        "year": 2016,
+        "constructed": 7.088755973670764,
+        "official": 7.22,
+        "difference_percentage_points": -0.13124402632923537
+      }
+    ],
+    "interpretation": "Check definition and denominator; do not overwrite official values."
+  }
+}
