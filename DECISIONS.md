@@ -188,3 +188,8 @@ Date: 2026-09-20
 Status: ACTIVE
 Decision: Mô hình không gian, bảng động, trung gian nhân quả, học máy nhân quả hoặc phương pháp phi tuyến không được dùng chỉ để tăng độ phức tạp. Chỉ mở khi có vấn đề nhận dạng/chẩn đoán cụ thể và giả định có thể bảo vệ.
 Reason: mẫu khoảng 63 tỉnh với chuỗi thời gian ngắn đến vừa khiến việc thêm mô hình phức tạp dễ tạo ảo giác chính xác hơn là thêm giá trị khoa học.
+
+
+## 2026-09-20 — phục hồi SR1 và kiểm toán trước mô hình
+
+Đã hợp nhất lịch sử main/PR13 trong PR16 nháp, kiểm toán ZIP và sửa lỗi thu thập NSO. Run 35482892847 thu được toàn bộ nguồn trừ bước chuẩn hóa dân số; giữ CSV gốc để sửa parser tiêu đề Total/năm sơ bộ. Không mở khóa mô hình: cần xác minh tính nhất quán PCI, quần thể H4 và mẫu số tỷ suất lợi nhuận. Bằng chứng và giới hạn: `docs/research/RECOVERY_AUDIT_2026-09-20.md`.

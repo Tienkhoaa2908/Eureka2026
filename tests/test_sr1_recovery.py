@@ -23,6 +23,12 @@ class RecoveryTests(unittest.TestCase):
         self.assertEqual(rows[0]["province"], "Thừa Thiên Huế")
         self.assertEqual(_parse_wide_pxweb_csv(b'"Province","2025"\n"Hue",10\n', (2025,), "fixture", "fixture", "persons"), [])
 
+    def test_total_year_header_and_ambiguous_duplicate(self):
+        rows = _parse_wide_pxweb_csv(b'"Province","Total 2022","Total Prel. 2023"\n"Ha Noi",12,14\n', (2022, 2023), "fixture", "population", "thousand_persons")
+        self.assertEqual([r["value"] for r in rows], [12, 14])
+        with self.assertRaisesRegex(ValueError, 'ambiguous repeated'):
+            _parse_wide_pxweb_csv(b'"Province","2022","Total 2022","2023"\n"Ha Noi",12,13,14\n', (2022, 2023), "fixture", "population", "thousand_persons")
+
     def test_auxiliary_selection_must_be_unambiguous(self):
         box = BeautifulSoup('<select><option value="m">Male</option><option value="f">Female</option></select>', 'html.parser').select_one('select')
         with self.assertRaisesRegex(ValueError, 'chưa xác minh'):

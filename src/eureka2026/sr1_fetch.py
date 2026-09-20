@@ -42,7 +42,7 @@ NSO_TABLES: dict[str, dict[str, Any]] = {
     "E05.02": {"database": "enterprise", "name": "new_registrations", "years": ENTRY_YEARS, "unit": "enterprises"},
     "E05.04": {"database": "enterprise", "name": "active_all", "years": tuple(range(2017, 2025)), "unit": "enterprises"},
     "E05.05": {"database": "enterprise", "name": "active_per_1000", "years": tuple(range(2017, 2025)), "unit": "enterprises_per_1000_people"},
-    "E02.03-07": {"database": "population", "name": "average_population", "years": CORE_YEARS, "unit": "thousand_persons"},
+    "E02.03-07": {"database": "population", "name": "average_population", "years": tuple(range(2015, 2025)), "unit": "thousand_persons"},
     "E02.55": {"database": "population", "name": "trained_labor_share", "years": CORE_YEARS, "unit": "percent"},
     "E11.23": {"database": "trade_price", "name": "spatial_cost_index", "years": CORE_YEARS, "unit": "hanoi_equals_100"},
 }
@@ -273,12 +273,18 @@ def _parse_wide_pxweb_csv(
         raise ValueError(f"{table_code}: unable to decode PX-Web CSV")
 
     lines = [line for line in decoded.splitlines() if line.strip()]
+    def header_year(cell: str) -> str:
+        # Observed NSO population export prefixes its selected scalar 'Total'.
+        # Do not strip arbitrary words: Male/Female must not be silently pooled.
+        match = re.fullmatch(r"(?:Total )?(?:Prel\. )?((?:19|20)\d{2})", cell)
+        return match.group(1) if match else cell
+
     header_idx = None
     delimiter = ","
     for idx, line in enumerate(lines[:12]):
         for candidate in (",", ";", "\t"):
             cells = [x.strip().strip('"') for x in next(csv.reader([line], delimiter=candidate))]
-            hits = sum(str(y) in cells for y in years)
+            hits = sum(str(y) in [header_year(c) for c in cells] for y in years)
             if hits >= min(2, len(years)):
                 header_idx = idx
                 delimiter = candidate
@@ -289,11 +295,13 @@ def _parse_wide_pxweb_csv(
         raise ValueError(f"{table_code}: year header not found in PX-Web export")
 
     parsed = list(csv.reader(lines[header_idx:], delimiter=delimiter))
-    header = [x.strip().strip('"') for x in parsed[0]]
+    header = [header_year(x.strip().strip('"')) for x in parsed[0]]
     year_columns: dict[int, int] = {}
     for year in years:
         if str(year) not in header:
             raise ValueError(f"{table_code}: requested year {year} absent from CSV header {header}")
+        if header.count(str(year)) != 1:
+            raise ValueError(f"{table_code}: ambiguous repeated year column {year}")
         year_columns[year] = header.index(str(year))
 
     records: list[dict[str, Any]] = []
@@ -350,10 +358,17 @@ def _submit_nso_form(
                     if normalize_province_loose(o.get_text(" ", strip=True), historical_63=max(years) <= 2024) is None]
         raise ValueError(f"province coverage mismatch at {page_url}: missing={missing} extra={extra}; unmapped={unmapped}")
 
-    year_options = {
-        " ".join(o.get_text(" ", strip=True).split()): str(o.get("value"))
-        for o in year_box.find_all("option")
-    }
+    year_options = {}
+    year_labels = {}
+    for option in year_box.find_all("option"):
+        label = " ".join(option.get_text(" ", strip=True).split())
+        match = re.fullmatch(r"(?:Prel\. )?((?:19|20)\d{2})", label)
+        if match:
+            year = match.group(1)
+            if year in year_options:
+                raise ValueError(f"ambiguous source year {year} at {page_url}")
+            year_options[year] = str(option.get("value"))
+            year_labels[year] = label
     year_values = []
     for year in years:
         if str(year) not in year_options:
@@ -458,9 +473,16 @@ def _submit_nso_form(
         "source_url": page_url,
         "title": meta_title,
         "selected_years": list(years),
+        "selected_year_labels": {str(y): year_labels[str(y)] for y in years},
+        "preliminary_years": [y for y in years if year_labels[str(y)].startswith("Prel.")],
         "province_count": len(province_values),
         "province_label_mapping": province_labels,
         "page_text": soup.get_text(" ", strip=True),
+        "source_information": {
+            dt.get_text(" ", strip=True): dt.find_next_sibling("dd").get_text(" ", strip=True)
+            for dt in soup.select("dl.information_definitionlist dt")
+            if dt.find_next_sibling("dd") is not None
+        },
         "auxiliary_selections": selected_aux,
         "page_sha256": sha256_bytes(page.content),
         "raw_export_sha256": sha256_bytes(response.content),
